@@ -1,0 +1,110 @@
+{
+  "name": "UI Designer Claude Orchestrator",
+  "version": "1.0.0",
+  "description": "Multi-agent UI/UX design orchestration system with vibe design methodology",
+  "orchestrator": {
+    "type": "ui-designer",
+    "parallel_agents": 5,
+    "default_timeout": 30000,
+    "memory_enabled": true
+  },
+  "design_config": {
+    "framework": "tailwind",
+    "icon_library": "lucide-react",
+    "color_mode": ["light", "dark"],
+    "breakpoints": {
+      "mobile": "320px",
+      "tablet": "768px",
+      "desktop": "1024px",
+      "wide": "1200px"
+    },
+    "default_tokens": {
+      "spacing_unit": "4px",
+      "border_radius": "8px",
+      "font_scale": 1.25,
+      "animation_duration": "200ms"
+    }
+  },
+  "specialists": {
+    "design_analyst": {
+      "enabled": true,
+      "capabilities": ["visual_dna_extraction", "pattern_recognition", "style_analysis"]
+    },
+    "style_guide_expert": {
+      "enabled": true,
+      "capabilities": ["token_generation", "system_creation", "consistency_validation"]
+    },
+    "ui_generator": {
+      "enabled": true,
+      "capabilities": ["component_creation", "screen_design", "responsive_layout"]
+    },
+    "ux_researcher": {
+      "enabled": true,
+      "capabilities": ["persona_creation", "journey_mapping", "usability_testing"]
+    },
+    "brand_strategist": {
+      "enabled": true,
+      "capabilities": ["identity_development", "messaging", "emotional_design"]
+    },
+    "accessibility_auditor": {
+      "enabled": true,
+      "capabilities": ["wcag_compliance", "screen_reader_testing", "inclusive_design"]
+    }
+  },
+  "workflows": {
+    "complete_ui_project": {
+      "stages": ["research", "concept", "design", "iterate", "deliver"],
+      "parallel_execution": true
+    },
+    "design_sprint": {
+      "duration_days": 5,
+      "daily_goals": ["understand", "diverge", "decide", "prototype", "test"]
+    },
+    "brand_identity": {
+      "deliverables": ["logo", "color_palette", "typography", "guidelines", "applications"]
+    },
+    "optimization_cycle": {
+      "metrics": ["performance", "accessibility", "usability", "conversion"]
+    }
+  },
+  "memory": {
+    "persist_preferences": true,
+    "store_decisions": true,
+    "track_iterations": true,
+    "export_format": "json"
+  },
+  "output": {
+    "formats": ["html", "jsx", "vue", "svelte"],
+    "include_tokens": true,
+    "generate_docs": true,
+    "export_assets": true
+  },
+  "integrations": {
+    "figma": {
+      "enabled": false,
+      "export_ready": true
+    },
+    "github": {
+      "enabled": true,
+      "branch_per_variation": true
+    },
+    "storybook": {
+      "enabled": false,
+      "auto_stories": true
+    }
+  },
+  "quality_checks": {
+    "accessibility": {
+      "level": "AAA",
+      "automated_testing": true
+    },
+    "performance": {
+      "lighthouse_threshold": 90,
+      "bundle_size_limit": "150kb"
+    },
+    "consistency": {
+      "token_validation": true,
+      "style_linting": true
+    }
+  }
+}
