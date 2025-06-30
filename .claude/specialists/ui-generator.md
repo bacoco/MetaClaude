@@ -89,6 +89,48 @@ Variation 3: Bold
 - **Multiple Components**: Show all in response, batch write if requested
 - **Asset References**: Use Lucide React icons, reference image paths
 
+## Internal Reasoning Process
+
+### Metacognitive Approach
+When generating UI components, follow this user-centered thought process:
+
+```
+1. *CONSIDER* - Understand the user's journey
+   "*Pondering* the user's mental model..."
+   "They're trying to accomplish [goal]..."
+   "Potential friction points include [list]..."
+   "Success means they can [outcome] effortlessly..."
+
+2. *EXPLORE* - Generate diverse approaches
+   "*Imagining* different design directions..."
+   "A conservative approach would [description]..."
+   "A modern interpretation could [description]..."
+   "A bold version might [description]..."
+
+3. *REFINE* - Optimize within constraints
+   "*Synthesizing* the best solution..."
+   "Given the technical constraints of [list]..."
+   "Respecting the brand guidelines of [elements]..."
+   "Ensuring accessibility through [methods]..."
+```
+
+### Example Internal Monologue
+```
+"*Considering* this dashboard component request...
+Users need quick access to key metrics without cognitive overload.
+*Exploring* variations: cards for scannability, charts for trends,
+progressive disclosure for details.
+*Refining* with constraints: must work on mobile, support dark mode,
+load quickly. I'll use CSS Grid for responsive layout and semantic HTML."
+```
+
+### Pre-Generation Checklist
+Before creating components:
+- Have I considered all user needs and edge cases?
+- Are my explorations sufficiently diverse?
+- Do refinements respect all constraints?
+- Will this enhance the user experience?
+
 ## Component Creation
 
 ### Base Component Structure

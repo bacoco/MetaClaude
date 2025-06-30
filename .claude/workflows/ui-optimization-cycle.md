@@ -143,6 +143,31 @@ const technicalAudit = {
 };
 ```
 
+### Phase 1 Reflection
+```
+*Reflect on Audit Findings:*
+
+Audit Coverage (Score each 1-5):
+- Path Completeness: Did we examine all critical flows? [Score: __/5]
+- Discovery Quality: What insights surprised us? [Score: __/5]
+- Hidden Issues: Confident we found all problems? [Score: __/5]
+Coverage Score: [Average]/5
+
+Priority Clarity (Score each 1-5):
+- Problem Identification: Are biggest issues clear? [Score: __/5]
+- Root Cause Analysis: Do we understand why? [Score: __/5]
+- Focus Validation: Is optimization direction correct? [Score: __/5]
+Clarity Score: [Average]/5
+
+Data Quality (Score each 1-5):
+- Analytics Completeness: Sufficient quantitative data? [Score: __/5]
+- User Feedback Depth: Rich qualitative insights? [Score: __/5]
+- Technical Assessment: Performance issues identified? [Score: __/5]
+Data Score: [Average]/5
+
+Overall Phase 1 Score: [Total Average]/5
+```
+
 ## Phase 2: Analysis & Insights (Day 3-4)
 
 ### Data Synthesis
@@ -252,6 +277,31 @@ const prioritization = {
     return scored.sort((a, b) => b.riceScore - a.riceScore);
   }
 };
+```
+
+### Phase 2 Reflection
+```
+*Reflect on Analysis Insights:*
+
+Insight Quality (Score each 1-5):
+- Actionability Level: Are findings implementable? [Score: __/5]
+- User Need Alignment: Do insights address real pain? [Score: __/5]
+- Quick Win Identification: Found easy improvements? [Score: __/5]
+Insight Score: [Average]/5
+
+Strategy Alignment (Score each 1-5):
+- Root Cause Focus: Does plan address core issues? [Score: __/5]
+- Optimization Targets: Are we fixing right things? [Score: __/5]
+- ROI Potential: Good effort-to-impact ratio? [Score: __/5]
+Strategy Score: [Average]/5
+
+Prioritization Effectiveness (Score each 1-5):
+- RICE Scoring: Was framework applied well? [Score: __/5]
+- Stakeholder Buy-in: Agreement on priorities? [Score: __/5]
+- Resource Planning: Realistic capacity match? [Score: __/5]
+Prioritization Score: [Average]/5
+
+Overall Phase 2 Score: [Total Average]/5
 ```
 
 ## Phase 3: Optimization Execution (Day 5-10)
@@ -382,6 +432,31 @@ const flowOptimization = {
 };
 ```
 
+### Phase 3 Reflection
+```
+*Reflect on Optimization Execution:*
+
+Implementation Quality (Score each 1-5):
+- Code Cleanliness: Were changes implemented well? [Score: __/5]
+- Design Consistency: Maintained system coherence? [Score: __/5]
+- Improvement Visibility: Are changes noticeable? [Score: __/5]
+Implementation Score: [Average]/5
+
+Technical Execution (Score each 1-5):
+- Regression Check: Did we avoid new issues? [Score: __/5]
+- Performance Gains: Measurable improvements? [Score: __/5]
+- Maintainability: Are changes sustainable? [Score: __/5]
+Technical Score: [Average]/5
+
+Optimization Breadth (Score each 1-5):
+- Coverage Achieved: Hit all priority areas? [Score: __/5]
+- Balance Maintained: UI/UX/Performance mix? [Score: __/5]
+- Innovation Applied: Creative solutions used? [Score: __/5]
+Breadth Score: [Average]/5
+
+Overall Phase 3 Score: [Total Average]/5
+```
+
 ## Phase 4: Validation (Day 11-12)
 
 ### A/B Testing Setup
@@ -457,6 +532,31 @@ const qualitativeValidation = {
     }
   }
 };
+```
+
+### Phase 4 Reflection
+```
+*Reflect on Validation Results:*
+
+Metric Movement (Score each 1-5):
+- Expected Improvement: Did KPIs move as predicted? [Score: __/5]
+- Surprise Findings: Any unexpected outcomes? [Score: __/5]
+- Change Analysis: Understand what didn't improve? [Score: __/5]
+Metric Score: [Average]/5
+
+User Response (Score each 1-5):
+- Feedback Quality: How are users reacting? [Score: __/5]
+- Behavior Change: Seeing desired actions? [Score: __/5]
+- Problem Resolution: Solving right issues? [Score: __/5]
+Response Score: [Average]/5
+
+Test Quality (Score each 1-5):
+- Statistical Significance: Results conclusive? [Score: __/5]
+- Test Coverage: All changes validated? [Score: __/5]
+- Learning Value: Rich insights gained? [Score: __/5]
+Test Score: [Average]/5
+
+Overall Phase 4 Score: [Total Average]/5
 ```
 
 ## Phase 5: Deployment (Day 13-14)
@@ -624,6 +724,52 @@ const majorInitiatives = [
   'Create responsive tables',
   'Build accessibility mode'
 ];
+```
+
+### Optimization Cycle Reflection
+```
+*Complete cycle retrospective:*
+
+Overall Impact (Score each 1-5):
+- Improvement Achievement: Meaningful gains realized? [Score: __/5]
+- ROI Delivery: Was investment worthwhile? [Score: __/5]
+- Impact Distribution: Which changes mattered most? [Score: __/5]
+Impact Score: [Average]/5
+
+Process Efficiency (Score each 1-5):
+- Systematic Approach: Was methodology effective? [Score: __/5]
+- Time Management: Minimized waste and delays? [Score: __/5]
+- Adaptation Quality: Adjusted well to findings? [Score: __/5]
+Efficiency Score: [Average]/5
+
+Knowledge Gained (Score each 1-5):
+- User Understanding: Deeper insights achieved? [Score: __/5]
+- Assumption Testing: Beliefs validated/challenged? [Score: __/5]
+- Opportunity Discovery: New paths identified? [Score: __/5]
+Knowledge Score: [Average]/5
+
+Next Cycle Planning (Score each 1-5):
+- Target Clarity: Clear on next priorities? [Score: __/5]
+- Process Evolution: Know how to improve? [Score: __/5]
+- Resource Readiness: Have needed tools/data? [Score: __/5]
+Planning Score: [Average]/5
+
+Overall Optimization Cycle Score: [Total Average]/5
+
+Key Metrics:
+- Conversion Rate Change: ____%
+- User Satisfaction Change: ____
+- Performance Score Change: ____
+
+Top 3 Successes:
+1. ____________
+2. ____________
+3. ____________
+
+Top 3 Learnings:
+1. ____________
+2. ____________
+3. ____________
 ```
 
 ## Feedback Interpretation

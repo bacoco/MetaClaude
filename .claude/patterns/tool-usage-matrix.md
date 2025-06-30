@@ -6,6 +6,18 @@ Comprehensive mapping of UI Designer Claude's conceptual operations to Claude Co
 
 This matrix provides explicit guidance on when and how to use Claude Code's tools (`read_file`, `write_file`, `run_shell_command`, etc.) versus performing internal reasoning and generation.
 
+## Critical Tool Usage Requirements
+
+**IMPORTANT: The following are NOT suggestions - they are MANDATORY requirements:**
+
+1. You **MUST** use `read_file` to access any existing file content - NEVER assume or guess
+2. You **MUST** use `write_file` when the user requests saving or file creation
+3. You **MUST** use `run_shell_command` for any system operations or builds
+4. You **MUST** use `search_file_content` when searching for patterns
+5. You **MUST** use `list_files` to understand project structure
+
+**Failure to use required tools is an error in execution.**
+
 ## Core Tools Available
 
 1. **read_file**: Read existing files for analysis or reference
@@ -140,21 +152,32 @@ purpose: "Verify fixes"
 
 ## Decision Trees for Tool Usage
 
-### Should I Use a Tool?
+### When You MUST Use Tools
 
 ```
 User Request Analysis:
 ├─ "Show me" / "Generate" / "Create"
 │  └─ Internal generation → Present in response
 ├─ "Save this" / "Create a file"
-│  └─ Use write_file → Save to filesystem
+│  └─ *MUST* use write_file → Save to filesystem
 ├─ "Analyze existing" / "Review current"
-│  └─ Use read_file → Load and analyze
+│  └─ *MUST* use read_file → Load and analyze
 ├─ "Set up" / "Install" / "Configure"
-│  └─ Use run_shell_command → System operations
+│  └─ *MUST* use run_shell_command → System operations
 └─ "Find" / "Search for"
-   └─ Use search_file_content → Locate patterns
+   └─ *MUST* use search_file_content → Locate patterns
 ```
+
+### Mandatory Tool Usage Rules
+
+**You MUST use tools when:**
+- User explicitly requests file operations ("save", "create file", "write")
+- Analyzing existing code or files (cannot guess content)
+- Running any system commands or builds
+- Searching for patterns across multiple files
+- Checking current project state or structure
+
+**Tool usage is REQUIRED, not optional, for these operations**
 
 ### Multi-Step Operations
 
@@ -177,16 +200,23 @@ Complex Task Breakdown:
 ## Tool Usage Best Practices
 
 ### 1. Explicit Tool Announcements
-Always announce tool usage:
+You MUST always announce tool usage:
 ```
 "I'll read your existing component to understand the current structure..."
-[Uses read_file]
+[MUST use read_file]
 
 "Let me save this design system configuration for you..."
-[Uses write_file]
+[MUST use write_file]
 ```
 
-### 2. Batch Operations
+### 2. Non-Negotiable Tool Requirements
+- **MUST** use `read_file` before editing any existing file
+- **MUST** use `write_file` when user requests saving
+- **MUST** use `run_shell_command` for any system operations
+- **MUST** use `search_file_content` when searching across files
+- **MUST** use `list_files` to verify directory structure
+
+### 3. Batch Operations
 Combine related tool operations:
 ```javascript
 // Good: Batch related file writes
@@ -200,7 +230,8 @@ files.forEach(f => write_file(f.path, f.content));
 // Avoid: Scattered operations
 ```
 
-### 3. Validation After Changes
+### 4. Validation After Changes
+You MUST validate after making changes:
 ```javascript
 // After generating and saving
 write_file("Component.jsx", newCode);
@@ -208,7 +239,8 @@ run_shell_command("npm run lint Component.jsx");
 run_shell_command("npm run test Component.test.jsx");
 ```
 
-### 4. Safe File Operations
+### 5. Safe File Operations
+You MUST check before critical operations:
 ```javascript
 // Check before overwriting
 const existing = read_file("important.config.js");

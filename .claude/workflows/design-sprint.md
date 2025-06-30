@@ -144,6 +144,31 @@ const monday = {
 };
 ```
 
+### Day 1 Reflection
+```
+*Evening reflection on Understanding:*
+
+Problem Clarity (Score each 1-5):
+- Challenge Understanding: Is the problem crystal clear to everyone? [Score: __/5]
+- Root Cause Identification: Did we uncover real problems or just symptoms? [Score: __/5]
+- User Focus: Are we solving for the right users? [Score: __/5]
+Clarity Score: [Average]/5
+
+Sprint Questions (Score each 1-5):
+- Question Specificity: Are questions specific and answerable? [Score: __/5]
+- Decision Guidance: Will answers genuinely guide our decisions? [Score: __/5]
+- Assumption Validation: Have we identified key assumptions? [Score: __/5]
+Questions Score: [Average]/5
+
+Team Alignment (Score each 1-5):
+- Shared Understanding: Does everyone see the same problem? [Score: __/5]
+- Energy Level: Is the team energized and engaged? [Score: __/5]
+- Focus Agreement: Are we aligned on the target? [Score: __/5]
+Alignment Score: [Average]/5
+
+Overall Day 1 Score: [Total Average]/5
+```
+
 ## Day 2: Tuesday - Diverge
 
 ### Ideation & Sketching
@@ -236,6 +261,31 @@ const tuesday = {
 };
 ```
 
+### Day 2 Reflection
+```
+*Evening reflection on Divergence:*
+
+Creative Output (Score each 1-5):
+- Solution Diversity: Did we push beyond obvious solutions? [Score: __/5]
+- Innovation Level: What surprised us in the sketches? [Score: __/5]
+- Boldness Factor: Are we being ambitious enough? [Score: __/5]
+Creativity Score: [Average]/5
+
+Idea Quality (Score each 1-5):
+- Problem Addressing: Do solutions tackle the core problem? [Score: __/5]
+- Excitement Level: Which ideas generate most enthusiasm? [Score: __/5]
+- Pattern Recognition: What themes emerged across sketches? [Score: __/5]
+Quality Score: [Average]/5
+
+Exploration Breadth (Score each 1-5):
+- Perspective Variety: Did we explore different angles? [Score: __/5]
+- Feasibility Range: Mix of safe and ambitious ideas? [Score: __/5]
+- User-Centeredness: Are solutions user-focused? [Score: __/5]
+Exploration Score: [Average]/5
+
+Overall Day 2 Score: [Total Average]/5
+```
+
 ## Day 3: Wednesday - Decide
 
 ### Critique & Selection
@@ -314,6 +364,31 @@ const wednesday = {
     ]
   }
 };
+```
+
+### Day 3 Reflection
+```
+*Evening reflection on Decision:*
+
+Decision Quality (Score each 1-5):
+- User-Driven Choice: Did we choose based on user needs? [Score: __/5]
+- Storyboard Clarity: Is our storyboard testable and clear? [Score: __/5]
+- Risk Identification: Have we identified key uncertainties? [Score: __/5]
+Decision Score: [Average]/5
+
+Team Alignment (Score each 1-5):
+- Direction Buy-In: Is everyone committed to the direction? [Score: __/5]
+- Concerns Addressed: Have we resolved major concerns? [Score: __/5]
+- Prototype Confidence: Are we ready for tomorrow? [Score: __/5]
+Alignment Score: [Average]/5
+
+Process Effectiveness (Score each 1-5):
+- Voting Fairness: Was the selection process democratic? [Score: __/5]
+- Time Management: Did we stay on schedule? [Score: __/5]
+- Decision Rationale: Is our reasoning documented? [Score: __/5]
+Process Score: [Average]/5
+
+Overall Day 3 Score: [Total Average]/5
 ```
 
 ## Day 4: Thursday - Prototype
@@ -410,6 +485,31 @@ const thursday = {
     ignore: ['Edge cases', 'Error states', 'Perfection']
   }
 };
+```
+
+### Day 4 Reflection
+```
+*Evening reflection on Prototyping:*
+
+Prototype Readiness (Score each 1-5):
+- Realism Level: Does it feel real enough to test? [Score: __/5]
+- Flow Completeness: Are all critical paths represented? [Score: __/5]
+- Quality Trade-offs: Were the right corners cut? [Score: __/5]
+Readiness Score: [Average]/5
+
+Test Preparation (Score each 1-5):
+- Test Focus: Are we testing the right things? [Score: __/5]
+- Script Neutrality: Is our interview script unbiased? [Score: __/5]
+- Learning Goals: Are objectives clearly defined? [Score: __/5]
+Preparation Score: [Average]/5
+
+Execution Quality (Score each 1-5):
+- Speed vs Quality: Did we balance well? [Score: __/5]
+- Team Coordination: How well did we collaborate? [Score: __/5]
+- Asset Quality: Are visuals and copy adequate? [Score: __/5]
+Execution Score: [Average]/5
+
+Overall Day 4 Score: [Total Average]/5
 ```
 
 ## Day 5: Friday - Test
@@ -513,6 +613,42 @@ const friday = {
     }
   }
 };
+```
+
+### Sprint Reflection
+```
+*End-of-sprint comprehensive reflection:*
+
+Sprint Success (Score each 1-5):
+- Questions Answered: Did we answer our sprint questions? [Score: __/5]
+- Path Clarity: Is the way forward now clear? [Score: __/5]
+- ROI Achievement: Was the time investment worthwhile? [Score: __/5]
+Success Score: [Average]/5
+
+Process Evaluation (Score each 1-5):
+- Day Productivity: Which days were most effective? [Score: __/5]
+- Time Efficiency: Did we minimize waste? [Score: __/5]
+- Team Collaboration: How well did we work together? [Score: __/5]
+Process Score: [Average]/5
+
+Key Insights (Score each 1-5):
+- Surprise Factor: What unexpected learnings emerged? [Score: __/5]
+- Assumption Testing: Which beliefs were challenged? [Score: __/5]
+- Opportunity Discovery: What new paths opened? [Score: __/5]
+Insights Score: [Average]/5
+
+Next Steps Clarity (Score each 1-5):
+- Direction Confidence: Clear on iterate/pivot/proceed? [Score: __/5]
+- Action Specificity: Are next steps concrete? [Score: __/5]
+- Ownership Clarity: Is accountability defined? [Score: __/5]
+Clarity Score: [Average]/5
+
+Overall Sprint Score: [Total Average]/5
+
+Key Takeaways:
+- Most Valuable Day: ____________
+- Biggest Learning: ____________
+- Next Sprint Focus: ____________
 ```
 
 ## Feedback Interpretation

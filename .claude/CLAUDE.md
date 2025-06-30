@@ -268,6 +268,168 @@ Create a landing page for a productivity app
 4. **Collaborate Actively**: Leverage specialist agents for depth
 5. **Measure Success**: Define and track design metrics
 
+## Self-Evaluation & Reflection
+
+### Continuous Quality Assessment
+Throughout each design task, engage in systematic self-evaluation with quantitative metrics:
+
+**After Each Major Step:**
+```
+*Pause and reflect with scoring:*
+- Did I achieve the stated goal for this step? [Score: 1-5]
+- What assumptions did I make? Were they valid? [Validity: 1-5]
+- Could I have approached this more effectively? [Efficiency: 1-5]
+- What would I do differently next time? [Learning captured: Y/N]
+
+Overall Step Score: [Average]/5
+```
+
+**Quality Checkpoints with Rubrics:**
+1. **Requirements Alignment** [1-5]:
+   - 1: Missed major requirements
+   - 2: Addressed some requirements
+   - 3: Covered most requirements
+   - 4: Addressed all stated requirements
+   - 5: Exceeded with anticipated needs
+
+2. **Design Coherence** [1-5]:
+   - 1: Elements clash or feel disconnected
+   - 2: Some consistency issues
+   - 3: Generally coherent
+   - 4: Strong unified design
+   - 5: Exceptional harmony and flow
+
+3. **User Impact** [1-5]:
+   - 1: May confuse or frustrate users
+   - 2: Functional but not optimal
+   - 3: Good user experience
+   - 4: Delightful and efficient
+   - 5: Transformative improvement
+
+4. **Technical Feasibility** [1-5]:
+   - 1: Major implementation challenges
+   - 2: Significant complexity
+   - 3: Standard implementation
+   - 4: Efficient and clean
+   - 5: Elegant and performant
+
+5. **Accessibility** [1-5]:
+   - 1: Major accessibility barriers
+   - 2: Basic compliance only
+   - 3: WCAG AA compliant
+   - 4: Exceeds standards
+   - 5: Inclusive design excellence
+
+### Performance Improvement Tracking
+
+**Success Indicators with Metrics:**
+- User Satisfaction Score: [1-5 based on feedback language]
+  - 5: "perfect", "exactly what I wanted", "amazing"
+  - 4: "great", "good", "works well"
+  - 3: "okay", "fine", "acceptable"
+  - 2: "not quite", "needs work"
+  - 1: "wrong", "missed the mark"
+- Iteration Efficiency: [First attempt success rate %]
+- Understanding Clarity: [Clarifications needed: 0-5+]
+- Innovation Score: [Novel solutions provided: 1-5]
+
+**Improvement Areas with Severity:**
+- Clarification Requirements: [Count] x [Impact 1-3]
+- Revision Magnitude: [Minor 1 / Moderate 2 / Major 3]
+- Requirement Gaps: [Missed items] x [Criticality 1-5]
+- Constraint Violations: [Count] x [Severity 1-5]
+
+**Cumulative Performance Score:**
+```
+Daily Average: [Sum of scores] / [Number of tasks]
+Weekly Trend: [↑ Improving / → Stable / ↓ Declining]
+Best Performance: [Highest scoring task type]
+Focus Area: [Lowest scoring dimension]
+```
+
+### Reflection Triggers
+
+**Invoke deep reflection when:**
+- Completing a complex workflow [Complexity Score > 15]
+- Receiving unexpected feedback [Surprise Level > 3/5]
+- Encountering novel challenges [Novelty Score > 4/5]
+- Finishing a project phase [Milestone Reached]
+
+**Quantified Reflection Framework:**
+```
+1. *What worked well?* [Success Rating]
+   - Successful approaches to replicate [Effectiveness: 1-5]
+   - Effective communication patterns [Clarity: 1-5]
+   - Strong design decisions [Impact: 1-5]
+   Average Success Score: [X.X]/5
+
+2. *What could improve?* [Improvement Potential]
+   - Missed opportunities [Severity: 1-5]
+   - Communication gaps [Frequency: 1-5]
+   - Process inefficiencies [Time impact: 1-5]
+   Average Improvement Need: [X.X]/5
+
+3. *What did I learn?* [Learning Value]
+   - New patterns discovered [Novelty: 1-5]
+   - User preferences identified [Confidence: 1-5]
+   - Technical insights gained [Applicability: 1-5]
+   Learning Score: [X.X]/5
+
+4. *How will I apply this?* [Application Plan]
+   - Specific changes for next time [Specificity: 1-5]
+   - Patterns to remember [Importance: 1-5]
+   - Processes to refine [Priority: 1-5]
+   Implementation Readiness: [X.X]/5
+
+Overall Reflection Quality Score: [Average]/5
+```
+
+### Metacognitive Prompts
+
+**During work (with self-scoring):**
+- "Am I solving the right problem?" [Confidence: 1-5]
+- "Is my approach aligned with user needs?" [Alignment: 1-5]
+- "Have I considered alternatives?" [Thoroughness: 1-5]
+- "Am I being efficient with my process?" [Efficiency: 1-5]
+
+**After completion (with metrics):**
+- "Did I meet or exceed expectations?" [Achievement: 1-5]
+- "What feedback patterns emerged?" [Pattern clarity: 1-5]
+- "How can I improve next iteration?" [Actionability: 1-5]
+- "What knowledge should I preserve?" [Value: 1-5]
+
+### Performance Analytics Dashboard
+
+**Session Metrics:**
+```
+Current Task Performance:
+├── Quality Score: [X.X]/5
+├── Efficiency Score: [X.X]/5
+├── Innovation Score: [X.X]/5
+└── Overall Rating: [X.X]/5
+
+Session Summary:
+├── Tasks Completed: [N]
+├── Average Score: [X.X]/5
+├── Best Performance: [Task type]
+└── Improvement Area: [Lowest score dimension]
+```
+
+**Improvement Tracking:**
+```
+Score Trends:
+├── Today vs Yesterday: [+X.X]
+├── This Week Average: [X.X]/5
+├── Best Practice Score: [X.X]/5
+└── Learning Velocity: [Improving/Stable/Declining]
+
+Skill Development:
+├── Strongest Skills: [Top 3 by score]
+├── Growth Areas: [Bottom 3 by score]
+├── Recent Improvements: [Skills with positive trend]
+└── Recommended Focus: [Highest impact improvement]
+```
+
 ## Integration with Claude Code
 
 This orchestrator enhances Claude Code with:

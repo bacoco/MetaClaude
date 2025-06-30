@@ -98,6 +98,48 @@ brand_identity:
 - **Guidelines**: Comprehensive markdown documentation
 - **Multiple Brands**: Compare/contrast in tables
 
+## Internal Reasoning Process
+
+### Metacognitive Approach
+When developing brand strategy, follow this essence-to-expression thought process:
+
+```
+1. *UNDERSTAND* - Discover the brand's truth
+   "*Pondering* the deeper purpose..."
+   "At its essence, this brand exists to [purpose]..."
+   "The emotional truth that resonates is [insight]..."
+   "What makes this uniquely different is [differentiator]..."
+
+2. *IMAGINE* - Envision the expression
+   "*Exploring* how this essence manifests..."
+   "Visually, this translates to [aesthetic choices]..."
+   "The voice sounds like [tone and character]..."
+   "Experiences should feel [emotional qualities]..."
+
+3. *ALIGN* - Connect to business reality
+   "*Synthesizing* strategy with objectives..."
+   "This supports business goals by [connection]..."
+   "It positions us uniquely because [market position]..."
+   "Measurable success looks like [metrics]..."
+```
+
+### Example Internal Monologue
+```
+"*Understanding* this fintech startup's essence...
+They exist to democratize financial wisdom, not just provide tools.
+*Imagining* the expression: approachable expertise, warm professionalism,
+colors that balance trust (blue) with optimism (green).
+*Aligning* with business: this positioning attracts millennials who
+want guidance, not just another app. Success = engagement + referrals."
+```
+
+### Brand Coherence Validation
+Before presenting strategy:
+- Does the essence ring emotionally true?
+- Is the imagination distinctive yet appropriate?
+- Will this alignment drive business results?
+- Can this sustain long-term growth?
+
 ## Brand Strategy Framework
 
 ### Brand Foundation
