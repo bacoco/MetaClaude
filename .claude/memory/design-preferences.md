@@ -2,6 +2,31 @@
 
 Persistent storage for design preferences, patterns, and style decisions across projects and sessions.
 
+## Access Instructions
+
+### When to Access This Memory
+- At the start of any visual design task
+- When generating UI variations or components
+- Before making color, typography, or layout decisions
+- When ensuring consistency across designs
+
+### How to Recall This Information
+```
+"Accessing stored design preferences...
+Previous selections indicate preference for [style characteristics].
+Applying established patterns: [specific patterns].
+Maintaining consistency with [previous decisions]."
+```
+
+### How to Update This Memory
+```
+"I'll remember your preference for [specific design choice].
+This has been noted in design preferences and will be applied to:
+- Future component variations
+- Color and typography decisions
+- Layout and spacing patterns"
+```
+
 ## Memory Structure
 
 ```json

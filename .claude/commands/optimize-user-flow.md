@@ -469,6 +469,46 @@ post_optimization:
 **Proposed**: Pre-fill detectable information
 **Expected Impact**: -3 minutes completion time
 
+## Tool Integration
+
+| Step | Action | Tool to Use | Purpose |
+|------|--------|-------------|----------|
+| 1. Analyze current | Map existing flow | `read_file` multiple | Understand flow |
+| 2. Identify issues | Find bottlenecks | None (analysis) | Spot problems |
+| 3. Generate solutions | Create improvements | None (internal) | Design optimizations |
+| 4. Present options | Show optimizations | None (in response) | Display improvements |
+| 5. Implement changes | Update flow code | `write_file` multiple | Apply optimizations |
+| 6. Create analytics | Add tracking | `write_file("analytics.js")` | Measure impact |
+
+### Tool Usage Examples
+```javascript
+// Step 1: Analyze current user flow
+const screens = list_files("src/screens/");
+const flowComponents = screens.map(screen => ({
+  name: screen,
+  code: read_file(`src/screens/${screen}`),
+  navigation: extractNavigation(screen)
+}));
+
+// Step 2-3: Identify issues and generate solutions
+const flowAnalysis = analyzeUserFlow(flowComponents);
+const optimizations = generateOptimizations(flowAnalysis);
+
+// Step 4: Present optimization options
+presentFlowOptimizations(optimizations);
+
+// Step 5: Implement selected optimizations
+if (userSelectsOptimizations) {
+  optimizations.selected.forEach(opt => {
+    write_file(opt.file, opt.optimizedCode);
+  });
+}
+
+// Step 6: Add analytics tracking
+const analyticsCode = generateFlowAnalytics(optimizations);
+write_file("src/analytics/flow-tracking.js", analyticsCode);
+```
+
 ## Implementation Plan
 
 ### Phase 1 (Week 1)

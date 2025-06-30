@@ -2,6 +2,28 @@
 
 Persistent storage for user persona data across design sessions.
 
+## Access Instructions
+
+### When to Access This Memory
+- Before designing any user interface or experience
+- When making decisions about functionality and features
+- During usability testing and validation
+- When prioritizing design elements
+
+### How to Recall This Information
+```
+"Recalling user personas from memory...
+Our primary persona is [Name], who values [key values] and struggles with [pain points].
+Designing with their needs in mind, specifically [relevant needs for current task]."
+```
+
+### How to Update This Memory
+```
+"Updating persona insights based on new user research...
+[Specific finding] has been added to [Persona name]'s profile.
+This will influence future designs by [specific impact]."
+```
+
 ## Memory Structure
 
 ```json

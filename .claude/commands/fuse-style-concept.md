@@ -360,6 +360,40 @@ const OnboardingStep = ({ step, total }) => (
 );
 ```
 
+## Tool Integration
+
+| Step | Action | Tool to Use | Purpose |
+|------|--------|-------------|----------|
+| 1. Load DNA | Get extracted tokens | `read_file("design-tokens.json")` | Access visual DNA |
+| 2. Load concept | Get MVP definition | `read_file("mvp-concept.json")` | Access app structure |
+| 3. Fuse internally | Combine DNA + concept | None | Mental synthesis |
+| 4. Generate preview | Create examples | None (in response) | Show fusion results |
+| 5. Save fusion | Store combined system | `write_file("fused-design.json")` (if requested) | Persist fusion |
+| 6. Create mockups | Generate UI samples | `write_file` multiple | Save example screens |
+
+### Tool Usage Examples
+```javascript
+// Step 1-2: Load both inputs
+const designDNA = JSON.parse(read_file("design-system/tokens.json"));
+const mvpConcept = JSON.parse(read_file("project/mvp-concept.json"));
+
+// Step 3-4: Internal fusion and presentation
+const fusedDesign = fuseStyleWithConcept(designDNA, mvpConcept);
+presentFusionResults(fusedDesign);
+
+// Step 5: Save fusion output
+if (userWantsSave) {
+  write_file("design-system/fused-design.json", JSON.stringify(fusedDesign, null, 2));
+}
+
+// Step 6: Generate example implementations
+if (userWantsExamples) {
+  fusedDesign.screens.forEach((screen) => {
+    write_file(`mockups/${screen.name}.jsx`, generateScreenCode(screen));
+  });
+}
+```
+
 ## Fusion Quality Checklist
 
 ### Visual Consistency

@@ -405,6 +405,46 @@ const comparisonData = {
 };
 ```
 
+## Tool Integration
+
+| Step | Action | Tool to Use | Purpose |
+|------|--------|-------------|----------|
+| 1. Check existing | Review current UI | `list_files("src/components/")` | Understand structure |
+| 2. Read patterns | Load design system | `read_file("design-tokens.json")` (if exists) | Apply consistent styling |
+| 3. Generate variations | Create options | None (internal generation) | Build 3-5 variations |
+| 4. Present options | Show in response | None | Display all variations |
+| 5. Save selected | Store chosen design | `write_file("Component.jsx", selected)` | Persist user's choice |
+| 6. Create all variations | Save all options | Multiple `write_file` calls | Store all variations (if requested) |
+
+### Tool Usage Examples
+```javascript
+// Step 1: Understand existing structure
+const components = list_files("src/components/");
+const hasDesignSystem = components.includes("design-tokens.json");
+
+// Step 2: Load design constraints if they exist
+let designTokens = {};
+if (hasDesignSystem) {
+  designTokens = JSON.parse(read_file("src/design-tokens.json"));
+}
+
+// Step 3-4: Generate and present (internal)
+const variations = generateVariations(requirements, designTokens);
+presentVariationsInResponse(variations);
+
+// Step 5: Save selected variation
+if (userSelectsVariation) {
+  write_file(`src/components/${componentName}.jsx`, variations[selectedIndex]);
+}
+
+// Step 6: Save all variations (if requested)
+if (userWantsAllVariations) {
+  variations.forEach((code, index) => {
+    write_file(`src/components/${componentName}-v${index + 1}.jsx`, code);
+  });
+}
+```
+
 ## Best Practices
 
 ### When to Use Each Variation

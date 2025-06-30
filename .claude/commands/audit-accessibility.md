@@ -411,6 +411,34 @@ const AccessibleComponent = ({ label, description, ...props }) => {
 };
 ```
 
+## Tool Integration
+
+| Step | Action | Tool to Use | Purpose |
+|------|--------|-------------|----------|
+| 1. Read component | Load existing code | `read_file("Component.jsx")` | Analyze current implementation |
+| 2. Automated scan | Internal analysis | None | Check WCAG criteria internally |
+| 3. Generate report | Create findings | None (in response) | Present issues and recommendations |
+| 4. Fix critical issues | Update code | `write_file("Component.jsx", fixed)` | Apply accessibility fixes |
+| 5. Verify changes | Check improvements | `read_file` + internal analysis | Confirm fixes work |
+| 6. Document | Save audit report | `write_file("audit-report.md")` (if requested) | Preserve findings |
+
+### Tool Usage Examples
+```javascript
+// Step 1: Analyze existing component
+const componentCode = read_file("src/components/Card.jsx");
+const auditFindings = analyzeAccessibility(componentCode);
+
+// Step 3: Apply fixes (only if user approves)
+if (userApprovessFixes) {
+  write_file("src/components/Card.jsx", accessibleCode);
+}
+
+// Step 4: Generate report (only if requested)
+if (userWantsReport) {
+  write_file("accessibility-audit.md", auditReport);
+}
+```
+
 ## Success Metrics
 ```javascript
 const successCriteria = {

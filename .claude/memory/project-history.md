@@ -2,6 +2,31 @@
 
 Persistent storage for project decisions, iterations, outcomes, and learned insights across all design projects.
 
+## Access Instructions
+
+### When to Access This Memory
+- When referencing past design decisions
+- During design iterations to understand what worked/didn't work
+- For maintaining consistency with previous projects
+- When applying learned insights to new challenges
+
+### How to Recall This Information
+```
+"Consulting project history...
+Previous projects showed [relevant findings].
+Past iterations revealed [specific insights].
+Building upon these learnings for the current design."
+```
+
+### How to Update This Memory
+```
+"Recording project decision in history...
+Decision: [what was decided]
+Rationale: [why it was decided]
+Outcome: [result or expected impact]
+This will inform future similar projects."
+```
+
 ## Memory Structure
 
 ```json

@@ -328,6 +328,44 @@ const industryTemplates = {
 };
 ```
 
+## Tool Integration
+
+| Step | Action | Tool to Use | Purpose |
+|------|--------|-------------|----------|
+| 1. Research domain | Understand context | `search_file_content("similar")` | Find existing patterns |
+| 2. Generate concept | Create MVP structure | None (internal) | Build concept model |
+| 3. Present concept | Show in response | None | Display MVP definition |
+| 4. Save concept | Store definition | `write_file("mvp-concept.json")` (if requested) | Persist concept |
+| 5. Create roadmap | Generate timeline | `write_file("roadmap.md")` (if requested) | Project planning |
+| 6. Init structure | Create folders | `run_shell_command("mkdir -p")` | Setup project |
+
+### Tool Usage Examples
+```javascript
+// Step 1: Research existing patterns
+const existingProjects = search_file_content("dashboard", "src/");
+const hasimilarFeatures = analyzeSimilarProjects(existingProjects);
+
+// Step 2-3: Generate and present concept
+const mvpConcept = generateMVPConcept({
+  description: userDescription,
+  existingPatterns: similarFeatures,
+  constraints: projectConstraints
+});
+presentMVPConcept(mvpConcept);
+
+// Step 4: Save concept definition
+if (userWantsSave) {
+  write_file("project/mvp-concept.json", JSON.stringify(mvpConcept, null, 2));
+  write_file("project/mvp-summary.md", generateConceptSummary(mvpConcept));
+}
+
+// Step 6: Initialize project structure
+if (userWantsInit) {
+  run_shell_command("mkdir -p src/components src/screens src/services");
+  write_file("src/screens/index.js", generateScreenIndex(mvpConcept.screens));
+}
+```
+
 ### Complexity Levels
 ```yaml
 mvp_complexity:

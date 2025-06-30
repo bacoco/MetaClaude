@@ -756,6 +756,39 @@ const exportConfig = {
 };
 ```
 
+## Tool Integration
+
+| Step | Action | Tool to Use | Purpose |
+|------|--------|-------------|----------|
+| 1. Gather system | Collect all tokens | `read_file("design-tokens.json")` | Load existing system |
+| 2. Read components | Load component library | Multiple `read_file` calls | Gather all components |
+| 3. Generate exports | Create format files | None (internal) | Build export formats |
+| 4. Write web assets | Save CSS/JS files | `write_file("tokens.css", css)` | Create web artifacts |
+| 5. Write configs | Save framework configs | `write_file("tailwind.config.js")` | Framework integration |
+| 6. Create docs | Generate documentation | `write_file("DESIGN_SYSTEM.md")` | Complete guide |
+| 7. Package files | Create distribution | `run_shell_command("zip -r")` | Bundle for delivery |
+
+### Tool Usage Examples
+```javascript
+// Step 1: Gather existing design system
+const tokens = JSON.parse(read_file("src/design-tokens.json"));
+const components = list_files("src/components/");
+
+// Step 4-5: Write various format exports
+write_file("dist/tokens.css", generateCSSVariables(tokens));
+write_file("dist/tokens.js", generateJSTokens(tokens));
+write_file("dist/tailwind.config.js", generateTailwindConfig(tokens));
+
+// Step 6: Generate comprehensive documentation
+const documentation = generateSystemDocs(tokens, components);
+write_file("dist/DESIGN_SYSTEM.md", documentation);
+
+// Step 7: Package everything (if requested)
+if (config.output.zip) {
+  run_shell_command(`cd dist && zip -r design-system-${timestamp}.zip .`);
+}
+```
+
 ## Export Process
 
 ### Generation Pipeline

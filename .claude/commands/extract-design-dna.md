@@ -232,6 +232,42 @@ const comparison = {
 };
 ```
 
+## Tool Integration
+
+| Step | Action | Tool to Use | Purpose |
+|------|--------|-------------|----------|
+| 1. Read inspiration | Load local images | `read_file("inspiration/image.png")` | View inspiration files |
+| 2. Analyze patterns | Extract DNA | None (internal analysis) | Identify visual patterns |
+| 3. Generate tokens | Create JSON | None (in response) | Build token structure |
+| 4. Present findings | Show analysis | None | Display in response |
+| 5. Save tokens | Store JSON | `write_file("design-tokens.json")` (if requested) | Persist extracted DNA |
+| 6. Export formats | Create configs | Multiple `write_file` calls | Save various formats |
+
+### Tool Usage Examples
+```javascript
+// Step 1: Read inspiration images (if local)
+if (inspirationSource.isLocal) {
+  const imageData = read_file(inspirationSource.path);
+  analyzeVisualElements(imageData);
+}
+
+// Step 2-4: Internal analysis and presentation
+const extractedDNA = extractVisualDNA(inspiration);
+presentDNAAnalysis(extractedDNA);
+
+// Step 5: Save tokens if requested
+if (userWantsSave) {
+  write_file("design-system/tokens.json", JSON.stringify(extractedDNA, null, 2));
+}
+
+// Step 6: Export multiple formats
+if (userWantsAllFormats) {
+  write_file("design-system/tokens.css", generateCSSVariables(extractedDNA));
+  write_file("tailwind.config.js", generateTailwindConfig(extractedDNA));
+  write_file("design-system/figma-tokens.json", generateFigmaTokens(extractedDNA));
+}
+```
+
 ## Output Formats
 
 ### JSON Export

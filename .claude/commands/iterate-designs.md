@@ -393,6 +393,45 @@ const validateIterations = {
 - Plan mobile-specific optimizations
 ```
 
+## Tool Integration
+
+| Step | Action | Tool to Use | Purpose |
+|------|--------|-------------|----------|
+| 1. Load current | Get existing design | `read_file("Component.jsx")` | Baseline version |
+| 2. Apply feedback | Process changes | None (internal) | Generate improvements |
+| 3. Show changes | Present iteration | None (in response) | Display new version |
+| 4. Save iteration | Store new version | `write_file("Component-v2.jsx")` | Version control |
+| 5. Update original | Replace if approved | `write_file("Component.jsx")` | Apply changes |
+| 6. Document changes | Create changelog | `write_file("CHANGELOG.md", changes)` | Track evolution |
+
+### Tool Usage Examples
+```javascript
+// Step 1: Load current design
+const currentDesign = read_file("src/components/Dashboard.jsx");
+const currentStyles = read_file("src/styles/dashboard.css");
+
+// Step 2-3: Apply feedback and present
+const iteration = applyFeedback(currentDesign, userFeedback);
+presentIterationChanges(iteration);
+
+// Step 4: Save as new version
+if (userWantsVersioning) {
+  const version = getNextVersion();
+  write_file(`src/components/Dashboard-v${version}.jsx`, iteration.code);
+  write_file(`src/styles/dashboard-v${version}.css`, iteration.styles);
+}
+
+// Step 5: Update original if approved
+if (userApprovesChanges) {
+  write_file("src/components/Dashboard.jsx", iteration.code);
+  write_file("src/styles/dashboard.css", iteration.styles);
+}
+
+// Step 6: Document the iteration
+const changelog = generateChangeLog(currentDesign, iteration);
+appendToFile("CHANGELOG.md", changelog);
+```
+
 ### Visual Comparison
 ```html
 <!-- Before/After comparison tool -->

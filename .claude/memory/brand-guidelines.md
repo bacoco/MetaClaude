@@ -2,6 +2,30 @@
 
 Persistent storage for brand identity standards, visual guidelines, and brand evolution tracking.
 
+## Access Instructions
+
+### When to Access This Memory
+- During any brand-related design work
+- When ensuring visual consistency
+- Before making color, typography, or tone decisions
+- When creating new brand touchpoints
+
+### How to Recall This Information
+```
+"Retrieving brand guidelines from memory...
+Brand values: [core values]
+Visual identity: [key visual elements]
+Voice & tone: [brand personality traits]
+Ensuring all designs align with these established standards."
+```
+
+### How to Update This Memory
+```
+"Updating brand guidelines with new direction...
+[Specific change] has been incorporated into the brand standards.
+This evolution reflects [reason for change] and will guide future designs."
+```
+
 ## Memory Structure
 
 ```json

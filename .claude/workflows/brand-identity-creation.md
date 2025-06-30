@@ -639,6 +639,74 @@ async function executeBrandIdentity(brief) {
 }
 ```
 
+## Feedback Interpretation
+
+### Brand Feedback Categories
+```javascript
+const interpretBrandFeedback = {
+  stakeholder: {
+    strategic: {
+      "doesn't feel like us": { action: "revisit values alignment", severity: "high" },
+      "too similar to competitor": { action: "increase differentiation", severity: "high" },
+      "missing our essence": { action: "deeper discovery needed", severity: "medium" }
+    },
+    visual: {
+      "too modern/traditional": { action: "adjust aesthetic balance", severity: "medium" },
+      "wrong energy level": { action: "refine visual dynamics", severity: "medium" },
+      "colors don't work": { action: "explore palette variations", severity: "low" }
+    }
+  },
+  
+  audience: {
+    perception: {
+      "confusing": { action: "simplify messaging", severity: "high" },
+      "generic": { action: "add distinctive elements", severity: "high" },
+      "appealing": { action: "preserve core elements", severity: "positive" }
+    },
+    emotional: {
+      "doesn't connect": { action: "strengthen emotional hooks", severity: "high" },
+      "feels corporate": { action: "humanize expression", severity: "medium" },
+      "inspiring": { action: "amplify successful elements", severity: "positive" }
+    }
+  },
+  
+  reconcile: (stakeholderFeedback, audienceFeedback) => {
+    // Balance internal vision with market perception
+    const priorities = {
+      both_negative: "Major revision needed",
+      stakeholder_negative: "Adjust while maintaining appeal",
+      audience_negative: "Educate stakeholders on market needs",
+      both_positive: "Minor refinements only"
+    };
+    
+    return determinePath(stakeholderFeedback, audienceFeedback, priorities);
+  }
+};
+```
+
+### Iteration Strategy
+```javascript
+const brandIterationStrategy = {
+  minor: {
+    scope: "Color adjustments, typography refinement",
+    timeline: "1-2 days",
+    approval: "Creative director only"
+  },
+  
+  moderate: {
+    scope: "Logo variations, messaging adjustment",
+    timeline: "3-5 days",
+    approval: "Leadership team"
+  },
+  
+  major: {
+    scope: "Strategic repositioning, visual overhaul",
+    timeline: "2-3 weeks",
+    approval: "Full stakeholder group"
+  }
+};
+```
+
 ---
 
 *Brand Identity Creation v1.0 | Complete brand development | Strategic to visual*

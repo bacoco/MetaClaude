@@ -321,6 +321,72 @@ const iterationPhase = {
 };
 ```
 
+## Feedback Interpretation
+
+### Processing User Test Results
+```javascript
+const interpretFeedback = {
+  categorize: (feedback) => ({
+    critical: feedback.filter(f => f.severity === 'blocker'),
+    important: feedback.filter(f => f.severity === 'major'),
+    nice_to_have: feedback.filter(f => f.severity === 'minor'),
+    positive: feedback.filter(f => f.sentiment === 'positive')
+  }),
+  
+  prioritize: (categorized) => {
+    // Address critical issues first
+    const actionPlan = [
+      ...categorized.critical.map(f => ({ ...f, priority: 1 })),
+      ...categorized.important.map(f => ({ ...f, priority: 2 })),
+      ...categorized.nice_to_have.map(f => ({ ...f, priority: 3 }))
+    ];
+    
+    return actionPlan.sort((a, b) => a.priority - b.priority);
+  },
+  
+  interpret: (feedback) => {
+    const patterns = {
+      "too complex": { action: "simplify", focus: "reduce cognitive load" },
+      "can't find": { action: "improve hierarchy", focus: "navigation clarity" },
+      "confusing": { action: "clarify", focus: "better labels and guidance" },
+      "slow": { action: "optimize", focus: "performance and perceived speed" },
+      "love it": { action: "preserve", focus: "maintain successful elements" }
+    };
+    
+    return matchFeedbackToActions(feedback, patterns);
+  }
+};
+```
+
+### Stakeholder vs User Feedback
+```javascript
+const balanceFeedback = {
+  stakeholder: {
+    weight: 0.4,
+    focus: ["Business goals", "Brand alignment", "Feature completeness"],
+    veto_power: ["Brand violations", "Legal requirements"]
+  },
+  
+  user: {
+    weight: 0.6,
+    focus: ["Usability", "Task completion", "Satisfaction"],
+    veto_power: ["Critical usability issues", "Accessibility failures"]
+  },
+  
+  reconcile: (stakeholderFeedback, userFeedback) => {
+    // Find conflicts
+    const conflicts = identifyConflicts(stakeholderFeedback, userFeedback);
+    
+    // Resolve based on severity and impact
+    return conflicts.map(conflict => ({
+      issue: conflict,
+      resolution: determineResolution(conflict),
+      rationale: explainDecision(conflict)
+    }));
+  }
+};
+```
+
 ## Phase 5: Delivery & Handoff (Week 6-7)
 
 ### Flow Optimization
