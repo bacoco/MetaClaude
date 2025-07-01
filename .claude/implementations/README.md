@@ -2,7 +2,7 @@
 
 ## Overview
 
-The MetaClaude Specialist Implementations directory contains 9 domain-specific AI specialists built on top of the MetaClaude universal cognitive framework. Each specialist leverages MetaClaude's core capabilities while providing specialized knowledge, agents, and workflows for specific domains.
+The MetaClaude Specialist Implementations directory contains 11 domain-specific AI specialists built on top of the MetaClaude universal cognitive framework. Each specialist leverages MetaClaude's core capabilities while providing specialized knowledge, agents, and workflows for specific domains.
 
 This directory serves as the central hub for all specialist implementations, providing a unified structure for development, documentation, and integration.
 
@@ -20,6 +20,7 @@ This directory serves as the central hub for all specialist implementations, pro
 | [Technical Writer](#8-technical-writer) | 🔧 Beta | Documentation | API docs, user guides, diagrams |
 | [Security Auditor](#9-security-auditor) | 🔧 Beta | Security Analysis | Vulnerability scanning, threat modeling, compliance |
 | [API-UI Designer](#10-api-ui-designer) | 🚀 New | API-to-UI Generation | OpenAPI/GraphQL to UI, smart mapping, bi-directional |
+| [Test Case Generator](#11-test-case-generator) | 🚀 New | Automated Test Generation | PRD to test plans, BDD scenarios, edge case discovery |
 
 ## Core Principles
 
@@ -326,6 +327,39 @@ All specialists inherit MetaClaude's universal capabilities:
 ./claude-flow sparc "Create admin dashboard from petstore API specification"
 ```
 
+---
+
+### 11. Test Case Generator
+**[📁 Directory](./test-case-generator/)** | **Status**: 🚀 New
+
+**Focus**: Bridge the gap between product requirements and quality assurance by automatically generating comprehensive test plans and cases from PRDs, user stories, and acceptance criteria.
+
+**Key Capabilities**:
+- **Requirements Analysis**: Deep parsing of PRDs to extract testable criteria
+- **Test Plan Generation**: Complete test plans with execution strategies
+- **BDD Scenario Creation**: Gherkin scenarios for Cucumber/SpecFlow/Behave
+- **Edge Case Discovery**: Systematic identification of boundary conditions
+- **Risk-Based Testing**: Prioritized test suites based on impact analysis
+- **Multi-Format Output**: JSON, Markdown, Gherkin, HTML, PDF, JIRA
+
+**Specialized Agents**:
+- Requirements Interpreter - Extract testable requirements and constraints
+- Scenario Builder - Create positive paths and user journeys
+- Edge Case Identifier - Find boundary conditions and security issues
+- Test Plan Architect - Organize tests with priorities and dependencies
+
+**Quick Start**:
+```bash
+# Generate test plan from PRD
+./claude-flow sparc "Generate comprehensive test plan from product-requirements.md"
+
+# Create BDD scenarios
+./claude-flow sparc "Create Gherkin scenarios for user authentication feature"
+
+# Discover edge cases
+./claude-flow sparc "Find edge cases for payment processing system"
+```
+
 ## Integration Matrix
 
 ### Specialist Collaboration Patterns
@@ -336,12 +370,13 @@ All specialists inherit MetaClaude's universal capabilities:
 | **Tool Builder** | All Specialists | Custom tool creation for any domain |
 | **Code Architect** | QA Engineer, DevOps Engineer | Complete software development lifecycle |
 | **Data Scientist** | Code Architect, Technical Writer | ML model deployment and documentation |
-| **PRD Specialist** | UI Designer, QA Engineer | Feature development from requirements to testing |
+| **PRD Specialist** | UI Designer, Test Case Generator | Feature development from requirements to testing |
 | **QA Engineer** | Code Architect, Security Auditor | Comprehensive quality and security testing |
 | **DevOps Engineer** | Code Architect, Security Auditor | Secure infrastructure and deployment |
 | **Technical Writer** | All Specialists | Documentation for any domain |
 | **Security Auditor** | Code Architect, DevOps Engineer | Secure development and deployment |
 | **API-UI Designer** | UI Designer, Code Architect, QA Engineer | API-driven application development |
+| **Test Case Generator** | PRD Specialist, QA Engineer, Security Auditor | Requirements to test automation pipeline |
 
 ### Cross-Specialist Workflows
 
@@ -541,4 +576,4 @@ For detailed development plans, see [SPECIALIST_ROADMAP.md](./SPECIALIST_ROADMAP
 
 ---
 
-*MetaClaude Specialist Implementations v2.1.0 | 10 Specialists | Expanding cognitive capabilities through specialized expertise*
+*MetaClaude Specialist Implementations v2.2.0 | 11 Specialists | Expanding cognitive capabilities through specialized expertise*

@@ -1,10 +1,10 @@
 # 🧠 MetaClaude: The First Prose-as-Code AI Framework
 
-> **Revolutionary AI architecture where markdown becomes executable intelligence. 10 domain specialists. 69,821 lines of cognitive infrastructure. Zero code required.**
+> **Revolutionary AI architecture where markdown becomes executable intelligence. 11 domain specialists. 73,452 lines of cognitive infrastructure. Zero code required.**
 
 <p align="center">
   <img src="https://img.shields.io/badge/Architecture-Prose--as--Code-ff6b6b?style=for-the-badge&logo=markdown&logoColor=white" alt="Prose-as-Code" />
-  <img src="https://img.shields.io/badge/Specialists-10_Available-4ecdc4?style=for-the-badge&logo=robot&logoColor=white" alt="10 Specialists" />
+  <img src="https://img.shields.io/badge/Specialists-11_Available-4ecdc4?style=for-the-badge&logo=robot&logoColor=white" alt="11 Specialists" />
   <img src="https://img.shields.io/badge/Learning-Self_Improving-7209b7?style=for-the-badge&logo=brain&logoColor=white" alt="Self-Improving" />
   <img src="https://img.shields.io/github/stars/bacoco/MetaClaude?style=for-the-badge&color=f77f00&logo=github" alt="GitHub Stars" />
 </p>
@@ -79,9 +79,9 @@ Not marketing fluff. Actual implementation:
 <td width="50%">
 
 ### Implementation Scale
-- 📁 **217 files** in the framework
-- 📝 **69,821 lines** of cognitive infrastructure
-- 🤖 **10 specialists** fully implemented
+- 📁 **231 files** in the framework
+- 📝 **73,452 lines** of cognitive infrastructure
+- 🤖 **11 specialists** fully implemented
 - 🪝 **Multiple hook types** for behavior control
 
 </td>
@@ -199,6 +199,14 @@ Not marketing fluff. Actual implementation:
 
 </td>
 <td width="33%">
+
+### 🧪 Test Case Generator
+<sub>Automated test generation</sub>
+- PRD to test plans
+- BDD scenario creation
+- Edge case discovery
+- Risk-based testing
+
 </td>
 <td width="33%">
 </td>
