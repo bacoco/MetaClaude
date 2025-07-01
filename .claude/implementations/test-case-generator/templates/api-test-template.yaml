@@ -1,0 +1,320 @@
+# API Test Case Template
+# This template provides a structure for comprehensive API testing
+
+test_suite:
+  name: "[API Name] Test Suite"
+  version: "1.0.0"
+  base_url: "{{BASE_URL}}"
+  
+  # Global test configuration
+  config:
+    timeout: 30000  # milliseconds
+    retry_count: 3
+    headers:
+      Content-Type: "application/json"
+      Accept: "application/json"
+      X-API-Version: "v1"
+    
+  # Test environment variables
+  variables:
+    BASE_URL: "https://api.example.com"
+    API_KEY: "{{API_KEY}}"
+    TEST_USER_EMAIL: "test@example.com"
+    TEST_USER_PASSWORD: "TestPass123!"
+
+  # Authentication setup
+  authentication:
+    type: "bearer"  # basic, bearer, oauth2, api-key
+    setup:
+      - name: "Get Auth Token"
+        request:
+          method: "POST"
+          endpoint: "/auth/login"
+          body:
+            email: "{{TEST_USER_EMAIL}}"
+            password: "{{TEST_USER_PASSWORD}}"
+        response:
+          save:
+            token: "$.data.token"
+            refresh_token: "$.data.refresh_token"
+
+  # Test cases
+  test_cases:
+    
+    # Happy Path Tests
+    - category: "Happy Path"
+      tests:
+        
+        - id: "API-HP-001"
+          name: "Get all resources successfully"
+          request:
+            method: "GET"
+            endpoint: "/api/resources"
+            headers:
+              Authorization: "Bearer {{token}}"
+            params:
+              page: 1
+              limit: 10
+          response:
+            status: 200
+            headers:
+              Content-Type: "application/json"
+            body:
+              schema:
+                type: "object"
+                properties:
+                  data:
+                    type: "array"
+                    items:
+                      type: "object"
+                      required: ["id", "name", "created_at"]
+                  meta:
+                    type: "object"
+                    properties:
+                      total: { type: "number" }
+                      page: { type: "number" }
+                      limit: { type: "number" }
+            assertions:
+              - "$.data.length <= 10"
+              - "$.meta.page == 1"
+              - "$.meta.limit == 10"
+              
+        - id: "API-HP-002"
+          name: "Create resource successfully"
+          request:
+            method: "POST"
+            endpoint: "/api/resources"
+            headers:
+              Authorization: "Bearer {{token}}"
+            body:
+              name: "Test Resource"
+              description: "Created by automated test"
+              type: "standard"
+              settings:
+                enabled: true
+                priority: 5
+          response:
+            status: 201
+            headers:
+              Location: "/api/resources/{{created_id}}"
+            body:
+              assertions:
+                - "$.data.id exists"
+                - "$.data.name == 'Test Resource'"
+                - "$.data.created_at exists"
+            save:
+              created_id: "$.data.id"
+              
+    # Validation Tests
+    - category: "Input Validation"
+      tests:
+        
+        - id: "API-VAL-001"
+          name: "Missing required field"
+          request:
+            method: "POST"
+            endpoint: "/api/resources"
+            headers:
+              Authorization: "Bearer {{token}}"
+            body:
+              description: "Missing name field"
+          response:
+            status: 400
+            body:
+              error:
+                code: "VALIDATION_ERROR"
+                message: "name is required"
+                
+        - id: "API-VAL-002"
+          name: "Invalid data type"
+          request:
+            method: "POST"
+            endpoint: "/api/resources"
+            headers:
+              Authorization: "Bearer {{token}}"
+            body:
+              name: "Test Resource"
+              settings:
+                priority: "high"  # Should be number
+          response:
+            status: 400
+            body:
+              error:
+                code: "VALIDATION_ERROR"
+                field: "settings.priority"
+                
+    # Edge Cases
+    - category: "Edge Cases"
+      tests:
+        
+        - id: "API-EDGE-001"
+          name: "Maximum payload size"
+          request:
+            method: "POST"
+            endpoint: "/api/resources"
+            headers:
+              Authorization: "Bearer {{token}}"
+            body:
+              name: "Large Resource"
+              description: "{{LARGE_STRING_10MB}}"
+          response:
+            status: 413
+            body:
+              error:
+                code: "PAYLOAD_TOO_LARGE"
+                
+        - id: "API-EDGE-002"
+          name: "Special characters in input"
+          request:
+            method: "POST"
+            endpoint: "/api/resources"
+            headers:
+              Authorization: "Bearer {{token}}"
+            body:
+              name: "Test <script>alert('XSS')</script>"
+              description: "'; DROP TABLE resources; --"
+          response:
+            status: 201
+            body:
+              assertions:
+                - "$.data.name == 'Test &lt;script&gt;alert(&#39;XSS&#39;)&lt;/script&gt;'"
+                
+    # Security Tests
+    - category: "Security"
+      tests:
+        
+        - id: "API-SEC-001"
+          name: "Unauthorized access"
+          request:
+            method: "GET"
+            endpoint: "/api/resources"
+            # No auth header
+          response:
+            status: 401
+            body:
+              error:
+                code: "UNAUTHORIZED"
+                
+        - id: "API-SEC-002"
+          name: "Invalid token"
+          request:
+            method: "GET"
+            endpoint: "/api/resources"
+            headers:
+              Authorization: "Bearer invalid-token-12345"
+          response:
+            status: 401
+            
+        - id: "API-SEC-003"
+          name: "SQL injection attempt"
+          request:
+            method: "GET"
+            endpoint: "/api/resources"
+            headers:
+              Authorization: "Bearer {{token}}"
+            params:
+              filter: "name'; DROP TABLE resources; --"
+          response:
+            status: 200  # Should handle safely
+            
+    # Performance Tests
+    - category: "Performance"
+      tests:
+        
+        - id: "API-PERF-001"
+          name: "Response time under normal load"
+          request:
+            method: "GET"
+            endpoint: "/api/resources"
+            headers:
+              Authorization: "Bearer {{token}}"
+          response:
+            status: 200
+          performance:
+            max_response_time: 1000  # milliseconds
+            
+        - id: "API-PERF-002"
+          name: "Pagination performance"
+          request:
+            method: "GET"
+            endpoint: "/api/resources"
+            headers:
+              Authorization: "Bearer {{token}}"
+            params:
+              page: 100
+              limit: 100
+          response:
+            status: 200
+          performance:
+            max_response_time: 2000
+            
+    # Error Handling
+    - category: "Error Handling"
+      tests:
+        
+        - id: "API-ERR-001"
+          name: "Resource not found"
+          request:
+            method: "GET"
+            endpoint: "/api/resources/non-existent-id"
+            headers:
+              Authorization: "Bearer {{token}}"
+          response:
+            status: 404
+            body:
+              error:
+                code: "RESOURCE_NOT_FOUND"
+                
+        - id: "API-ERR-002"
+          name: "Method not allowed"
+          request:
+            method: "PATCH"  # If not supported
+            endpoint: "/api/resources"
+            headers:
+              Authorization: "Bearer {{token}}"
+          response:
+            status: 405
+            headers:
+              Allow: "GET, POST, PUT, DELETE"
+              
+  # Test execution order
+  execution_plan:
+    phases:
+      - name: "Setup"
+        tests: ["authentication.setup"]
+        
+      - name: "Smoke Tests"
+        tests: ["API-HP-001", "API-SEC-001"]
+        
+      - name: "Full Suite"
+        parallel: true
+        groups:
+          - tests: ["API-HP-*"]
+          - tests: ["API-VAL-*"]
+          - tests: ["API-EDGE-*"]
+          - tests: ["API-SEC-*"]
+          
+      - name: "Performance"
+        tests: ["API-PERF-*"]
+        config:
+          iterations: 100
+          concurrent_users: 10
+          
+  # Cleanup
+  teardown:
+    - name: "Delete created resources"
+      request:
+        method: "DELETE"
+        endpoint: "/api/resources/{{created_id}}"
+        headers:
+          Authorization: "Bearer {{token}}"
+
+# Usage Notes:
+# 1. Replace placeholder values in [brackets] and {{variables}}
+# 2. Adjust test categories based on your API requirements
+# 3. Add more specific assertions for your business logic
+# 4. Configure performance thresholds based on SLAs
+# 5. Extend security tests based on OWASP guidelines
+# 6. Use environment-specific variable files
+# 7. Integrate with CI/CD pipelines
+# 8. Generate reports from test results

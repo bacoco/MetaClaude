@@ -1,0 +1,221 @@
+{
+  "test_plan": {
+    "id": "TP-CHECKOUT-001",
+    "name": "E-Commerce Checkout Test Plan",
+    "version": "1.0.0",
+    "created": "2024-01-15T10:00:00Z",
+    "total_test_cases": 47,
+    "estimated_duration": "4.5 hours",
+    "coverage": {
+      "requirements": "100%",
+      "acceptance_criteria": "100%",
+      "edge_cases": "85%"
+    },
+    "test_suites": [
+      {
+        "id": "TS-001",
+        "name": "Cart Validation Suite",
+        "test_cases": [
+          {
+            "id": "TC-001",
+            "title": "Validate cart with in-stock items",
+            "priority": "High",
+            "type": "Functional",
+            "preconditions": [
+              "User is logged in",
+              "Cart contains at least one item",
+              "All items are in stock"
+            ],
+            "steps": [
+              {
+                "step": 1,
+                "action": "Navigate to checkout page",
+                "expected": "Checkout page loads with cart summary"
+              },
+              {
+                "step": 2,
+                "action": "Verify item details displayed",
+                "expected": "All items show correct name, price, quantity"
+              },
+              {
+                "step": 3,
+                "action": "Verify total calculation",
+                "expected": "Subtotal = sum of (item price × quantity)"
+              }
+            ],
+            "test_data": {
+              "items": [
+                {"sku": "LAPTOP-001", "quantity": 1, "price": 999.99},
+                {"sku": "MOUSE-001", "quantity": 2, "price": 29.99}
+              ]
+            }
+          },
+          {
+            "id": "TC-002",
+            "title": "Handle out-of-stock items during checkout",
+            "priority": "Critical",
+            "type": "Functional",
+            "preconditions": [
+              "Item in cart becomes out of stock"
+            ],
+            "steps": [
+              {
+                "step": 1,
+                "action": "Add item to cart",
+                "expected": "Item added successfully"
+              },
+              {
+                "step": 2,
+                "action": "Make item out of stock in system",
+                "expected": "Inventory updated"
+              },
+              {
+                "step": 3,
+                "action": "Proceed to checkout",
+                "expected": "Warning displayed about out-of-stock item"
+              },
+              {
+                "step": 4,
+                "action": "Verify user options",
+                "expected": "Option to remove item or save for later"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TS-002",
+        "name": "Payment Processing Suite",
+        "test_cases": [
+          {
+            "id": "TC-010",
+            "title": "Successful credit card payment",
+            "priority": "Critical",
+            "type": "Functional",
+            "preconditions": [
+              "Valid items in cart",
+              "Shipping address entered"
+            ],
+            "steps": [
+              {
+                "step": 1,
+                "action": "Enter valid credit card details",
+                "expected": "Card number field masks appropriately"
+              },
+              {
+                "step": 2,
+                "action": "Enter CVV and expiry date",
+                "expected": "Fields validate format"
+              },
+              {
+                "step": 3,
+                "action": "Click 'Place Order'",
+                "expected": "Payment processing spinner appears"
+              },
+              {
+                "step": 4,
+                "action": "Wait for processing",
+                "expected": "Order confirmation page displays"
+              }
+            ],
+            "test_data": {
+              "card_number": "4111111111111111",
+              "expiry": "12/25",
+              "cvv": "123",
+              "name": "Test User"
+            }
+          }
+        ]
+      },
+      {
+        "id": "TS-003",
+        "name": "Edge Case Suite",
+        "test_cases": [
+          {
+            "id": "TC-030",
+            "title": "Payment timeout scenario",
+            "priority": "High",
+            "type": "Edge Case",
+            "category": "Network Issues",
+            "steps": [
+              {
+                "step": 1,
+                "action": "Initiate payment",
+                "expected": "Payment processing starts"
+              },
+              {
+                "step": 2,
+                "action": "Simulate network delay > 30 seconds",
+                "expected": "Timeout error displayed"
+              },
+              {
+                "step": 3,
+                "action": "Verify order status",
+                "expected": "Order not created, items still in cart"
+              }
+            ]
+          },
+          {
+            "id": "TC-031",
+            "title": "Concurrent purchase of last item",
+            "priority": "Critical",
+            "type": "Edge Case",
+            "category": "Race Condition",
+            "steps": [
+              {
+                "step": 1,
+                "action": "User A and User B add last item to cart",
+                "expected": "Both users have item in cart"
+              },
+              {
+                "step": 2,
+                "action": "Both users proceed to checkout simultaneously",
+                "expected": "Both reach payment page"
+              },
+              {
+                "step": 3,
+                "action": "User A completes payment first",
+                "expected": "User A order succeeds"
+              },
+              {
+                "step": 4,
+                "action": "User B attempts payment",
+                "expected": "User B receives out-of-stock error"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "execution_strategy": {
+      "phases": [
+        {
+          "phase": "Smoke Test",
+          "test_cases": ["TC-001", "TC-010"],
+          "duration": "15 minutes"
+        },
+        {
+          "phase": "Critical Path",
+          "test_cases": ["TC-001", "TC-002", "TC-010", "TC-031"],
+          "duration": "45 minutes"
+        },
+        {
+          "phase": "Full Regression",
+          "test_cases": "all",
+          "duration": "4.5 hours"
+        }
+      ],
+      "parallel_execution": {
+        "enabled": true,
+        "max_threads": 5,
+        "excluded_tests": ["TC-031"]
+      }
+    }
+  },
+  "requirements_traceability": {
+    "FR-001": ["TC-001", "TC-002"],
+    "FR-002": ["TC-015", "TC-016"],
+    "FR-003": ["TC-010", "TC-011", "TC-012"],
+    "FR-004": ["TC-030", "TC-031"]
+  }
+}
