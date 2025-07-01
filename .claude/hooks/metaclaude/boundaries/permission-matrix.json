@@ -1,0 +1,166 @@
+{
+  "version": "1.0.0",
+  "description": "MetaClaude Agent Permission Matrix for UI Designer Claude",
+  "last_updated": "2025-07-01",
+  
+  "agent_types": {
+    "orchestrator": {
+      "description": "Main UI Designer Claude orchestrator",
+      "scope": "system",
+      "permissions": {
+        "tools": ["*"],
+        "agents": ["spawn", "terminate", "coordinate"],
+        "memory": ["read", "write", "delete"],
+        "files": ["read", "write", "create", "delete"],
+        "workflows": ["execute", "modify", "create"],
+        "boundaries": ["define", "modify"]
+      }
+    },
+    
+    "design_analyst": {
+      "description": "Visual DNA extraction and pattern recognition",
+      "scope": "analysis",
+      "permissions": {
+        "tools": ["Read", "WebFetch", "Grep", "Glob"],
+        "agents": ["communicate"],
+        "memory": ["read", "write:analysis_results"],
+        "files": ["read"],
+        "workflows": ["participate"],
+        "boundaries": ["respect"]
+      }
+    },
+    
+    "style_guide_expert": {
+      "description": "Design token generation and system creation",
+      "scope": "design_system",
+      "permissions": {
+        "tools": ["Read", "Write", "Edit", "MultiEdit"],
+        "agents": ["communicate", "request_review"],
+        "memory": ["read", "write:design_tokens"],
+        "files": ["read", "write:*.css", "write:*.json", "write:*.scss"],
+        "workflows": ["participate", "trigger:consistency_check"],
+        "boundaries": ["respect", "enforce:design_consistency"]
+      }
+    },
+    
+    "ui_generator": {
+      "description": "Component creation and screen design",
+      "scope": "implementation",
+      "permissions": {
+        "tools": ["Read", "Write", "Edit", "MultiEdit", "Bash"],
+        "agents": ["communicate", "request_validation"],
+        "memory": ["read", "write:components"],
+        "files": ["read", "write:*.jsx", "write:*.tsx", "write:*.vue", "write:*.svelte"],
+        "workflows": ["participate", "trigger:build"],
+        "boundaries": ["respect", "query:design_tokens"]
+      }
+    },
+    
+    "ux_researcher": {
+      "description": "User research and journey mapping",
+      "scope": "research",
+      "permissions": {
+        "tools": ["Read", "Write", "WebSearch", "WebFetch"],
+        "agents": ["communicate", "interview"],
+        "memory": ["read", "write:research_data"],
+        "files": ["read", "write:*.md", "write:research/*"],
+        "workflows": ["participate", "trigger:user_testing"],
+        "boundaries": ["respect", "define:user_constraints"]
+      }
+    },
+    
+    "brand_strategist": {
+      "description": "Brand identity and emotional design",
+      "scope": "strategy",
+      "permissions": {
+        "tools": ["Read", "Write", "WebSearch"],
+        "agents": ["communicate", "influence"],
+        "memory": ["read", "write:brand_guidelines"],
+        "files": ["read", "write:brand/*", "write:*.md"],
+        "workflows": ["participate", "approve:visual_direction"],
+        "boundaries": ["respect", "define:brand_constraints"]
+      }
+    },
+    
+    "accessibility_auditor": {
+      "description": "WCAG compliance and inclusive design",
+      "scope": "quality",
+      "permissions": {
+        "tools": ["Read", "Bash", "WebFetch"],
+        "agents": ["communicate", "veto:non_compliant"],
+        "memory": ["read", "write:accessibility_reports"],
+        "files": ["read", "annotate"],
+        "workflows": ["participate", "block:non_accessible"],
+        "boundaries": ["enforce:wcag_compliance", "override:aesthetic_choices"]
+      }
+    }
+  },
+  
+  "cross_agent_rules": {
+    "communication": {
+      "allowed_channels": ["memory", "direct_message", "broadcast"],
+      "rate_limits": {
+        "messages_per_minute": 50,
+        "broadcasts_per_minute": 5
+      }
+    },
+    
+    "delegation": {
+      "orchestrator_to_specialist": "always_allowed",
+      "specialist_to_specialist": "requires_orchestrator_approval",
+      "specialist_to_orchestrator": "request_only"
+    },
+    
+    "resource_sharing": {
+      "memory_namespaces": {
+        "shared": ["design_tokens", "brand_guidelines", "research_findings"],
+        "protected": ["system_config", "security_keys", "user_credentials"]
+      },
+      "file_access": {
+        "read_only_paths": ["/node_modules", "/.git", "/dist"],
+        "write_restricted_paths": ["/", "/.claude", "/package.json"]
+      }
+    },
+    
+    "conflict_resolution": {
+      "priority_order": ["accessibility_auditor", "orchestrator", "brand_strategist", "others"],
+      "veto_powers": {
+        "accessibility_auditor": ["non_accessible_designs"],
+        "orchestrator": ["resource_conflicts", "deadline_violations"],
+        "brand_strategist": ["off_brand_designs"]
+      }
+    }
+  },
+  
+  "boundary_violations": {
+    "severity_levels": {
+      "info": "Log only",
+      "warning": "Log and notify orchestrator",
+      "error": "Block operation and notify",
+      "critical": "Terminate agent and alert"
+    },
+    
+    "common_violations": {
+      "unauthorized_tool_access": "error",
+      "cross_boundary_file_write": "error",
+      "memory_namespace_violation": "critical",
+      "rate_limit_exceeded": "warning",
+      "unapproved_delegation": "error",
+      "scope_creep": "warning"
+    }
+  },
+  
+  "enforcement": {
+    "validation_hooks": ["PreToolUse", "PreAgentSpawn", "PreMemoryAccess"],
+    "monitoring": {
+      "log_all_operations": true,
+      "alert_on_violations": true,
+      "periodic_audit": "hourly"
+    },
+    "recovery": {
+      "auto_rollback": true,
+      "checkpoint_frequency": "per_operation",
+      "violation_quarantine": true
+    }
+  }
+}

@@ -143,3 +143,147 @@ The UI Designer implementation leverages MetaClaude's cognitive patterns with sp
 - [Mobile App](examples/mobile-app-example/) - Complete mobile design project
 - [Web Dashboard](examples/web-dashboard-example/) - SaaS dashboard design
 - [Design System](examples/design-system-example/) - Token-based system creation
+
+## Integration with Other Specialists
+
+The UI Designer creates user experiences that connect with all aspects of the system, ensuring aesthetic excellence meets functional requirements:
+
+### Integration Patterns
+
+**← Tool Builder**
+- Requests design automation tools
+- Needs color palette generators
+- Requires accessibility checkers
+- Uses component analyzers
+
+**← Code Architect**
+- Receives frontend architecture patterns
+- Gets component structure guidelines
+- Implements state management design
+- Follows API integration specs
+
+**→ DevOps Engineer**
+- Provides static assets for deployment
+- Specifies CDN requirements
+- Defines build optimization needs
+- Sets performance budgets
+
+**← Data Scientist**
+- Receives user behavior analytics
+- Gets A/B test results
+- Uses heatmap data
+- Implements personalization insights
+
+**← QA Engineer**
+- Provides UI components for testing
+- Defines visual regression tests
+- Specifies accessibility requirements
+- Creates interaction test scenarios
+
+**← PRD Specialist**
+- Receives user experience requirements
+- Gets persona definitions
+- Implements feature specifications
+- Follows brand guidelines
+
+**← Security Auditor**
+- Implements secure UI patterns
+- Follows input validation rules
+- Ensures secure session handling
+- Prevents XSS vulnerabilities
+
+**→ Technical Writer**
+- Provides UI documentation assets
+- Supplies component usage guides
+- Creates design pattern library
+- Delivers style guide content
+
+### Workflow Integration Examples
+
+```mermaid
+graph TD
+    A[PRD User Requirements] --> B[UI Designer]
+    B --> C[Design System]
+    C --> D[Component Library]
+    
+    E[Data Scientist] --> F[User Analytics]
+    F --> B
+    
+    B --> G[UI Mockups]
+    G --> H[Code Architect]
+    H --> I[Frontend Implementation]
+    
+    G --> J[QA Engineer]
+    J --> K[Visual Testing]
+```
+
+### Integration Use Cases
+
+1. **Data-Driven Design**
+   ```yaml
+   Data Scientist provides:
+   - User interaction heatmaps
+   - Conversion funnel analysis
+   - A/B test results
+   - Engagement metrics
+   
+   UI Designer implements:
+   - Optimized layouts
+   - Improved CTAs
+   - Personalized experiences
+   - Data visualization components
+   ```
+
+2. **Accessible Architecture**
+   ```yaml
+   Code Architect defines:
+   - Component hierarchy
+   - State management patterns
+   - API contracts
+   - Performance requirements
+   
+   UI Designer creates:
+   - Accessible components
+   - Responsive layouts
+   - Progressive enhancement
+   - Optimized assets
+   ```
+
+3. **Secure UI Patterns**
+   ```yaml
+   Security Auditor specifies:
+   - Input validation rules
+   - Session management requirements
+   - Content security policies
+   - Authentication flows
+   
+   UI Designer implements:
+   - Secure form components
+   - Protected routes UI
+   - Security status indicators
+   - Safe error messaging
+   ```
+
+### Design System Integration
+
+1. **Token Distribution**
+   - Design tokens shared with all specialists
+   - Consistent theming across applications
+   - Centralized design updates
+
+2. **Component Library**
+   - Reusable components for developers
+   - Documented patterns for writers
+   - Testable units for QA
+
+3. **Asset Pipeline**
+   - Optimized assets for DevOps
+   - Accessible resources for all teams
+   - Version-controlled design files
+
+### Best Practices for Integration
+1. **Design Tokens First**: Share design system tokens with all teams
+2. **Component Documentation**: Provide clear usage guidelines
+3. **Accessibility Standards**: Ensure WCAG compliance in all outputs
+4. **Performance Metrics**: Work with DevOps on optimization
+5. **User Feedback Loop**: Integrate analytics for continuous improvement

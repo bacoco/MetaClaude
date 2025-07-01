@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "pre_tool_use": [
+      {
+        "name": "concept-density-check",
+        "script": "pre-write-density-check.sh",
+        "tools": ["Write", "Edit", "MultiEdit"],
+        "enabled": true,
+        "description": "Checks concept density before write operations and warns about over-emphasis"
+      }
+    ],
+    "post_tool_use": [
+      {
+        "name": "update-concept-tracking",
+        "script": "post-write-update-tracking.sh",
+        "tools": ["Write", "Edit", "MultiEdit"],
+        "enabled": true,
+        "description": "Updates concept tracking database and analyzes trends after write operations"
+      }
+    ]
+  },
+  "configuration": {
+    "warning_threshold": 2,
+    "tracking_history": 20,
+    "consolidation_trigger": 3,
+    "trend_analysis_enabled": true
+  }
+}

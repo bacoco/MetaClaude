@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MetaClaude Concept Map</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .concept-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        .concept-name {
+            font-weight: bold;
+            color: #007bff;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .file-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .file-item {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        .definition {
+            background: #cfe2ff;
+            border: 1px solid #6ea8fe;
+        }
+        .reference {
+            background: #e2e3e5;
+            border: 1px solid #adb5bd;
+        }
+        .stats {
+            margin: 20px 0;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 5px;
+        }
+        .redundancy-warning {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .legend-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MetaClaude Concept Map</h1>
+        <p>Generated: <span id="timestamp"></span></p>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box definition"></div>
+                <span>Definition</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box reference"></div>
+                <span>Reference</span>
+            </div>
+        </div>
+        
+        <div id="stats" class="stats"></div>
+        <div id="warnings"></div>
+        <div id="concepts"></div>
+    </div>
+    
+    <script>
+        const conceptData = 
+{"transparency":[],"adaptability":[],"user_centricity":[],"orchestration":[],"metacognition":[],"evolution":[],"autonomy":[]}
+        ;
+        
+        // Set timestamp
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        
+        // Process data
+        const stats = {
+            totalConcepts: Object.keys(conceptData).length,
+            totalDefinitions: 0,
+            totalReferences: 0,
+            redundantDefinitions: []
+        };
+        
+        // Build concept sections
+        const conceptsDiv = document.getElementById('concepts');
+        const warningsDiv = document.getElementById('warnings');
+        
+        for (const [concept, locations] of Object.entries(conceptData)) {
+            const section = document.createElement('div');
+            section.className = 'concept-section';
+            
+            const title = document.createElement('div');
+            title.className = 'concept-name';
+            title.textContent = concept.replace(/_/g, ' ').toUpperCase();
+            section.appendChild(title);
+            
+            const definitions = locations.filter(l => l.type === 'definition');
+            const references = locations.filter(l => l.type === 'reference');
+            
+            stats.totalDefinitions += definitions.length;
+            stats.totalReferences += references.length;
+            
+            // Check for redundant definitions
+            if (definitions.length > 1) {
+                stats.redundantDefinitions.push({
+                    concept: concept,
+                    count: definitions.length,
+                    files: definitions.map(d => d.file)
+                });
+            }
+            
+            // Add definitions
+            if (definitions.length > 0) {
+                const defLabel = document.createElement('div');
+                defLabel.innerHTML = '<strong>Defined in:</strong>';
+                section.appendChild(defLabel);
+                
+                const defList = document.createElement('div');
+                defList.className = 'file-list';
+                
+                definitions.forEach(def => {
+                    const item = document.createElement('div');
+                    item.className = 'file-item definition';
+                    item.textContent = def.file + ':' + def.line;
+                    item.title = def.snippet;
+                    defList.appendChild(item);
+                });
+                
+                section.appendChild(defList);
+            }
+            
+            // Add references
+            if (references.length > 0) {
+                const refLabel = document.createElement('div');
+                refLabel.innerHTML = '<strong>Referenced in:</strong>';
+                section.appendChild(refLabel);
+                
+                const refList = document.createElement('div');
+                refList.className = 'file-list';
+                
+                references.forEach(ref => {
+                    const item = document.createElement('div');
+                    item.className = 'file-item reference';
+                    item.textContent = ref.file + ':' + ref.line;
+                    item.title = ref.snippet;
+                    refList.appendChild(item);
+                });
+                
+                section.appendChild(refList);
+            }
+            
+            conceptsDiv.appendChild(section);
+        }
+        
+        // Add stats
+        document.getElementById('stats').innerHTML = `
+            <h3>Summary Statistics</h3>
+            <p>Total Concepts: ${stats.totalConcepts}</p>
+            <p>Total Definitions: ${stats.totalDefinitions}</p>
+            <p>Total References: ${stats.totalReferences}</p>
+            <p>Average References per Concept: ${(stats.totalReferences / stats.totalConcepts).toFixed(1)}</p>
+        `;
+        
+        // Add warnings
+        if (stats.redundantDefinitions.length > 0) {
+            const warning = document.createElement('div');
+            warning.className = 'redundancy-warning';
+            warning.innerHTML = '<h3>⚠️ Redundant Definitions Detected</h3>';
+            
+            stats.redundantDefinitions.forEach(rd => {
+                warning.innerHTML += `<p><strong>${rd.concept}:</strong> Defined ${rd.count} times in: ${rd.files.join(', ')}</p>`;
+            });
+            
+            warningsDiv.appendChild(warning);
+        }
+    </script>
+</body>
+</html>

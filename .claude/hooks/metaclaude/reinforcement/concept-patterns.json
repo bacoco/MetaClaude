@@ -1,0 +1,99 @@
+{
+  "core_concepts": {
+    "transparency": {
+      "keywords": ["transparency", "transparent", "visible", "clarity", "clear", "explicit", "observable"],
+      "weight": 1.0,
+      "optimal_density": {
+        "min": 0.002,
+        "max": 0.008,
+        "description": "2-8 mentions per 1000 words"
+      }
+    },
+    "adaptability": {
+      "keywords": ["adaptability", "adaptive", "flexible", "configurable", "customizable", "extensible", "modular"],
+      "weight": 1.0,
+      "optimal_density": {
+        "min": 0.002,
+        "max": 0.008,
+        "description": "2-8 mentions per 1000 words"
+      }
+    },
+    "user_centricity": {
+      "keywords": ["user-centric", "user-centered", "user experience", "UX", "user-focused", "user needs", "user feedback"],
+      "weight": 1.0,
+      "optimal_density": {
+        "min": 0.002,
+        "max": 0.008,
+        "description": "2-8 mentions per 1000 words"
+      }
+    },
+    "orchestration": {
+      "keywords": ["orchestration", "orchestrate", "coordinate", "coordination", "workflow", "pipeline", "integration"],
+      "weight": 0.8,
+      "optimal_density": {
+        "min": 0.001,
+        "max": 0.006,
+        "description": "1-6 mentions per 1000 words"
+      }
+    },
+    "metacognition": {
+      "keywords": ["metacognition", "metacognitive", "self-aware", "self-reflection", "introspection", "self-monitoring"],
+      "weight": 0.8,
+      "optimal_density": {
+        "min": 0.001,
+        "max": 0.005,
+        "description": "1-5 mentions per 1000 words"
+      }
+    },
+    "evolution": {
+      "keywords": ["evolution", "evolve", "improvement", "iteration", "refinement", "continuous", "progressive"],
+      "weight": 0.7,
+      "optimal_density": {
+        "min": 0.001,
+        "max": 0.005,
+        "description": "1-5 mentions per 1000 words"
+      }
+    },
+    "autonomy": {
+      "keywords": ["autonomy", "autonomous", "independent", "self-directed", "self-managing", "agency"],
+      "weight": 0.6,
+      "optimal_density": {
+        "min": 0.001,
+        "max": 0.004,
+        "description": "1-4 mentions per 1000 words"
+      }
+    }
+  },
+  "file_types": {
+    "documentation": {
+      "patterns": ["*.md", "README*", "DESIGN*", "*.txt"],
+      "density_multiplier": 1.0
+    },
+    "code": {
+      "patterns": ["*.sh", "*.py", "*.js", "*.ts"],
+      "density_multiplier": 0.5
+    },
+    "configuration": {
+      "patterns": ["*.json", "*.yaml", "*.yml", "*.config"],
+      "density_multiplier": 0.3
+    }
+  },
+  "thresholds": {
+    "over_emphasis": {
+      "multiplier": 2.0,
+      "description": "Concept is over-emphasized when density exceeds max * multiplier"
+    },
+    "under_emphasis": {
+      "multiplier": 0.5,
+      "description": "Concept is under-emphasized when density is below min * multiplier"
+    }
+  },
+  "implicit_patterns": {
+    "reference_keywords": ["see", "refer to", "as described in", "following the", "based on", "according to"],
+    "consolidation_triggers": [
+      "repeated definition within 100 lines",
+      "same concept explained 3+ times in file",
+      "density exceeds 2x optimal maximum"
+    ]
+  }
+}

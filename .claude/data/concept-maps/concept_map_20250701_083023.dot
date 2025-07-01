@@ -1,0 +1,23 @@
+digraph ConceptMap {
+    rankdir=LR;
+    node [shape=box, style=rounded];
+    
+    // Styling
+    graph [fontname="Arial", fontsize=12, bgcolor="white"];
+    node [fontname="Arial", fontsize=10];
+    edge [fontname="Arial", fontsize=9];
+    
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=dotted;
+        
+        legend_def [label="Definition", shape=box, style="rounded,filled", fillcolor="lightblue"];
+        legend_ref [label="Reference", shape=box, style="rounded,filled", fillcolor="lightgray"];
+        legend_strong [label="Strong Link", style=invis];
+        legend_weak [label="Weak Link", style=invis];
+        
+        legend_strong -> legend_weak [label="Relationship Strength", style=bold];
+    }
+    
+}

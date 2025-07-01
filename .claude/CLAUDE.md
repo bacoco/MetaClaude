@@ -504,6 +504,195 @@ This orchestrator enhances Claude Code with:
 - Natural language design requests
 - Complete workflow automation
 
+## MetaClaude Specialist Implementations
+
+The UI Designer Claude system is part of a larger ecosystem of MetaClaude specialists. Each specialist provides domain-specific expertise while sharing core cognitive capabilities, creating a powerful multi-agent AI system.
+
+### Complete Specialist Catalog
+
+All specialists are located in [`implementations/`](implementations/) with full documentation:
+
+#### 1. **UI Designer Claude** ([`implementations/ui-designer/`](implementations/ui-designer/README.md))
+- **Purpose**: Complete UI/UX design orchestration with vibe design methodology
+- **Key Features**: Design DNA extraction, multi-variation generation, accessibility audit
+- **Agents**: Design Analyst, Style Guide Expert, UI Generator, UX Researcher, Brand Strategist
+- **Example Command**: `/project:extract-design-dna "[inspiration images]"`
+
+#### 2. **Tool Builder** ([`implementations/tool-builder/`](implementations/tool-builder/README.md)) 🔧
+- **Purpose**: Dynamic tool creation and integration for extending Claude's capabilities
+- **Key Features**: Custom tool generation, API integration, workflow automation
+- **Agents**: Tool Requirements Analyst, Tool Design Architect, Tool Code Generator, Tool Validator
+- **Special Role**: Enables self-extension by creating new tools for any specialist
+- **Example Command**: `Create a color palette generator tool for UI Designer Claude`
+
+#### 3. **Code Architect** ([`implementations/code-architect/`](implementations/code-architect/README.md))
+- **Purpose**: Software architecture design and code structure generation
+- **Key Features**: Architecture patterns, tech stack selection, scalability planning
+- **Agents**: Architecture Analyst, Code Generator, Pattern Expert, Performance Optimizer
+- **Example Command**: `Design a microservices architecture for an e-commerce platform`
+
+#### 4. **Data Scientist** ([`implementations/data-scientist/`](implementations/data-scientist/README.md))
+- **Purpose**: Data analysis, ML model development, and statistical insights
+- **Key Features**: EDA pipelines, model training, A/B testing, visualization
+- **Agents**: Data Explorer, ML Engineer, Statistical Analyst, Insight Generator
+- **Example Command**: `Analyze customer churn patterns and build a prediction model`
+
+#### 5. **PRD Specialist** ([`implementations/prd-specialist/`](implementations/prd-specialist/README.md))
+- **Purpose**: Product requirements documentation and user story generation
+- **Key Features**: Requirements gathering, acceptance criteria, stakeholder alignment
+- **Agents**: Requirements Analyst, User Story Generator, Acceptance Criteria Expert
+- **Example Command**: `Generate a complete PRD for a task management mobile app`
+
+#### 6. **QA Engineer** ([`implementations/qa-engineer/`](implementations/qa-engineer/README.md))
+- **Purpose**: Test automation, quality assurance, and defect management
+- **Key Features**: Test case design, automation scripts, regression suites
+- **Agents**: Test Case Designer, Automation Script Writer, Bug Reporter, Test Data Generator
+- **Example Command**: `Create an E2E test suite for the authentication flow`
+
+#### 7. **DevOps Engineer** ([`implementations/devops-engineer/`](implementations/devops-engineer/README.md))
+- **Purpose**: CI/CD pipelines, infrastructure as code, deployment automation
+- **Key Features**: Pipeline design, IaC templates, monitoring setup, incident response
+- **Agents**: Pipeline Designer, IaC Generator, Deployment Strategist, Monitoring Configurator
+- **Example Command**: `Set up a complete CI/CD pipeline with GitHub Actions and AWS`
+
+#### 8. **Technical Writer** ([`implementations/technical-writer/`](implementations/technical-writer/README.md))
+- **Purpose**: Documentation generation, API docs, user guides
+- **Key Features**: Structured documentation, diagrams, style consistency
+- **Agents**: Documentation Structurer, API Doc Generator, User Guide Writer, Diagramming Assistant
+- **Example Command**: `Generate API documentation from OpenAPI specification`
+
+#### 9. **Security Auditor** ([`implementations/security-auditor/`](implementations/security-auditor/README.md))
+- **Purpose**: Security assessment, vulnerability scanning, compliance checks
+- **Key Features**: Threat modeling, OWASP compliance, security reports
+- **Agents**: Vulnerability Scanner, Threat Modeler, Compliance Checker, Security Report Generator
+- **Example Command**: `Perform a security audit following OWASP Top 10 guidelines`
+
+### Specialist Integration Examples
+
+#### Multi-Specialist Workflows
+
+**1. Complete Product Development Flow**
+```
+PRD Specialist → "Generate requirements for social media dashboard"
+    ↓
+UI Designer → "Create UI mockups based on PRD"
+    ↓
+Code Architect → "Design scalable architecture for the UI"
+    ↓
+QA Engineer → "Generate test cases for all features"
+    ↓
+DevOps Engineer → "Set up deployment pipeline"
+    ↓
+Security Auditor → "Audit the complete system"
+```
+
+**2. Design-to-Code Pipeline**
+```
+UI Designer: Extract design DNA → Generate components
+    ↓
+Tool Builder: Create component generator tool
+    ↓
+Code Architect: Structure component library
+    ↓
+Technical Writer: Document component usage
+```
+
+**3. Data-Driven Feature Development**
+```
+Data Scientist: Analyze user behavior patterns
+    ↓
+PRD Specialist: Create feature requirements based on insights
+    ↓
+UI Designer: Design data visualization interfaces
+    ↓
+QA Engineer: Create data validation test cases
+```
+
+### Command Invocation Patterns
+
+#### Direct Specialist Invocation
+```bash
+# Invoke specific specialist
+"As Code Architect, design a scalable backend for a chat application"
+
+# Chain specialists
+"First, as Data Scientist, analyze the dataset. Then, as Technical Writer, document the findings."
+
+# Parallel specialist work
+"Have UI Designer create mockups while Code Architect designs the API structure"
+```
+
+#### Cross-Specialist Tool Creation
+```bash
+# Tool Builder creating tools for other specialists
+"As Tool Builder, create a design token converter for UI Designer"
+"As Tool Builder, create a dependency vulnerability scanner for Security Auditor"
+"As Tool Builder, create a test data generator for QA Engineer"
+```
+
+### The Tool Builder's Special Role
+
+The Tool Builder specialist holds a unique position in the MetaClaude ecosystem as the **self-extension mechanism**:
+
+1. **Dynamic Capability Addition**: Can create new tools for any specialist on-demand
+2. **Integration Bridge**: Builds connectors between different systems and APIs
+3. **Workflow Automation**: Creates custom workflows spanning multiple specialists
+4. **Evolution Engine**: Enables the entire system to adapt and grow
+
+Example self-extension scenario:
+```
+User: "I need to analyze color accessibility in my designs"
+UI Designer: "I'll request a custom tool for this"
+Tool Builder: *Creates accessibility-color-analyzer tool*
+UI Designer: *Uses new tool for all future accessibility checks*
+```
+
+### Collaboration Protocols
+
+#### Information Sharing
+- Specialists share context through structured handoffs
+- Each specialist documents decisions for others to reference
+- Tool Builder can create integration tools for seamless data flow
+
+#### Conflict Resolution
+- When specialists have conflicting recommendations, they present trade-offs
+- User makes final decision with full context from all perspectives
+- System learns from decisions to improve future coordination
+
+#### Quality Gates
+- Each specialist can review others' outputs from their domain perspective
+- Security Auditor reviews all code/infrastructure changes
+- QA Engineer validates all functional implementations
+- UI Designer ensures consistent user experience
+
+### Extending the Ecosystem
+
+To create new specialists or extend existing ones:
+
+1. **Use Templates**: Start with [`implementations/templates/specialist-template/`](implementations/templates/specialist-template/)
+2. **Follow Patterns**: Adhere to MetaClaude cognitive patterns and agent structure
+3. **Define Integration Points**: Specify how the specialist interacts with others
+4. **Create Example Workflows**: Show multi-specialist collaboration scenarios
+5. **Document Thoroughly**: Include setup guides, examples, and best practices
+
+See [`implementations/SPECIALIST_ROADMAP.md`](implementations/SPECIALIST_ROADMAP.md) for planned future specialists and development guidelines.
+
+### Best Practices for Specialist Usage
+
+1. **Start with Intent**: Clearly state your goal to let the system select appropriate specialists
+2. **Leverage Combinations**: Most complex tasks benefit from multiple specialists
+3. **Use Tool Builder Early**: If you need custom functionality, involve Tool Builder upfront
+4. **Maintain Context**: Reference previous specialist outputs for continuity
+5. **Review Holistically**: Have relevant specialists review the final output
+
+### Performance Optimization
+
+When working with multiple specialists:
+- Use parallel execution for independent tasks
+- Cache specialist outputs for reuse
+- Let Tool Builder create batch processing tools
+- Minimize context switching between specialists
+
 ---
 
-*UI Designer Claude Orchestrator v1.0 | Multi-agent design system | Vibe methodology integration*
+*UI Designer Claude Orchestrator v1.0 | Multi-agent design system | Vibe methodology integration | Part of MetaClaude Framework*

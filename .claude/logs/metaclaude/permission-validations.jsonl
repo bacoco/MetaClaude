@@ -1,0 +1,5 @@
+{"timestamp":"2025-07-01T06:08:29Z","result":"allowed","agent":"ui_generator","operation":"tool:Write","resource":"Button.jsx","reason":"permission_granted"}
+{"timestamp":"2025-07-01T06:08:29Z","result":"blocked","agent":"design_analyst","operation":"file:write","resource":".claude/settings.json","reason":"permission_denied"}
+{"timestamp":"2025-07-01T06:08:29Z","result":"allowed","agent":"orchestrator","operation":"tool:AnyRandomTool","resource":"anything","reason":"permission_granted"}
+{"timestamp":"2025-07-01T06:08:29Z","result":"allowed","agent":"style_guide_expert","operation":"memory:write","resource":"design_tokens","reason":"permission_granted"}
+{"timestamp":"2025-07-01T06:08:29Z","result":"allowed","agent":"ux_researcher","operation":"agent:communicate","resource":"ui_generator","reason":"permission_granted"}

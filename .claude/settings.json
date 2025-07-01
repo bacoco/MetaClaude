@@ -106,5 +106,122 @@
       "token_validation": true,
       "style_linting": true
     }
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "name": "metaclaude-permission-validation",
+        "script": ".claude/hooks/metaclaude/boundaries/validate-permissions.sh",
+        "enabled": true,
+        "description": "Validates agent operations against the MetaClaude permission matrix",
+        "env_mapping": {
+          "METACLAUDE_AGENT_TYPE": "${AGENT_TYPE}",
+          "METACLAUDE_OPERATION": "tool:${TOOL_NAME}",
+          "METACLAUDE_RESOURCE": "${TOOL_PARAMS}"
+        }
+      },
+      {
+        "name": "metaclaude-content-deduplication",
+        "matcher": "Write|Edit",
+        "hooks": [{
+          "type": "command",
+          "command": "${HOME}/.claude/hooks/metaclaude/content/dedup-check.sh",
+          "description": "Validates content before Write/Edit operations to prevent redundancy"
+        }]
+      },
+      {
+        "name": "metaclaude-tool-matrix-enforcement",
+        "script": ".claude/hooks/metaclaude/tools/enforce-matrix.sh",
+        "enabled": true,
+        "description": "Enforces tool-usage-matrix.md rules before tool execution",
+        "env_mapping": {
+          "TOOL_NAME": "${TOOL_NAME}",
+          "CONTEXT": "${CONTEXT}",
+          "USER_REQUEST": "${USER_REQUEST}"
+        }
+      },
+      {
+        "name": "metaclaude-role-enforcement",
+        "script": ".claude/hooks/metaclaude/coordination/role-enforcer.sh",
+        "enabled": true,
+        "description": "Enforces agent role boundaries and delegation requirements",
+        "env_mapping": {
+          "TOOL_NAME": "${TOOL_NAME}",
+          "TOOL_ARGS": "${TOOL_PARAMS}",
+          "AGENT_TYPE": "${AGENT_TYPE}",
+          "AGENT_ID": "${AGENT_ID}"
+        }
+      }
+    ],
+    "PostToolUse": [
+      {
+        "name": "metaclaude-handoff-tracking",
+        "script": ".claude/hooks/metaclaude/boundaries/track-handoff.sh",
+        "enabled": true,
+        "description": "Tracks cross-agent handoffs and communications",
+        "when": "agent_handoff"
+      },
+      {
+        "name": "metaclaude-tool-usage-tracking",
+        "script": ".claude/hooks/metaclaude/tools/track-usage.sh",
+        "enabled": true,
+        "description": "Records all tool usage patterns for analysis and learning",
+        "env_mapping": {
+          "TOOL_NAME": "${TOOL_NAME}",
+          "TOOL_PARAMS": "${TOOL_PARAMS}",
+          "TOOL_RESULT": "${TOOL_RESULT}",
+          "EXECUTION_TIME": "${EXECUTION_TIME}",
+          "AGENT_TYPE": "${AGENT_TYPE}"
+        }
+      },
+      {
+        "name": "metaclaude-tool-validation",
+        "script": ".claude/hooks/metaclaude/tools/enforce-matrix.sh",
+        "enabled": true,
+        "description": "Validates tool usage against tool-usage-matrix.md rules",
+        "when": "always",
+        "env_mapping": {
+          "TOOL_NAME": "${TOOL_NAME}",
+          "CONTEXT": "${CONTEXT}",
+          "USER_REQUEST": "${USER_REQUEST}"
+        }
+      },
+      {
+        "name": "metaclaude-broadcast-system",
+        "script": ".claude/hooks/metaclaude/coordination/broadcast.sh",
+        "enabled": true,
+        "description": "Broadcasts tool usage to subscribed agents for coordination",
+        "env_mapping": {
+          "TOOL_NAME": "${TOOL_NAME}",
+          "TOOL_OUTPUT": "${TOOL_RESULT}",
+          "AGENT_TYPE": "${AGENT_TYPE}",
+          "AGENT_ID": "${AGENT_ID}"
+        }
+      },
+      {
+        "name": "metaclaude-conflict-detection",
+        "script": ".claude/hooks/metaclaude/coordination/detect-conflicts.sh",
+        "enabled": true,
+        "description": "Detects resource conflicts and task collisions between agents",
+        "env_mapping": {
+          "TOOL_NAME": "${TOOL_NAME}",
+          "TOOL_ARGS": "${TOOL_PARAMS}",
+          "AGENT_ID": "${AGENT_ID}"
+        }
+      }
+    ],
+    "PreAgentSpawn": [
+      {
+        "name": "metaclaude-agent-boundary-check",
+        "script": ".claude/hooks/metaclaude/boundaries/validate-permissions.sh",
+        "enabled": true,
+        "description": "Validates agent spawning permissions",
+        "env_mapping": {
+          "METACLAUDE_AGENT_TYPE": "${SPAWNING_AGENT}",
+          "METACLAUDE_OPERATION": "agent:spawn",
+          "METACLAUDE_RESOURCE": "${NEW_AGENT_TYPE}"
+        }
+      }
+    ]
   }
 }
