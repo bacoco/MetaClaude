@@ -50,11 +50,11 @@ Else if creative task:
 Traditional AI hides logic in neural networks. MetaClaude's logic is **readable, auditable, and modifiable** by anyone who can write English.
 
 ### 2. **Deterministic Control Over Non-Deterministic AI**
-Our hook system provides millisecond-precise control over Claude's responses:
+Our hook system provides precise control over Claude's responses:
 ```bash
-PreToolUse  → Validate permissions (2ms)
-Execute     → Run with boundaries (50ms)  
-PostToolUse → Extract learning patterns (5ms)
+PreToolUse  → Validate permissions before execution
+Execute     → Run with defined boundaries
+PostToolUse → Extract patterns for learning
 ```
 
 ### 3. **Real Meta-Cognition**
@@ -293,7 +293,6 @@ result = model.predict(input)
 1. Analyzed user intent: "professional"
 2. Recalled past preference: "minimal"
 3. Applied pattern: "Enterprise UI"
-4. Confidence: 92%
 ✅ Full reasoning trace available
 ```
 
@@ -301,7 +300,7 @@ result = model.predict(input)
 </tr>
 </table>
 
-## 🚀 Get Started in 30 Seconds
+## 🚀 Get Started
 
 ```bash
 # 1. Clone the revolution
@@ -337,8 +336,8 @@ The framework demonstrates that AI logic doesn't need to be hidden in black boxe
   <a href="https://github.com/bacoco/MetaClaude/fork">
     <img src="https://img.shields.io/badge/🍴_Fork_&_Extend-Build_Together-blue?style=for-the-badge" alt="Fork This Repo" />
   </a>
-  <a href="https://discord.gg/metaclaude">
-    <img src="https://img.shields.io/badge/💬_Join_Discord-Community-purple?style=for-the-badge" alt="Join Discord" />
+  <a href="https://github.com/bacoco/MetaClaude/discussions">
+    <img src="https://img.shields.io/badge/💬_Discussions-Community-purple?style=for-the-badge" alt="Join Discussions" />
   </a>
 </p>
 
@@ -387,8 +386,8 @@ MIT License - Build freely on our foundation.
 </p>
 
 <p align="center">
-  <a href="#-get-started-in-30-seconds">⚡ Start Now</a> • 
+  <a href="#-get-started">⚡ Start Now</a> • 
   <a href="https://github.com/bacoco/MetaClaude/issues">💡 Share Ideas</a> • 
-  <a href="https://discord.gg/metaclaude">👥 Join Community</a> •
+  <a href="https://github.com/bacoco/MetaClaude/discussions">👥 Join Community</a> •
   <a href="https://twitter.com/intent/tweet?text=Just%20discovered%20MetaClaude%20-%20AI%20that%20writes%20its%20own%20logic%20in%20plain%20English!%20%F0%9F%A4%AF%20Check%20it%20out:%20https://github.com/bacoco/MetaClaude">🐦 Share on Twitter</a>
 </p>
