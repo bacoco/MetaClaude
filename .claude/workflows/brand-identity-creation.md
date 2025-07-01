@@ -46,12 +46,27 @@ const brandDiscovery = {
     process: async () => {
       const interviews = await conductInterviews();
       const themes = await extractThemes(interviews);
-      const insights = await synthesizeInsights(themes);
+      
+      // Check for conflicting visions among stakeholders
+      const conflicts = conflictResolver.analyzeStakeholderPerspectives(themes);
+      
+      const insights = await synthesizeInsights(themes, conflicts);
+      
+      // Generate transparency report
+      const explanation = explainableAI.explainBrandInsights({
+        themes: themes,
+        conflicts: conflicts,
+        synthesis: insights,
+        methodology: 'Thematic analysis with conflict resolution',
+        confidence: 0.88
+      });
       
       return {
         coreThemes: themes,
         brandInsights: insights,
-        stakeholderAlignment: assessAlignment(insights)
+        stakeholderAlignment: assessAlignment(insights),
+        conflicts: conflicts,
+        explanation: explanation
       };
     }
   },
@@ -68,14 +83,29 @@ const brandDiscovery = {
       },
       
       analysis: async (competitors) => {
-        const visualDNA = await extractDesignDNA(competitors);
+        // Suggest appropriate tools for competitive analysis
+        const suggestedTools = toolSuggestionPatterns.recommend({
+          task: 'Competitive brand analysis',
+          context: { analysisType: 'visual-positioning', competitorCount: competitors.length }
+        });
+        
+        const visualDNA = await extractDesignDNA(competitors, { tools: suggestedTools });
         const positioning = await mapPositioning(competitors);
         const opportunities = await identifyGaps(positioning);
+        
+        // Explain opportunity identification rationale
+        const opportunityExplanation = explainableAI.explainOpportunities({
+          gaps: opportunities,
+          rationale: 'Unoccupied positioning spaces with audience appeal',
+          viability: assessViability(opportunities),
+          confidence: 0.82
+        });
         
         return {
           competitiveLandscape: positioning,
           visualTrends: visualDNA,
-          whiteSpace: opportunities
+          whiteSpace: opportunities,
+          explanation: opportunityExplanation
         };
       }
     }

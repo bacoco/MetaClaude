@@ -86,7 +86,13 @@ const monday = {
           'Analytics expert (20 min)',
           'Previous customers (40 min)'
         ],
-        output: 'How Might We notes'
+        output: 'How Might We notes',
+        // Transparency checkpoint
+        explanation: explainableAI.explainInterviewStrategy({
+          selection: 'Diverse perspectives for holistic understanding',
+          timeAllocation: 'Based on impact and insight potential',
+          confidence: 0.85
+        })
       }
     ]
   },
@@ -122,7 +128,19 @@ const monday = {
         time: '4:00-5:00',
         activity: 'Target Selection',
         decider: true,
-        output: 'Specific moment in journey to focus on'
+        output: 'Specific moment in journey to focus on',
+        // Conflict resolution checkpoint
+        conflictCheck: async () => {
+          const perspectives = gatherTeamPerspectives();
+          const conflicts = conflictResolver.detectTargetConflicts(perspectives);
+          
+          if (conflicts.length > 0) {
+            const resolution = await conflictResolver.facilitateConsensus(conflicts);
+            return explainableAI.explainTargetDecision(resolution);
+          }
+          
+          return { consensus: true, rationale: 'Team aligned on target' };
+        }
       }
     ]
   },
@@ -183,14 +201,30 @@ const tuesday = {
         activity: 'Lightning Demos',
         lead: 'design-analyst',
         process: async () => {
-          // AI-enhanced inspiration
+          // AI-enhanced inspiration with tool suggestions
+          const suggestedTools = toolSuggestionPatterns.recommend({
+            task: 'Lightning demos and inspiration gathering',
+            context: { phase: 'diverge', sprintDay: 2 }
+          });
+          
           const demos = await gatherInspiration({
             sources: ['Competitors', 'Analogous industries', 'Best-in-class'],
             count: 10,
-            time: '3 minutes each'
+            time: '3 minutes each',
+            tools: suggestedTools
           });
           
-          return extractDesignDNA(demos);
+          // Explain DNA extraction rationale
+          const dnaExplanation = explainableAI.explainDNAExtraction({
+            sources: demos,
+            patterns: 'Visual, interaction, and emotional qualities',
+            confidence: 0.9
+          });
+          
+          return {
+            dna: extractDesignDNA(demos),
+            explanation: dnaExplanation
+          };
         }
       },
       {

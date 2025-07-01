@@ -252,6 +252,143 @@ const updateMemory = (newPreference) => {
 };
 ```
 
+## Context Scoping & Management
+
+### Context-Aware Memory Operations
+
+```javascript
+// Integration with contextual-learning.md
+const contextScopedMemory = {
+  scopes: {
+    global: "Applies across all projects and contexts",
+    project: "Specific to current project only",
+    task: "Temporary for current task",
+    session: "Lives only in current conversation"
+  },
+  
+  store: (key, value, scope = 'project') => {
+    const contextualizedKey = `${scope}:${currentContext.id}:${key}`;
+    const metadata = {
+      scope,
+      context: currentContext,
+      timestamp: Date.now(),
+      confidence: contextualLearning.calculateConfidence(value, currentContext)
+    };
+    
+    return memory.store(contextualizedKey, { value, metadata });
+  },
+  
+  retrieve: (key, scope = 'auto') => {
+    if (scope === 'auto') {
+      // Search from most specific to most general
+      const scopes = ['task', 'session', 'project', 'global'];
+      for (const s of scopes) {
+        const result = memory.get(`${s}:${currentContext.id}:${key}`);
+        if (result) return result;
+      }
+    }
+    return memory.get(`${scope}:${currentContext.id}:${key}`);
+  }
+};
+```
+
+### Conflict Tracking Storage
+
+```javascript
+// Integration with conflict-resolution.md
+const conflictTracking = {
+  structure: {
+    activeConflicts: new Map(),
+    resolvedConflicts: [],
+    conflictPatterns: new Map()
+  },
+  
+  trackConflict: (conflict) => {
+    const conflictId = generateConflictId(conflict);
+    
+    conflictTracking.structure.activeConflicts.set(conflictId, {
+      ...conflict,
+      detectedAt: Date.now(),
+      attempts: [],
+      status: 'unresolved'
+    });
+    
+    // Analyze for patterns
+    const pattern = identifyConflictPattern(conflict);
+    if (pattern) {
+      conflictTracking.structure.conflictPatterns.set(
+        pattern.type,
+        (conflictTracking.structure.conflictPatterns.get(pattern.type) || 0) + 1
+      );
+    }
+  },
+  
+  resolveConflict: (conflictId, resolution) => {
+    const conflict = conflictTracking.structure.activeConflicts.get(conflictId);
+    if (conflict) {
+      conflict.resolution = resolution;
+      conflict.resolvedAt = Date.now();
+      conflict.status = 'resolved';
+      
+      conflictTracking.structure.resolvedConflicts.push(conflict);
+      conflictTracking.structure.activeConflicts.delete(conflictId);
+    }
+  }
+};
+```
+
+### Explanation History Storage
+
+```javascript
+// Integration with explainable-ai.md
+const explanationHistory = {
+  storage: {
+    decisions: [],
+    rationales: new Map(),
+    feedback: new Map()
+  },
+  
+  recordDecision: (decision, explanation) => {
+    const record = {
+      id: generateDecisionId(),
+      decision,
+      explanation,
+      timestamp: Date.now(),
+      context: captureCurrentContext(),
+      confidence: explanation.confidence || 0.5
+    };
+    
+    explanationHistory.storage.decisions.push(record);
+    explanationHistory.storage.rationales.set(record.id, explanation.detailed);
+    
+    return record.id;
+  },
+  
+  addFeedback: (decisionId, feedback) => {
+    const existing = explanationHistory.storage.feedback.get(decisionId) || [];
+    existing.push({
+      feedback,
+      timestamp: Date.now(),
+      impact: assessFeedbackImpact(feedback)
+    });
+    explanationHistory.storage.feedback.set(decisionId, existing);
+  },
+  
+  retrieveExplanation: (decisionId) => {
+    const decision = explanationHistory.storage.decisions.find(d => d.id === decisionId);
+    const rationale = explanationHistory.storage.rationales.get(decisionId);
+    const feedback = explanationHistory.storage.feedback.get(decisionId) || [];
+    
+    return {
+      decision,
+      rationale,
+      feedback,
+      learnings: extractLearningsFromFeedback(feedback)
+    };
+  }
+};
+```
+
 ## Context Management Strategies
 
 ### 1. Conversation Anchoring
@@ -482,11 +619,22 @@ const incrementalEnhancement = {
 ```javascript
 // When feedback-automation detects a pattern
 feedbackAutomation.onPatternDetected((pattern) => {
+  // Check for conflicts before updating
+  const conflicts = conflictTracking.checkForConflicts(pattern);
+  
+  if (conflicts.length > 0) {
+    // Use conflict resolution before memory update
+    const resolution = conflictResolver.resolve(conflicts, pattern);
+    pattern = resolution.mergedPattern;
+  }
+  
   memoryOperations.scheduleUpdate({
     type: pattern.category,
     content: pattern.insight,
     confidence: pattern.confidence,
-    updateStrategy: 'append_or_merge'
+    updateStrategy: 'append_or_merge',
+    context: contextualLearning.getCurrentScope(),
+    explanation: explainableAI.generateUpdateRationale(pattern)
   });
 });
 ```
@@ -583,6 +731,37 @@ When memory seems inconsistent or unclear:
 "I want to ensure I'm recalling your preferences correctly. 
 Earlier you mentioned [preference], is this still accurate? 
 Would you like me to adjust my understanding?"
+```
+
+### Conflict Detection & Resolution
+
+```javascript
+// Automatic conflict detection during recall
+const recallWithConflictCheck = (memoryType) => {
+  const memories = memory.getAll(memoryType);
+  const conflicts = conflictDetector.analyze(memories);
+  
+  if (conflicts.length > 0) {
+    // Generate explanation for the conflict
+    const explanation = explainableAI.explainConflict(conflicts);
+    
+    // Attempt resolution
+    const resolution = conflictResolver.resolve(conflicts);
+    
+    if (resolution.requiresUserInput) {
+      return {
+        data: resolution.bestGuess,
+        conflicts: conflicts,
+        explanation: explanation,
+        needsClarification: true
+      };
+    }
+    
+    return resolution.merged;
+  }
+  
+  return memories;
+};
 ```
 
 ---

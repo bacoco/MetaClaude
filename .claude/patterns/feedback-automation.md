@@ -53,7 +53,9 @@ const feedbackCategorizer = {
     design_preference: {
       triggers: ["color", "style", "layout", "visual", "look"],
       memory_target: "design-preferences.md",
-      priority: "high"
+      priority: "high",
+      context_scope: "project|global", // From contextual-learning.md
+      tool_suggestions: ["ui-generator", "style-guide-expert"] // From tool-suggestion-patterns.md
     },
     
     user_needs: {
@@ -97,7 +99,9 @@ const capturePattern = {
       hasEeedback: containsFeedbackSignals(userInput),
       feedbackType: categorizeFeeback(userInput),
       learningValue: assessLearningPotential(userInput),
-      confidence: calculateConfidence(userInput)
+      confidence: calculateConfidence(userInput),
+      // Generate explanation for learning decision
+      reasoning: explainableAI.generateLearningRationale(userInput)
     };
     
     if (analysis.learningValue > threshold) {
@@ -111,6 +115,14 @@ const capturePattern = {
 
 ```javascript
 const priorityScoring = {
+  // Enhanced with contextual-learning.md integration
+  contextAwareness: {
+    weight: 0.15,
+    score: (feedback) => {
+      return contextualLearning.calculateRelevance(feedback, currentContext);
+    }
+  },
+  
   factors: {
     frequency: {
       weight: 0.3,
@@ -275,14 +287,15 @@ const conflictResolution = {
   },
   
   process: (conflict) => {
-    // Attempt automatic resolution
-    if (conflict.contexts_differ) {
-      return createContextualRules(conflict);
-    } else if (conflict.frequency_clear) {
-      return adoptMajorityPreference(conflict);
+    // Integrate with conflict-resolution.md patterns
+    const resolution = conflictResolver.analyze(conflict);
+    
+    if (resolution.autoResolvable) {
+      return resolution.apply();
     } else {
-      // Only ask when truly necessary
-      return requestClarification(conflict);
+      // Generate explanation for conflict
+      const explanation = explainableAI.generateConflictExplanation(conflict);
+      return requestClarificationWithExplanation(conflict, explanation);
     }
   }
 };
@@ -507,6 +520,11 @@ if (userPreference.includes('quick_iterations')) {
 } else if (userPreference.includes('thorough_analysis')) {
   reasoningSelector.bias_towards('deep_patterns');
 }
+
+// Check for adaptive pattern generation need
+if (reasoningSelector.noSuitablePattern(task)) {
+  adaptivePatternGeneration.createCustomPattern(task, userPreference);
+}
 ```
 
 ### With Tool Usage
@@ -517,6 +535,13 @@ if (learnedPreference.workflow === 'see_updates_immediately') {
 } else if (learnedPreference.workflow === 'review_first') {
   toolUsage.prefer('response_only', 'until_approved');
 }
+
+// Proactive tool suggestions based on learned patterns
+const suggestedTools = toolSuggestionPatterns.recommend({
+  task: currentTask,
+  preferences: learnedPreference,
+  context: currentContext
+});
 ```
 
 ---
