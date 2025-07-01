@@ -390,6 +390,34 @@ The framework handles the rest. No coding required.
   <img src="https://img.shields.io/badge/Status-Production_Ready-blue?style=flat-square" />
 </p>
 
+## 🔮 Future Vision: Next-Generation Specialists
+
+MetaClaude continues to evolve. Our roadmap includes four groundbreaking specialists that will further revolutionize development workflows:
+
+### Coming Soon
+
+**🧪 Automated Test Case Generator**
+- Transform PRDs into comprehensive test plans
+- Generate BDD scenarios and edge cases automatically
+- Bridge requirements and quality assurance seamlessly
+
+**🗄️ Database-to-Admin-Panel Specialist**
+- Instant admin panels from database schemas
+- Complete CRUD interfaces with zero coding
+- Built-in RBAC and security patterns
+
+**📖 Intelligent Documentation Writer**
+- Beyond API docs: narrative guides and tutorials
+- Analyzes code to create human-friendly documentation
+- Adapts tone and depth for different audiences
+
+**🎯 Design-to-Test-Script Specialist**
+- Convert UI designs directly to E2E test scripts
+- Support for Cypress, Playwright, and more
+- Robust selector strategies that survive design changes
+
+Each specialist follows MetaClaude's proven pattern: taking technical inputs and producing human-centric, practical outputs that save countless development hours. See [todo.md](todo.md) for detailed specifications.
+
 ## 📄 License
 
 MIT License - Build freely on our foundation.
