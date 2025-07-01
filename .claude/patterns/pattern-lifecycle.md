@@ -15,6 +15,91 @@ graph LR
     F --> G[Archive]
 ```
 
+## Tool Integration
+
+| Step | Action | Tool to Use | Purpose |
+|------|--------|-------------|---------|
+| 1. Create pattern | Initialize new pattern | None (internal creation) | Generate pattern structure |
+| 2. Validate structure | Check pattern integrity | `pattern_validate(pattern)` | Ensure correctness |
+| 3. Save pattern | Write to filesystem | `write_file("patterns/new.md", content)` | Persist pattern |
+| 4. Deploy pattern | Activate for use | `pattern_registry_update(status: "active")` | Make available |
+| 5. Monitor performance | Track metrics | `pattern_metrics_collect(patternId)` | Gather usage data |
+| 6. Analyze health | Evaluate performance | None (internal analysis) | Assess pattern health |
+| 7. Optimize pattern | Update based on metrics | `edit_file("patterns/name.md", updates)` | Improve performance |
+| 8. Check retirement criteria | Evaluate continued value | `pattern_metrics_analyze(patternId)` | Decide lifecycle stage |
+| 9. Archive pattern | Move to storage | `move_file(source, "archive/")` | Preserve for history |
+| 10. Update registry | Remove from active | `pattern_registry_update(status: "retired")` | Clean up index |
+
+### Tool Usage Examples
+
+```javascript
+// Step 2: Validating pattern structure
+const validationResult = pattern_validate({
+  pattern: newPattern,
+  checks: [
+    "structural_integrity",
+    "performance_baseline",
+    "safety_constraints",
+    "dependency_resolution"
+  ]
+});
+
+// Step 3: Saving validated pattern
+if (validationResult.valid) {
+  write_file(`patterns/${pattern.domain}/${pattern.name}.md`, 
+    formatPatternContent(pattern)
+  );
+}
+
+// Step 4: Deploying pattern to registry
+pattern_registry_update({
+  patternId: pattern.id,
+  status: "active",
+  deployment: {
+    timestamp: Date.now(),
+    environment: "production",
+    version: pattern.version
+  }
+});
+
+// Step 5: Collecting performance metrics
+const metrics = pattern_metrics_collect(pattern.id, {
+  period: "last_24_hours",
+  metrics: ["execution_time", "success_rate", "memory_usage"]
+});
+
+// Step 7: Optimizing based on analysis
+if (optimization.needed) {
+  const optimizedContent = applyOptimizations(pattern, optimization.recommendations);
+  edit_file(`patterns/${pattern.domain}/${pattern.name}.md`, optimizedContent);
+  
+  // Update version
+  pattern_registry_update({
+    patternId: pattern.id,
+    version: incrementVersion(pattern.version),
+    optimization: optimization.summary
+  });
+}
+
+// Step 9: Archiving retired pattern
+if (retirement.confirmed) {
+  // Move to archive
+  move_file(
+    `patterns/${pattern.domain}/${pattern.name}.md`,
+    `archive/patterns/${pattern.domain}/${pattern.name}_v${pattern.version}.md`
+  );
+  
+  // Create retirement record
+  write_file(`archive/retirement_logs/${pattern.id}.json`, {
+    pattern: pattern,
+    retirementReason: retirement.reason,
+    finalMetrics: metrics,
+    replacedBy: retirement.replacement || null,
+    timestamp: Date.now()
+  });
+}
+```
+
 ## Lifecycle Stages
 
 ### 1. Pattern Creation

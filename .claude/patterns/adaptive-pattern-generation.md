@@ -6,6 +6,79 @@ Dynamic pattern synthesis framework enabling AI to create novel reasoning patter
 
 This framework empowers AI to recognize when existing patterns are insufficient and synthesize new approaches through controlled creativity. It combines pattern evolution, mutation strategies, and safety constraints to enable genuine innovation within boundaries.
 
+## Tool Integration
+
+| Step | Action | Tool to Use | Purpose |
+|------|--------|-------------|---------|
+| 1. Detect novelty | Analyze challenge uniqueness | None (internal analysis) | Identify if new pattern needed |
+| 2. Search existing patterns | Find similar approaches | `pattern_search(characteristics)` | Check for reusable patterns |
+| 3. Load pattern library | Retrieve candidate patterns | `read_file("patterns/*.md")` | Get pattern components |
+| 4. Synthesize new pattern | Combine/mutate patterns | None (internal synthesis) | Create novel approach |
+| 5. Validate safety | Check constraints | `pattern_validate(newPattern)` | Ensure safe execution |
+| 6. Test pattern | Run controlled trial | None (internal simulation) | Verify effectiveness |
+| 7. Document pattern | Create pattern file | `write_file("patterns/generated/new.md")` | Persist for future use |
+| 8. Register pattern | Add to pattern index | `pattern_registry_update(newPattern)` | Make discoverable |
+| 9. Track evolution | Log pattern lineage | `memory_update("pattern_evolution", lineage)` | Maintain history |
+
+### Tool Usage Examples
+
+```javascript
+// Step 2: Searching for similar existing patterns
+const similarPatterns = pattern_search({
+  domain: "ui_generation",
+  complexity: "high",
+  characteristics: ["real-time", "adaptive", "user-driven"],
+  threshold: 0.6 // 60% similarity minimum
+});
+
+// Step 3: Loading pattern files for synthesis
+const patternLibrary = [];
+for (const patternName of candidatePatterns) {
+  const content = read_file(`patterns/${patternName}.md`);
+  patternLibrary.push(parsePattern(content));
+}
+
+// Step 5: Validating new pattern safety
+const validationResult = pattern_validate({
+  pattern: synthesizedPattern,
+  constraints: {
+    maxRecursionDepth: 10,
+    timeoutSeconds: 30,
+    memoryLimitMB: 512,
+    forbiddenOperations: ["delete", "system_access"]
+  }
+});
+
+// Step 7: Documenting the new pattern
+write_file("patterns/generated/emotion-aware-ui-pattern.md", `
+# ${newPattern.name}
+
+## Overview
+${newPattern.description}
+
+## Synthesis Origin
+- Base patterns: ${newPattern.parentPatterns.join(", ")}
+- Mutation strategy: ${newPattern.mutationType}
+- Creation context: ${newPattern.context}
+
+## Implementation
+${newPattern.implementation}
+
+## Validation Results
+${JSON.stringify(newPattern.validation, null, 2)}
+`);
+
+// Step 8: Registering in pattern index
+pattern_registry_update({
+  name: newPattern.name,
+  path: "patterns/generated/emotion-aware-ui-pattern.md",
+  category: "adaptive_ui",
+  complexity: "high",
+  validated: true,
+  performance: newPattern.metrics
+});
+```
+
 ## Pattern Synthesis Algorithms
 
 ### Core Synthesis Engine

@@ -202,6 +202,52 @@ const taskToolMatcher = {
 };
 ```
 
+## Explicit Tool Mapping
+
+### Comprehensive Detection Pattern to Tool Mapping
+
+| Detection Pattern | Trigger Keywords | Suggested Tool | Priority | Example Usage | Alternative Approach |
+|-------------------|------------------|----------------|----------|---------------|---------------------|
+| File Content Assumptions | "probably contains", "likely has", "should include" | `read_file()` | High | `read_file("config.json")` | None - always read |
+| Manual Iteration | "for each file", "one by one", "then next" | `batch_operations()` | Medium | `batch_write_files(fileList)` | Sequential if dependencies |
+| Structure Guessing | "typical structure", "probably organized" | `list_files()` | High | `list_files("./src")` | None - always check |
+| Content Search | "looking for", "find instances", "search through" | `search_file_content()` | High | `search_file_content("pattern", "*.js")` | `grep` via shell |
+| System Verification | "check if installed", "verify setup" | `run_shell_command()` | Medium | `run_shell_command("npm -v")` | Parse package files |
+| File Existence | "if file exists", "check for file" | `list_files()` | High | `list_files("./").includes("file.md")` | None |
+| Content Analysis | "analyze code", "review implementation" | `read_file()` → analyze | High | Read then process | None |
+| Bulk Updates | "update all", "modify every" | `batch_edit_files()` | High | `batch_edit_files(edits)` | Loop with edit_file |
+| Performance Check | "measure time", "check speed" | `run_shell_command()` | Low | `run_shell_command("time command")` | Internal timing |
+| Dependency Check | "required packages", "missing imports" | `read_file()` + `run_shell_command()` | Medium | Check package.json + npm | Parse only |
+
+### Context-Specific Tool Selection
+
+| Context | Default Tool Choice | When to Override |
+|---------|-------------------|------------------|
+| Initial project exploration | `list_files()` → `read_file("README.md")` | If specific entry point known |
+| Code modification | `read_file()` → `edit_file()` | `write_file()` for new files |
+| Validation | `run_shell_command("npm test")` | Internal validation for simple checks |
+| Search operations | `search_file_content()` | `read_file()` if single file |
+| Batch operations | Batch variants of tools | Individual tools if < 3 items |
+
+### Tool Combination Patterns
+
+| Scenario | Tool Sequence | Purpose |
+|----------|---------------|---------|
+| Safe file update | `read_file()` → verify → `edit_file()` | Prevent overwrites |
+| Project analysis | `list_files()` → `read_file(multiple)` → analyze | Complete understanding |
+| Refactoring | `search_file_content()` → `batch_edit_files()` | Systematic changes |
+| Deployment prep | `run_shell_command("build")` → `list_files("dist")` | Verify output |
+| Debug investigation | `read_file()` → `search_file_content()` → `run_shell_command()` | Multi-angle analysis |
+
+### Confidence-Based Tool Suggestions
+
+| Confidence Level | Suggestion Approach | Example |
+|-----------------|---------------------|----------|
+| 🟢 High (>0.8) | Direct recommendation | "I'll use `read_file()` to check the actual content" |
+| 🟡 Medium (0.5-0.8) | Gentle suggestion | "It might be more efficient to use `batch_operations()`" |
+| 🟠 Low (0.3-0.5) | Optional mention | "Consider using `search_file_content()` if looking for patterns" |
+| 🔴 Very Low (<0.3) | No suggestion | Continue with current approach |
+
 ## Self-Correction Mechanisms
 
 ### Real-Time Correction

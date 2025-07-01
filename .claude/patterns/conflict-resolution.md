@@ -6,6 +6,63 @@ Comprehensive system for detecting, analyzing, and autonomously resolving contra
 
 This pattern enables Claude to handle contradictory feedback gracefully, resolving 90% of conflicts automatically through intelligent weighting systems and only escalating to user clarification when truly necessary.
 
+## Tool Integration
+
+| Step | Action | Tool to Use | Purpose |
+|------|--------|-------------|---------|
+| 1. Monitor feedback | Capture user input | None (internal monitoring) | Detect feedback signals |
+| 2. Load conflict history | Retrieve past conflicts | `memory_access("conflict_history")` | Get resolution patterns |
+| 3. Load feedback history | Get historical preferences | `memory_access("feedback_history", timeRange)` | Compare with past feedback |
+| 4. Detect conflicts | Analyze contradictions | None (internal analysis) | Identify conflict type and severity |
+| 5. Calculate weights | Score resolution factors | None (internal calculation) | Determine resolution approach |
+| 6. Apply resolution | Execute strategy | None (internal logic) | Resolve conflict |
+| 7. Store resolution | Save conflict outcome | `memory_update("conflict_history", resolution)` | Learn from resolution |
+| 8. Update preferences | Modify based on resolution | `memory_update("design_preferences", resolved)` | Apply resolved preference |
+| 9. Generate explanation | Create resolution narrative | None (internal generation) | Prepare transparency |
+
+### Tool Usage Examples
+
+```javascript
+// Step 2: Loading conflict history for pattern analysis
+const conflictHistory = memory_access("conflict_history", {
+  filter: "similar_conflicts",
+  context: currentContext,
+  limit: 10
+});
+
+// Step 3: Retrieving feedback history for comparison
+const feedbackHistory = memory_access("feedback_history", {
+  timeRange: "last_30_days",
+  relevantTo: conflictingElements,
+  includeContext: true
+});
+
+// Step 7: Storing resolution for future learning
+memory_update("conflict_history", {
+  conflict: {
+    type: "style_preference",
+    elements: ["button_size", "mobile_vs_desktop"],
+    timestamp: Date.now()
+  },
+  resolution: {
+    strategy: "context_isolation",
+    outcome: "separate_preferences_by_platform",
+    confidence: 0.85,
+    userSatisfaction: "pending"
+  }
+});
+
+// Step 8: Updating preferences based on resolution
+memory_update("design_preferences", {
+  scope: "platform_specific",
+  updates: {
+    mobile: { buttonSize: "large" },
+    desktop: { buttonSize: "medium" }
+  },
+  reason: "conflict_resolution_outcome"
+});
+```
+
 ## Conflict Detection System
 
 ### Contradiction Identification Algorithm

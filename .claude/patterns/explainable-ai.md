@@ -10,6 +10,68 @@ Transparent reasoning patterns that help users understand not just WHAT the AI d
 - **Contextual Relevance**: Focus on what matters for the current decision
 - **Confidence Communication**: Be honest about uncertainty
 
+## Tool Integration
+
+| Step | Action | Tool to Use | Purpose |
+|------|--------|-------------|---------|
+| 1. Capture decision path | Track reasoning steps | None (internal tracking) | Build explanation foundation |
+| 2. Load decision history | Retrieve past explanations | `memory_access("explanation_history")` | Maintain consistency |
+| 3. Gather supporting data | Collect evidence | `memory_access("project_history", "metrics")` | Add factual backing |
+| 4. Analyze confidence | Calculate certainty levels | None (internal calculation) | Determine confidence score |
+| 5. Generate explanation | Create narrative | None (internal generation) | Produce human-readable explanation |
+| 6. Check accessibility | Verify clarity | None (internal validation) | Ensure understandability |
+| 7. Store explanation | Save for reference | `memory_update("explanation_history", explanation)` | Build knowledge base |
+| 8. Link to outcomes | Connect to results | `memory_link("explanation", "outcome")` | Track effectiveness |
+
+### Tool Usage Examples
+
+```javascript
+// Step 2: Loading past explanations for consistency
+const previousExplanations = memory_access("explanation_history", {
+  context: "similar_decisions",
+  limit: 5,
+  includeOutcomes: true
+});
+
+// Step 3: Gathering supporting evidence
+const supportingData = {
+  userResearch: memory_access("project_history", {
+    type: "user_research",
+    relevantTo: currentDecision
+  }),
+  performanceMetrics: memory_access("project_history", {
+    type: "metrics",
+    timeframe: "last_90_days"
+  }),
+  industryBenchmarks: memory_access("design_preferences", {
+    category: "industry_standards"
+  })
+};
+
+// Step 7: Storing explanation with full context
+memory_update("explanation_history", {
+  decision: {
+    type: "design_choice",
+    element: "navigation_pattern",
+    timestamp: Date.now()
+  },
+  explanation: {
+    narrative: generatedExplanation,
+    confidence: 0.87,
+    factors: identifiedFactors,
+    alternatives: consideredOptions
+  },
+  context: currentProjectContext
+});
+
+// Step 8: Linking explanation to eventual outcome
+memory_link("explanation", {
+  explanationId: explanation.id,
+  outcomeId: null, // To be filled when outcome is known
+  relationship: "decision_to_result"
+});
+```
+
 ## Reasoning Trace Patterns
 
 ### Basic Reasoning Template

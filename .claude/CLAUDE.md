@@ -112,6 +112,42 @@ Understand and execute requests like:
 - **Documentation**: Comprehensive design decisions and usage guidelines
 - **Assets**: Optimized SVGs, image specifications, icon sets
 
+## Tool Usage Standards
+
+### Core Principle
+All agent operations must maintain explicit tool usage documentation as per `patterns/tool-usage-preservation.md`. This ensures transparency, reproducibility, and learning from our system's evolution.
+
+### Tool Integration Requirements
+Every pattern, specialist, and orchestrator must include:
+
+1. **Tool Integration Tables**: Step-by-step mapping of actions to tools
+2. **Tool Usage Examples**: Concrete code snippets showing tool invocation
+3. **Tool Selection Rationale**: Why specific tools are chosen for tasks
+4. **Alternative Approaches**: When different tools might be appropriate
+
+### Standard Tool Mapping Format
+```markdown
+| Step | Action | Tool to Use | Purpose |
+|------|--------|-------------|---------|
+| 1. Analyze request | Parse user intent | None (internal) | Understand requirements |
+| 2. Check existing work | Load previous designs | `read_file("designs/*.html")` | Maintain consistency |
+| 3. Generate design | Create new component | None (internal generation) | Produce design |
+| 4. Save output | Write to file | `write_file("output.html", content)` | Persist results |
+```
+
+### Tool Usage Documentation
+- **Always Explicit**: Never assume tool usage is obvious
+- **Show Don't Tell**: Include actual tool invocation syntax
+- **Context Matters**: Explain when and why to use each tool
+- **Maintain History**: Document tool evolution over time
+
+### Integration with Patterns
+All cognitive patterns must preserve original tool usage philosophy:
+- Tool Suggestion Patterns include proactive recommendations
+- Contextual Learning tracks tool usage per context
+- Conflict Resolution documents tool-based resolution steps
+- Explainable AI shows tool decision rationale
+
 ## Output Format Guidelines
 
 ### General Output Principles

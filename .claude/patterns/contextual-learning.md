@@ -2,6 +2,50 @@
 
 Advanced context-aware preference learning system that prevents inappropriate generalization across unrelated contexts.
 
+## Tool Integration
+
+| Step | Action | Tool to Use | Purpose |
+|------|--------|-------------|---------|
+| 1. Detect context | Analyze current work environment | None (internal analysis) | Identify context boundaries and hierarchy level |
+| 2. Check existing preferences | Load context-specific memory | `memory_access("contextual_preferences", scope)` | Retrieve relevant learned preferences |
+| 3. Validate boundaries | Compare contexts for compatibility | None (internal validation) | Prevent cross-context bleeding |
+| 4. Apply preferences | Use context-appropriate settings | None (internal application) | Implement learned behaviors |
+| 5. Capture new learning | Identify preference signals | None (internal detection) | Recognize new patterns |
+| 6. Update memory | Store context-scoped preference | `memory_update("contextual_preferences", scope, data)` | Persist learning with proper scope |
+| 7. Propagate inheritance | Update child contexts if needed | `memory_cascade_update(parent, children)` | Maintain hierarchy consistency |
+
+### Tool Usage Examples
+
+```javascript
+// Step 2: Loading context-specific preferences
+const projectPreferences = memory_access("contextual_preferences", {
+  level: "project",
+  projectId: currentProject.id
+});
+
+// Step 6: Storing new learning with context
+if (confidenceScore >= 0.7) {
+  memory_update("contextual_preferences", {
+    level: detectedContext.level,
+    scope: detectedContext.identifier,
+    preference: {
+      type: "colorScheme",
+      value: "darkMode",
+      confidence: 0.85,
+      timestamp: Date.now()
+    }
+  });
+}
+
+// Step 7: Cascading updates through hierarchy
+if (shouldPropagate) {
+  memory_cascade_update(
+    { level: "project", id: projectId },
+    { levels: ["feature", "task"], filter: "activeOnly" }
+  );
+}
+```
+
 ## Context Hierarchy Architecture
 
 ### Hierarchical Levels
