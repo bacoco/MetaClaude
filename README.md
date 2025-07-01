@@ -388,6 +388,5 @@ MIT License - Build freely on our foundation.
 <p align="center">
   <a href="#-get-started">⚡ Start Now</a> • 
   <a href="https://github.com/bacoco/MetaClaude/issues">💡 Share Ideas</a> • 
-  <a href="https://github.com/bacoco/MetaClaude/discussions">👥 Join Community</a> •
-  <a href="https://twitter.com/intent/tweet?text=Just%20discovered%20MetaClaude%20-%20AI%20that%20writes%20its%20own%20logic%20in%20plain%20English!%20%F0%9F%A4%AF%20Check%20it%20out:%20https://github.com/bacoco/MetaClaude">🐦 Share on Twitter</a>
+  <a href="https://github.com/bacoco/MetaClaude/discussions">👥 Join Community</a>
 </p>
