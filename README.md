@@ -65,6 +65,39 @@ Result: A complete app grandma loves, not just code.
 
 ---
 
+## 🎭 The AI Partnership: Claude Creates, Gemini Reviews
+
+<table>
+<tr>
+<td width="50%" align="center">
+
+### 🏗️ Claude (Master)
+**The Creator**
+- Designs and builds
+- Makes all decisions  
+- Generates solutions
+- Controls the workflow
+
+</td>
+<td width="50%" align="center">
+
+### 🔍 Gemini (Analyst)
+**The Critic**
+- Reviews and analyzes
+- Never creates code
+- Provides feedback only
+- Ensures quality
+
+</td>
+</tr>
+</table>
+
+**How it works**: Claude is the architect who builds everything. Gemini is the quality inspector who reviews Claude's work. This separation ensures you get both creativity AND quality - like having a senior developer with a dedicated code reviewer.
+
+> **Important**: Gemini can ONLY analyze and critique. It never generates code or makes decisions. All creation happens through Claude.
+
+---
+
 ## ⚡ Quick Start (5 Minutes)
 
 ### Prerequisites
