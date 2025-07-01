@@ -19,6 +19,7 @@ This directory serves as the central hub for all specialist implementations, pro
 | [DevOps Engineer](#7-devops-engineer) | 🔧 Beta | Infrastructure & CI/CD | Pipeline design, IaC, deployment strategies |
 | [Technical Writer](#8-technical-writer) | 🔧 Beta | Documentation | API docs, user guides, diagrams |
 | [Security Auditor](#9-security-auditor) | 🔧 Beta | Security Analysis | Vulnerability scanning, threat modeling, compliance |
+| [API-UI Designer](#10-api-ui-designer) | 🚀 New | API-to-UI Generation | OpenAPI/GraphQL to UI, smart mapping, bi-directional |
 
 ## Core Principles
 
@@ -295,6 +296,36 @@ All specialists inherit MetaClaude's universal capabilities:
 ./claude-flow sparc "Verify GDPR compliance for user data handling"
 ```
 
+### 10. API-UI Designer
+**[📁 Directory](./api-ui-designer/)** | **Status**: 🚀 New
+
+**Focus**: Automatically generate high-quality, data-aware UI mockups and user flows directly from API specifications.
+
+**Key Capabilities**:
+- **API-to-UI Generation**: Transform OpenAPI/GraphQL specs into complete UIs
+- **Smart Field Mapping**: Intelligent component selection based on data types
+- **User Flow Design**: Automatic navigation patterns from API structure
+- **Mock Data Generation**: Realistic test data for all UI states
+- **Bi-directional**: UI mockups to API specification generation
+- **Error State Design**: Comprehensive error handling UI
+
+**Specialized Agents**:
+- API Analyst - Parse and understand API specifications
+- Flow Architect - Design user flows from API structure
+- Component Mapper - Map API fields to UI components
+- Mock Data Generator - Create realistic test data
+- Error State Designer - Design loading and error states
+- API Improvement Advisor - Suggest API optimizations
+
+**Quick Start**:
+```bash
+# Generate UI from API
+./claude-flow sparc "Generate UI from https://api.example.com/openapi.json"
+
+# Design admin panel from API
+./claude-flow sparc "Create admin dashboard from petstore API specification"
+```
+
 ## Integration Matrix
 
 ### Specialist Collaboration Patterns
@@ -310,6 +341,7 @@ All specialists inherit MetaClaude's universal capabilities:
 | **DevOps Engineer** | Code Architect, Security Auditor | Secure infrastructure and deployment |
 | **Technical Writer** | All Specialists | Documentation for any domain |
 | **Security Auditor** | Code Architect, DevOps Engineer | Secure development and deployment |
+| **API-UI Designer** | UI Designer, Code Architect, QA Engineer | API-driven application development |
 
 ### Cross-Specialist Workflows
 
@@ -509,4 +541,4 @@ For detailed development plans, see [SPECIALIST_ROADMAP.md](./SPECIALIST_ROADMAP
 
 ---
 
-*MetaClaude Specialist Implementations v2.0.0 | 9 Specialists | Expanding cognitive capabilities through specialized expertise*
+*MetaClaude Specialist Implementations v2.1.0 | 10 Specialists | Expanding cognitive capabilities through specialized expertise*

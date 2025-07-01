@@ -1,10 +1,10 @@
 # 🧠 MetaClaude: The First Prose-as-Code AI Framework
 
-> **Revolutionary AI architecture where markdown becomes executable intelligence. 9 production-ready specialists. 69,821 lines of cognitive infrastructure. Zero code required.**
+> **Revolutionary AI architecture where markdown becomes executable intelligence. 10 domain specialists. 69,821 lines of cognitive infrastructure. Zero code required.**
 
 <p align="center">
   <img src="https://img.shields.io/badge/Architecture-Prose--as--Code-ff6b6b?style=for-the-badge&logo=markdown&logoColor=white" alt="Prose-as-Code" />
-  <img src="https://img.shields.io/badge/Specialists-9_Production_Ready-4ecdc4?style=for-the-badge&logo=robot&logoColor=white" alt="9 Specialists" />
+  <img src="https://img.shields.io/badge/Specialists-10_Available-4ecdc4?style=for-the-badge&logo=robot&logoColor=white" alt="10 Specialists" />
   <img src="https://img.shields.io/badge/Learning-Self_Improving-7209b7?style=for-the-badge&logo=brain&logoColor=white" alt="Self-Improving" />
   <img src="https://img.shields.io/github/stars/bacoco/MetaClaude?style=for-the-badge&color=f77f00&logo=github" alt="GitHub Stars" />
 </p>
@@ -81,14 +81,14 @@ Not marketing fluff. Actual implementation:
 ### Implementation Scale
 - 📁 **217 files** in the framework
 - 📝 **69,821 lines** of cognitive infrastructure
-- 🤖 **9 specialists** fully implemented
+- 🤖 **10 specialists** fully implemented
 - 🪝 **Multiple hook types** for behavior control
 
 </td>
 </tr>
 </table>
 
-## 🏭 Production-Ready Specialists (All Available Now!)
+## 🏭 Available Specialists
 
 <table>
 <tr>
@@ -185,6 +185,22 @@ Not marketing fluff. Actual implementation:
 - Compliance checking
 - Remediation plans
 
+</td>
+</tr>
+<tr>
+<td width="33%">
+
+### 🔌 API-UI Designer
+<sub>API-driven UI generation</sub>
+- OpenAPI/GraphQL to UI
+- Smart field mapping
+- User flow design
+- Bi-directional generation
+
+</td>
+<td width="33%">
+</td>
+<td width="33%">
 </td>
 </tr>
 </table>

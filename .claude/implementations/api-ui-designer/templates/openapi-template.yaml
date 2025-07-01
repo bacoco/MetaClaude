@@ -1,0 +1,1171 @@
+openapi: 3.0.3
+info:
+  title: E-Commerce API Example
+  description: |
+    Example OpenAPI specification demonstrating various patterns that map to UI components.
+    This template shows best practices for API design that enables automatic UI generation.
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: api@example.com
+    url: https://support.example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+  - url: https://staging-api.example.com/v1
+    description: Staging server
+  - url: http://localhost:3000/v1
+    description: Development server
+
+tags:
+  - name: Authentication
+    description: User authentication endpoints
+  - name: Users
+    description: User management operations
+  - name: Products
+    description: Product catalog management
+  - name: Orders
+    description: Order processing and management
+  - name: Analytics
+    description: Business analytics and reporting
+
+paths:
+  # Authentication endpoints
+  /auth/login:
+    post:
+      tags: [Authentication]
+      summary: User login
+      description: Authenticate user with credentials
+      operationId: login
+      x-ui-config:
+        component: LoginForm
+        redirect: /dashboard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                  x-ui-config:
+                    component: EmailInput
+                    icon: mail
+                    autocomplete: email
+                password:
+                  type: string
+                  format: password
+                  minLength: 8
+                  example: SecurePass123!
+                  x-ui-config:
+                    component: PasswordInput
+                    icon: lock
+                    showToggle: true
+                rememberMe:
+                  type: boolean
+                  default: false
+                  x-ui-config:
+                    component: Checkbox
+                    label: Remember me for 30 days
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /auth/register:
+    post:
+      tags: [Authentication]
+      summary: Register new user
+      operationId: register
+      x-ui-config:
+        component: RegistrationForm
+        steps:
+          - title: Account Information
+            fields: [email, password, confirmPassword]
+          - title: Personal Details
+            fields: [firstName, lastName, phone]
+          - title: Preferences
+            fields: [newsletter, terms]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+      responses:
+        '201':
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
+  # User management
+  /users:
+    get:
+      tags: [Users]
+      summary: List users
+      operationId: listUsers
+      x-ui-config:
+        component: DataTable
+        features:
+          - search
+          - sort
+          - filter
+          - export
+          - bulkActions
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/SearchParam'
+        - name: role
+          in: query
+          schema:
+            type: string
+            enum: [admin, user, guest]
+          x-ui-config:
+            component: MultiSelect
+            label: Filter by Role
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive, pending]
+          x-ui-config:
+            component: RadioGroup
+            label: Status
+      responses:
+        '200':
+          description: User list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+
+    post:
+      tags: [Users]
+      summary: Create user
+      operationId: createUser
+      x-ui-config:
+        component: Modal
+        title: Create New User
+        size: medium
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/{userId}:
+    parameters:
+      - $ref: '#/components/parameters/UserIdParam'
+    
+    get:
+      tags: [Users]
+      summary: Get user details
+      operationId: getUser
+      x-ui-config:
+        component: DetailView
+        layout: tabs
+        tabs:
+          - id: profile
+            label: Profile
+            fields: [avatar, firstName, lastName, email, phone]
+          - id: settings
+            label: Settings
+            fields: [role, status, preferences]
+          - id: activity
+            label: Activity
+            component: ActivityTimeline
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetail'
+
+    put:
+      tags: [Users]
+      summary: Update user
+      operationId: updateUser
+      x-ui-config:
+        component: EditForm
+        mode: inline
+        confirmation: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+    delete:
+      tags: [Users]
+      summary: Delete user
+      operationId: deleteUser
+      x-ui-config:
+        component: ConfirmDialog
+        title: Delete User
+        message: Are you sure you want to delete this user? This action cannot be undone.
+        type: danger
+      responses:
+        '204':
+          description: User deleted
+
+  # Product management
+  /products:
+    get:
+      tags: [Products]
+      summary: List products
+      operationId: listProducts
+      x-ui-config:
+        component: ProductGrid
+        layout: cards
+        features:
+          - quickView
+          - compare
+          - wishlist
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: category
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          x-ui-config:
+            component: CategoryTree
+            multiple: true
+        - name: priceRange
+          in: query
+          schema:
+            type: object
+            properties:
+              min:
+                type: number
+                minimum: 0
+              max:
+                type: number
+          x-ui-config:
+            component: RangeSlider
+            label: Price Range
+            format: currency
+        - name: inStock
+          in: query
+          schema:
+            type: boolean
+          x-ui-config:
+            component: Switch
+            label: In Stock Only
+      responses:
+        '200':
+          description: Product list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductListResponse'
+
+    post:
+      tags: [Products]
+      summary: Create product
+      operationId: createProduct
+      x-ui-config:
+        component: WizardForm
+        steps:
+          - title: Basic Information
+            fields: [name, description, category]
+          - title: Pricing & Inventory
+            fields: [price, compareAtPrice, sku, quantity]
+          - title: Images & Media
+            fields: [images, videos]
+          - title: SEO & Marketing
+            fields: [metaTitle, metaDescription, tags]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '201':
+          description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+  # Order management
+  /orders:
+    get:
+      tags: [Orders]
+      summary: List orders
+      operationId: listOrders
+      x-ui-config:
+        component: OrderTable
+        features:
+          - timeline
+          - statusFilter
+          - dateRange
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/DateRangeParam'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, processing, shipped, delivered, cancelled]
+          x-ui-config:
+            component: StatusFilter
+            showCounts: true
+      responses:
+        '200':
+          description: Order list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderListResponse'
+
+  # Analytics endpoints
+  /analytics/dashboard:
+    get:
+      tags: [Analytics]
+      summary: Get dashboard metrics
+      operationId: getDashboard
+      x-ui-config:
+        component: Dashboard
+        layout: grid
+        refreshInterval: 30000
+      parameters:
+        - $ref: '#/components/parameters/DateRangeParam'
+      responses:
+        '200':
+          description: Dashboard data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardData'
+
+  # File upload example
+  /upload/avatar:
+    post:
+      tags: [Users]
+      summary: Upload user avatar
+      operationId: uploadAvatar
+      x-ui-config:
+        component: AvatarUpload
+        accept: image/*
+        maxSize: 5MB
+        crop:
+          aspectRatio: 1
+          shape: circle
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  x-ui-config:
+                    preview: true
+                    validation:
+                      maxSize: 5242880
+                      accept: [image/jpeg, image/png, image/webp]
+      responses:
+        '200':
+          description: Upload successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    format: uri
+
+  # WebSocket example (for real-time features)
+  /ws/notifications:
+    get:
+      tags: [Notifications]
+      summary: WebSocket endpoint for real-time notifications
+      operationId: notifications
+      x-ui-config:
+        component: NotificationCenter
+        position: top-right
+        features:
+          - sound
+          - desktop
+          - grouping
+      responses:
+        '101':
+          description: Switching Protocols
+
+components:
+  schemas:
+    # Authentication schemas
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: JWT token
+        refreshToken:
+          type: string
+          description: Refresh token
+        expiresIn:
+          type: integer
+          description: Token expiration time in seconds
+        user:
+          $ref: '#/components/schemas/User'
+
+    # User schemas
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        lastName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        avatar:
+          type: string
+          format: uri
+          x-ui-config:
+            component: Avatar
+            size: medium
+        role:
+          type: string
+          enum: [admin, user, guest]
+          x-ui-config:
+            component: Badge
+            color:
+              admin: primary
+              user: secondary
+              guest: default
+        status:
+          type: string
+          enum: [active, inactive, pending]
+          x-ui-config:
+            component: StatusBadge
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          x-ui-config:
+            component: DateDisplay
+            format: relative
+
+    UserInput:
+      type: object
+      required: [email, firstName, lastName]
+      properties:
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        lastName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        phone:
+          type: string
+          pattern: '^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$'
+          x-ui-config:
+            component: PhoneInput
+            defaultCountry: US
+        role:
+          type: string
+          enum: [admin, user, guest]
+          default: user
+
+    UserRegistration:
+      allOf:
+        - $ref: '#/components/schemas/UserInput'
+        - type: object
+          required: [password, confirmPassword, terms]
+          properties:
+            password:
+              type: string
+              format: password
+              minLength: 8
+              pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]'
+              x-ui-config:
+                component: PasswordInput
+                strengthMeter: true
+                requirements:
+                  - Minimum 8 characters
+                  - One uppercase letter
+                  - One lowercase letter
+                  - One number
+                  - One special character
+            confirmPassword:
+              type: string
+              format: password
+              x-ui-config:
+                component: PasswordInput
+                match: password
+                label: Confirm Password
+            newsletter:
+              type: boolean
+              default: false
+              x-ui-config:
+                component: Checkbox
+                label: Subscribe to newsletter
+            terms:
+              type: boolean
+              x-ui-config:
+                component: Checkbox
+                label: I agree to the terms and conditions
+                required: true
+                link:
+                  text: terms and conditions
+                  url: /terms
+
+    UserDetail:
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          properties:
+            preferences:
+              type: object
+              x-ui-config:
+                component: JsonEditor
+                collapsed: true
+              properties:
+                theme:
+                  type: string
+                  enum: [light, dark, auto]
+                  x-ui-config:
+                    component: ThemeToggle
+                language:
+                  type: string
+                  enum: [en, es, fr, de]
+                  x-ui-config:
+                    component: LanguageSelect
+                notifications:
+                  type: object
+                  x-ui-config:
+                    component: NotificationSettings
+                  properties:
+                    email:
+                      type: boolean
+                    push:
+                      type: boolean
+                    sms:
+                      type: boolean
+            stats:
+              type: object
+              x-ui-config:
+                component: StatCards
+              properties:
+                ordersCount:
+                  type: integer
+                  x-ui-config:
+                    icon: shopping-cart
+                    color: primary
+                totalSpent:
+                  type: number
+                  x-ui-config:
+                    icon: dollar
+                    format: currency
+                    color: success
+                lastLogin:
+                  type: string
+                  format: date-time
+                  x-ui-config:
+                    icon: clock
+                    format: relative
+
+    UserListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    # Product schemas
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          minLength: 3
+          maxLength: 200
+        description:
+          type: string
+          maxLength: 5000
+          x-ui-config:
+            component: RichTextDisplay
+        category:
+          type: string
+          x-ui-config:
+            component: CategoryBreadcrumb
+        price:
+          type: number
+          minimum: 0
+          x-ui-config:
+            component: PriceDisplay
+            currency: USD
+        compareAtPrice:
+          type: number
+          minimum: 0
+          x-ui-config:
+            component: PriceDisplay
+            strikethrough: true
+        images:
+          type: array
+          items:
+            type: string
+            format: uri
+          x-ui-config:
+            component: ImageGallery
+            zoom: true
+            thumbnails: true
+        sku:
+          type: string
+          pattern: '^[A-Z0-9-]+$'
+        quantity:
+          type: integer
+          minimum: 0
+          x-ui-config:
+            component: InventoryBadge
+            lowStockThreshold: 10
+        tags:
+          type: array
+          items:
+            type: string
+          x-ui-config:
+            component: TagList
+            clickable: true
+        rating:
+          type: number
+          minimum: 0
+          maximum: 5
+          x-ui-config:
+            component: StarRating
+            showCount: true
+        reviewsCount:
+          type: integer
+          minimum: 0
+
+    ProductInput:
+      type: object
+      required: [name, category, price, sku]
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 200
+          x-ui-config:
+            component: TextInput
+            size: large
+            counter: true
+        description:
+          type: string
+          maxLength: 5000
+          x-ui-config:
+            component: RichTextEditor
+            toolbar:
+              - bold
+              - italic
+              - underline
+              - link
+              - bulletList
+              - numberedList
+        category:
+          type: string
+          x-ui-config:
+            component: CategorySelect
+            allowCreate: false
+            searchable: true
+        price:
+          type: number
+          minimum: 0
+          x-ui-config:
+            component: CurrencyInput
+            currency: USD
+        compareAtPrice:
+          type: number
+          minimum: 0
+          x-ui-config:
+            component: CurrencyInput
+            currency: USD
+            label: Compare at Price (Optional)
+        images:
+          type: array
+          items:
+            type: string
+            format: binary
+          x-ui-config:
+            component: MultiImageUpload
+            maxFiles: 10
+            accept: image/*
+            reorder: true
+        sku:
+          type: string
+          pattern: '^[A-Z0-9-]+$'
+          x-ui-config:
+            component: TextInput
+            transform: uppercase
+            placeholder: ABC-123
+        quantity:
+          type: integer
+          minimum: 0
+          default: 0
+          x-ui-config:
+            component: NumberInput
+            min: 0
+            step: 1
+        tags:
+          type: array
+          items:
+            type: string
+          x-ui-config:
+            component: TagInput
+            allowCreate: true
+            suggestions: true
+
+    ProductListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        filters:
+          type: object
+          x-ui-config:
+            component: ActiveFilters
+            clearable: true
+
+    # Order schemas
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        orderNumber:
+          type: string
+          x-ui-config:
+            component: CopyableText
+            prefix: 'Order #'
+        customer:
+          $ref: '#/components/schemas/User'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+          x-ui-config:
+            component: OrderItemsList
+            editable: false
+        subtotal:
+          type: number
+          x-ui-config:
+            component: PriceDisplay
+        tax:
+          type: number
+          x-ui-config:
+            component: PriceDisplay
+        shipping:
+          type: number
+          x-ui-config:
+            component: PriceDisplay
+        total:
+          type: number
+          x-ui-config:
+            component: PriceDisplay
+            size: large
+            weight: bold
+        status:
+          type: string
+          enum: [pending, processing, shipped, delivered, cancelled]
+          x-ui-config:
+            component: OrderStatus
+            showTimeline: true
+        shippingAddress:
+          $ref: '#/components/schemas/Address'
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+
+    OrderItem:
+      type: object
+      properties:
+        product:
+          $ref: '#/components/schemas/Product'
+        quantity:
+          type: integer
+          minimum: 1
+        price:
+          type: number
+        total:
+          type: number
+
+    OrderListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        summary:
+          type: object
+          x-ui-config:
+            component: OrderSummaryCards
+          properties:
+            totalOrders:
+              type: integer
+            totalRevenue:
+              type: number
+            averageOrderValue:
+              type: number
+
+    # Common schemas
+    Address:
+      type: object
+      required: [street, city, country, postalCode]
+      properties:
+        street:
+          type: string
+          x-ui-config:
+            component: AddressAutocomplete
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+          x-ui-config:
+            component: CountrySelect
+        postalCode:
+          type: string
+          x-ui-config:
+            component: PostalCodeInput
+            validateFormat: true
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+          minimum: 1
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 100
+        total:
+          type: integer
+        totalPages:
+          type: integer
+      x-ui-config:
+        component: Pagination
+        showSizeChanger: true
+        showQuickJumper: true
+
+    # Analytics schemas
+    DashboardData:
+      type: object
+      properties:
+        revenue:
+          type: object
+          x-ui-config:
+            component: RevenueChart
+            type: line
+          properties:
+            current:
+              type: number
+            previous:
+              type: number
+            chart:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                  value:
+                    type: number
+        orders:
+          type: object
+          x-ui-config:
+            component: OrdersChart
+            type: bar
+          properties:
+            count:
+              type: integer
+            growth:
+              type: number
+            chart:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                  count:
+                    type: integer
+        topProducts:
+          type: array
+          x-ui-config:
+            component: TopProductsList
+            limit: 10
+          items:
+            type: object
+            properties:
+              product:
+                $ref: '#/components/schemas/Product'
+              sales:
+                type: integer
+              revenue:
+                type: number
+
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+        timestamp:
+          type: string
+          format: date-time
+
+  parameters:
+    UserIdParam:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: User ID
+
+    PageParam:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+      description: Page number
+      x-ui-config:
+        hide: true
+
+    LimitParam:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+      description: Items per page
+      x-ui-config:
+        component: PageSizeSelector
+        options: [10, 20, 50, 100]
+
+    SearchParam:
+      name: search
+      in: query
+      schema:
+        type: string
+      description: Search query
+      x-ui-config:
+        component: SearchInput
+        placeholder: Search...
+        debounce: 300
+
+    DateRangeParam:
+      name: dateRange
+      in: query
+      schema:
+        type: object
+        properties:
+          start:
+            type: string
+            format: date
+          end:
+            type: string
+            format: date
+      x-ui-config:
+        component: DateRangePicker
+        presets:
+          - label: Last 7 days
+            value: 7d
+          - label: Last 30 days
+            value: 30d
+          - label: Last 90 days
+            value: 90d
+
+  responses:
+    UnauthorizedError:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: UNAUTHORIZED
+            message: Authentication required
+
+    ForbiddenError:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: FORBIDDEN
+            message: You don't have permission to perform this action
+
+    NotFoundError:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: NOT_FOUND
+            message: The requested resource was not found
+
+    ValidationError:
+      description: Validation failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: VALIDATION_ERROR
+            message: Validation failed
+            details:
+              field: email
+              reason: Invalid email format
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-ui-config:
+        storage: localStorage
+        key: auth_token
+        refreshEndpoint: /auth/refresh
+
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      x-ui-config:
+        storage: environment
+        envVar: API_KEY
+
+security:
+  - bearerAuth: []
+
+x-ui-generation-config:
+  # Global UI configuration
+  theme:
+    mode: light
+    primaryColor: '#1976d2'
+    borderRadius: 8
+  
+  # Component defaults
+  components:
+    forms:
+      layout: vertical
+      showCancelButton: true
+      submitText: Save
+      cancelText: Cancel
+    
+    tables:
+      striped: true
+      hoverable: true
+      density: comfortable
+    
+    modals:
+      closeOnEscape: true
+      closeOnOverlayClick: false
+      showCloseButton: true
+  
+  # Error handling
+  errorHandling:
+    showToast: true
+    logToConsole: true
+    retryable: true
+  
+  # Loading states
+  loading:
+    type: skeleton
+    delay: 200
+  
+  # Empty states
+  emptyStates:
+    showIcon: true
+    showAction: true
