@@ -34,6 +34,32 @@ Result: A complete app that grandma can actually use, not just code.
 
 It's like asking one person vs. asking an entire team of specialists. Which would you trust more?
 
+> **🚨 Important**: MetaClaude works exclusively with **Claude Code** (Anthropic's CLI) as the main orchestrator, enhanced by **Gemini CLI** (Google's free tool) as a quality controller. This powerful combination gives you:
+> - **Claude Code**: The senior architect that creates and builds
+> - **Gemini CLI**: The junior analyst that reviews and improves
+> - **Result**: Higher quality code through continuous peer review
+
+### Requirements & Quick Start:
+```bash
+# 1. Install Claude Code (main engine)
+npm install -g claude-code
+
+# 2. Install Gemini CLI (free quality analyzer)  
+npm install -g @google/gemini-cli
+
+# 3. Clone MetaClaude framework
+git clone https://github.com/yourusername/MetaClaude.git
+
+# 4. Use MetaClaude through Claude Code
+claude "Build a recipe app for my grandmother"
+# MetaClaude activates 14 specialists
+# Gemini automatically reviews outputs
+# Claude implements improvements
+# You get production-ready results
+```
+
+**Why Two AIs?** Just like pair programming, having Gemini review Claude's work catches issues early and ensures higher quality. Best part: Gemini CLI is completely free!
+
 ---
 
 > **Revolutionary AI architecture where markdown becomes executable intelligence. 14 domain specialists. 73,452+ lines of cognitive infrastructure. Zero code required.**
@@ -46,7 +72,7 @@ It's like asking one person vs. asking an entire team of specialists. Which woul
 </p>
 
 <p align="center">
-  <strong>🔥 The AI that writes its own logic in plain English and executes it.</strong>
+  <strong>🔥 The AI framework that supercharges Claude Code with 14 specialists + free Gemini quality control.</strong>
 </p>
 
 ## 🤝 Claude + Gemini: The Perfect AI Partnership
