@@ -1,0 +1,104 @@
+{
+  "specialist": "critic-analyst",
+  "version": "1.0.0",
+  "description": "Gemini-powered analysis and critique specialist for MetaClaude",
+  "settings": {
+    "analysis_only_mode": true,
+    "gemini_cli_required": true,
+    "output_format": "markdown",
+    "report_retention_days": 30
+  },
+  "agents": [
+    {
+      "name": "code-critic",
+      "description": "Analyzes code quality and structure",
+      "focus_areas": ["maintainability", "readability", "patterns", "anti-patterns"]
+    },
+    {
+      "name": "security-auditor",
+      "description": "Identifies security vulnerabilities",
+      "focus_areas": ["owasp", "authentication", "authorization", "data-protection"]
+    },
+    {
+      "name": "architecture-reviewer",
+      "description": "Reviews system design and architecture",
+      "focus_areas": ["patterns", "scalability", "maintainability", "technical-debt"]
+    },
+    {
+      "name": "performance-analyst",
+      "description": "Analyzes performance and efficiency",
+      "focus_areas": ["complexity", "bottlenecks", "resource-usage", "optimization"]
+    },
+    {
+      "name": "documentation-reviewer",
+      "description": "Assesses documentation quality",
+      "focus_areas": ["completeness", "clarity", "accuracy", "examples"]
+    }
+  ],
+  "workflows": [
+    {
+      "name": "comprehensive-review",
+      "description": "Full analysis using all agents",
+      "agents": ["all"],
+      "parallel": true
+    },
+    {
+      "name": "iterative-improvement",
+      "description": "Continuous improvement cycles",
+      "max_iterations": 5,
+      "quality_threshold": 7.0
+    },
+    {
+      "name": "pre-release-audit",
+      "description": "Final quality gate before release",
+      "required_score": 7.0,
+      "block_on_critical": true
+    }
+  ],
+  "quality_thresholds": {
+    "excellent": 8.0,
+    "good": 6.0,
+    "acceptable": 5.0,
+    "poor": 3.0
+  },
+  "severity_levels": {
+    "critical": {
+      "description": "Must fix immediately",
+      "examples": ["security vulnerabilities", "data loss risk", "system crashes"],
+      "action": "block"
+    },
+    "high": {
+      "description": "Fix before release",
+      "examples": ["major bugs", "performance issues", "missing auth"],
+      "action": "warn"
+    },
+    "medium": {
+      "description": "Should fix soon",
+      "examples": ["code smells", "minor bugs", "optimization opportunities"],
+      "action": "track"
+    },
+    "low": {
+      "description": "Nice to fix",
+      "examples": ["style issues", "minor improvements", "documentation gaps"],
+      "action": "log"
+    }
+  },
+  "integration": {
+    "gemini_cli": {
+      "command": "npx @google/gemini-cli",
+      "requires_auth": true,
+      "model": "gemini-pro"
+    },
+    "hooks": {
+      "post_generate": true,
+      "pre_commit": false,
+      "ci_pipeline": true
+    }
+  },
+  "constraints": {
+    "never_generate_code": true,
+    "analysis_only": true,
+    "output_types": ["markdown", "json"],
+    "max_file_size_mb": 10
+  }
+}
