@@ -1,87 +1,168 @@
-# UI Designer Claude Orchestrator
+# MetaClaude
 
-Transform Claude Code into a comprehensive UI/UX design assistant with multi-agent orchestration, vibe design methodology, and complete design system generation.
+A cognitive framework for building self-aware, adaptive AI systems. MetaClaude provides reusable patterns, orchestration capabilities, and cognitive architectures that can be applied to any domain.
 
-## Features
+## What is MetaClaude?
 
-- **6 Specialized Design Agents**: From brand strategy to accessibility auditing
-- **Vibe Design Integration**: Sean Kochel's visual DNA extraction methodology
-- **Parallel Processing**: Generate 3-5 design variations simultaneously
-- **Design System First**: Token-based design with Tailwind CSS integration
-- **Natural Language Interface**: Describe your vision, get professional designs
-- **Persistent Memory**: Evolving design intelligence across sessions
+MetaClaude is a meta-cognitive layer for Claude that enables:
+
+- **Self-Evolving Intelligence**: Systems that create new reasoning patterns when facing unprecedented challenges
+- **Transparent Reasoning**: Explainable decision-making with clear cognitive traces
+- **Adaptive Behavior**: Context-aware responses that adjust to situational needs
+- **Multi-Agent Orchestration**: Coordinated specialist agents working in parallel
+- **Cognitive Persistence**: Learning and memory that evolves across sessions
+
+## Core Components
+
+### Cognitive Patterns
+Reusable reasoning frameworks that can be applied across domains:
+- **Reasoning Patterns**: Analytical, creative, strategic, and adaptive thinking modes
+- **Memory Operations**: Simulated persistence and knowledge accumulation
+- **Feedback Processing**: Learning mechanisms and improvement cycles
+- **Pattern Lifecycle**: Dynamic pattern creation, evolution, and retirement
+
+### Orchestration Layer
+Coordination and workflow management:
+- **Agent Coordination**: Multi-specialist collaboration
+- **Workflow Dispatch**: Complex task decomposition and execution
+- **Parallel Processing**: Efficient concurrent operations
+- **Result Synthesis**: Intelligent aggregation of outputs
+
+### Evolution Layer
+Self-improvement and adaptation:
+- **Dynamic Reasoning Selection**: Choose or create appropriate patterns
+- **Autonomous Learning**: Extract insights from interactions
+- **Conflict Resolution**: Handle contradictions and ambiguities
+- **Explainable AI**: Transparent decision processes
+
+## Available Implementations
+
+### UI Designer
+A comprehensive UI/UX design assistant featuring:
+- 6 specialized design agents
+- Vibe design methodology
+- Parallel design generation
+- Complete design systems
+
+[Learn more about UI Designer →](.claude/implementations/ui-designer/)
+
+### Coming Soon
+- **Code Architect**: Intelligent software architecture and design
+- **Data Scientist**: Advanced analytics and ML workflows
+- **Content Creator**: Multi-format content generation
+- **Research Assistant**: Academic and technical research
 
 ## Quick Start
 
+### Using an Implementation
+
 ```bash
-# Install and configure
+# Install MetaClaude
 ./install.sh
+
+# Use the UI Designer implementation
+"I want to create a modern SaaS dashboard using the UI Designer implementation"
 ```
 
-### Start designing with Claude Code:
+### Creating Your Own Implementation
+
+1. **Define Your Domain**
+   - Identify specialist roles needed
+   - Map workflow patterns
+   - Define success criteria
+
+2. **Create Specialists**
+   ```
+   .claude/implementations/your-domain/
+   ├── agents/
+   │   ├── specialist-1.md
+   │   ├── specialist-2.md
+   │   └── orchestrator.md
+   ├── workflows/
+   │   └── main-workflow.md
+   └── README.md
+   ```
+
+3. **Leverage Core Patterns**
+   - Import reasoning patterns
+   - Use memory operations
+   - Apply feedback loops
+
+## Architecture
 
 ```
-# Extract design DNA from inspiration
-"I have some inspiration images I'd like to analyze for design patterns and visual DNA"
-
-# Generate MVP concept
-"Create an MVP concept for a fitness tracking app"
-
-# Create UI variations
-"Design multiple variations for an onboarding flow"
+MetaClaude Framework
+├── Core Patterns (Reusable)
+│   ├── Reasoning Patterns
+│   ├── Memory Operations
+│   ├── Feedback Processing
+│   └── Evolution Mechanisms
+├── Orchestration Layer
+│   ├── Agent Coordination
+│   ├── Workflow Management
+│   └── Result Synthesis
+└── Implementations (Domain-Specific)
+    ├── UI Designer
+    ├── Code Architect
+    └── [Your Implementation]
 ```
 
-## Workflows
+## Key Concepts
 
-### Complete UI Project
-```
-"Create a modern SaaS dashboard design using the UI Designer Claude system"
-```
+### Cognitive Patterns
+Reusable thinking frameworks that can be combined and adapted:
+- **PASE Method**: Ponder → Analyze → Synthesize → Execute
+- **Systems Thinking**: Understanding complex interconnections
+- **Iterative Refinement**: Continuous improvement cycles
+- **Context-Aware Adaptation**: Situational reasoning
 
-### Design Sprint
-```
-"Run a design sprint workflow for an e-commerce mobile app"
-```
+### Agent Orchestration
+Coordinated multi-agent systems:
+- **Specialist Agents**: Domain experts with specific capabilities
+- **Parallel Execution**: Concurrent task processing
+- **Sequential Dependencies**: Ordered workflow management
+- **Result Aggregation**: Intelligent synthesis of outputs
 
-### Brand Identity
-```
-"Create a brand identity for a tech startup focused on AI"
-```
+### Adaptive Intelligence
+Self-improving capabilities:
+- **Pattern Generation**: Create new approaches for novel problems
+- **Learning Integration**: Incorporate feedback and experience
+- **Performance Optimization**: Continuously improve efficiency
+- **Error Recovery**: Graceful handling of failures
 
-## Specialists
+## Benefits
 
-- **Design Analyst**: Visual DNA extraction, pattern recognition
-- **Style Guide Expert**: Design system creation, token management
-- **UI Generator**: Screen creation with Tailwind CSS & Lucide icons
-- **UX Researcher**: User personas, journey mapping, validation
-- **Brand Strategist**: Identity development, emotional design
-- **Accessibility Auditor**: WCAG compliance, inclusive design
+### For Users
+- **Natural Interaction**: Describe what you want in plain language
+- **Consistent Quality**: Reliable, high-quality outputs
+- **Transparent Process**: Understand how decisions are made
+- **Adaptive Response**: Solutions tailored to your context
 
-## Commands
-
-| Command | Description |
-|---------|-------------|
-| `extract-design-dna` | Analyze inspiration images, create design tokens |
-| `generate-mvp-concept` | Structure app concept with features and flows |
-| `fuse-style-concept` | Combine visual DNA with app concept |
-| `create-ui-variations` | Generate multiple UI approaches |
-| `iterate-designs` | Focused improvements based on feedback |
-| `audit-accessibility` | Comprehensive a11y review |
-| `optimize-user-flow` | Improve UX flows and interactions |
-| `export-design-system` | Generate complete design documentation |
+### For Developers
+- **Reusable Framework**: Build on proven patterns
+- **Extensible Architecture**: Easy to add new capabilities
+- **Domain Flexibility**: Apply to any field or industry
+- **Cognitive Tools**: Leverage advanced reasoning capabilities
 
 ## Documentation
 
-- [Setup Guide](docs/setup-guide.md) - Installation and configuration
-- [Workflow Examples](docs/workflow-examples.md) - Common design scenarios
-- [Customization](docs/customization.md) - Extend and modify the system
+- [Core Patterns](.claude/patterns/) - Reusable cognitive frameworks
+- [Implementation Guide](.claude/implementations/) - Create your own domains
+- [API Reference](.claude/core/) - Framework interfaces
 
-## Examples
+## Contributing
 
-- [Mobile App](examples/mobile-app-example/) - Complete mobile design project
-- [Web Dashboard](examples/web-dashboard-example/) - SaaS dashboard design
-- [Design System](examples/design-system-example/) - Token-based system creation
+MetaClaude is designed to grow through community contributions:
+
+1. **Create New Implementations**: Apply MetaClaude to your domain
+2. **Enhance Core Patterns**: Improve reasoning frameworks
+3. **Share Workflows**: Document successful approaches
+4. **Report Issues**: Help improve the framework
 
 ## License
 
 MIT License - See LICENSE for details
+
+---
+
+*MetaClaude: Building cognitive systems that think about thinking*
