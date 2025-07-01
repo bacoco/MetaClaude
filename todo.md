@@ -6,6 +6,29 @@ Following that same pattern, here are four ideas for next-level specialists that
 
 ---
 
+## 0. The Gemini Critic-Analyst 🔍 **NEXT PRIORITY**
+
+**Purpose:** To provide continuous quality analysis and feedback on all Claude outputs using Google's Gemini as a dedicated analysis engine. This creates an unprecedented AI collaboration where one AI (Claude) creates while another (Gemini) critiques.
+
+**Input:** Any Claude-generated code, architecture, or documentation
+
+**Output:**
+- Detailed analysis reports (`.md` files only)
+- Security audit documents
+- Performance assessments
+- Architecture reviews
+- Code quality reports
+
+**Required Components:**
+- **Gemini CLI Integration:** Wrapper scripts enforcing analysis-only mode
+- **Analysis Agents:** Code Critic, Security Auditor, Architecture Reviewer, Performance Analyst
+- **Report Templates:** Structured formats for different analysis types
+- **Workflow Patterns:** Automated critique cycles after Claude operations
+
+**Key Restriction:** Gemini will ONLY write analysis documents, never implementation code.
+
+---
+
 ## 1. The Automated Test Case Generator
 
 **Purpose:** To bridge the gap between product requirements and quality assurance by automatically generating comprehensive test plans and cases. This specialist would ensure that every requirement is testable and has corresponding validation scenarios.
