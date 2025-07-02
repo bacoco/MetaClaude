@@ -1,0 +1,335 @@
+{
+  "version": "2.0.0",
+  "last_updated": "2025-01-02",
+  "schema": {
+    "version": "2.0",
+    "features": ["versioning", "dependency-constraints", "backward-compatibility"]
+  },
+  "scripts": [
+    {
+      "id": "core/json-validator",
+      "name": "JSON Schema Validator",
+      "category": "validation",
+      "path": "scripts/validation/json-schema-validator.sh",
+      "description": "Validates JSON files against a schema",
+      "execution": {
+        "type": "shell_script",
+        "interpreter": "/bin/bash",
+        "args": [
+          {"name": "schema_path", "type": "string", "required": true, "description": "Path to JSON schema file"},
+          {"name": "data_path", "type": "string", "required": true, "description": "Path to JSON data file"}
+        ],
+        "timeout": 30000,
+        "permissions": ["read_file"]
+      },
+      "outputs": [
+        {"name": "is_valid", "type": "boolean", "description": "Whether the data is valid"},
+        {"name": "errors", "type": "array", "description": "List of validation errors"}
+      ],
+      "specialists": ["api-ui-designer", "data-scientist", "prd-specialist"],
+      "dependencies": {
+        "jq": ">=1.6"
+      },
+      "version": "1.0.0",
+      "security": {
+        "sandbox": "minimal",
+        "max_memory": "512MB",
+        "network_access": false
+      },
+      "examples": ["examples/json-validator-example.md"],
+      "tags": ["validation", "json", "schema"]
+    },
+    {
+      "id": "data/csv-to-json",
+      "name": "CSV to JSON Converter",
+      "category": "data",
+      "path": "scripts/data/csv-to-json.sh",
+      "description": "Convert CSV files to JSON format with type inference",
+      "execution": {
+        "type": "shell_script",
+        "interpreter": "/bin/bash",
+        "args": [
+          {"name": "input_file", "type": "string", "required": true, "description": "Input CSV file"},
+          {"name": "output_file", "type": "string", "required": false, "description": "Output JSON file (stdout if not specified)"},
+          {"name": "headers", "type": "boolean", "default": true, "description": "First row contains headers"}
+        ],
+        "timeout": 60000,
+        "permissions": ["read_file", "write_file"]
+      },
+      "outputs": [
+        {"name": "json_data", "type": "object", "description": "Converted JSON data"},
+        {"name": "row_count", "type": "number", "description": "Number of rows processed"}
+      ],
+      "specialists": ["data-scientist", "database-admin-builder"],
+      "dependencies": {
+        "python3": ">=3.8",
+        "pandas": "^1.3.0"
+      },
+      "version": "1.0.0",
+      "security": {
+        "sandbox": "standard",
+        "max_memory": "1GB",
+        "network_access": false
+      },
+      "tags": ["conversion", "csv", "json", "data"]
+    },
+    {
+      "id": "analysis/code-complexity",
+      "name": "Code Complexity Analyzer",
+      "category": "analysis",
+      "path": "scripts/analysis/code-complexity.py",
+      "description": "Analyze code complexity metrics (cyclomatic, cognitive)",
+      "execution": {
+        "type": "python_script",
+        "interpreter": "/usr/bin/python3",
+        "args": [
+          {"name": "source_path", "type": "string", "required": true, "description": "Path to source code"},
+          {"name": "language", "type": "string", "enum": ["javascript", "typescript", "python", "java"], "required": true},
+          {"name": "format", "type": "string", "enum": ["json", "markdown", "html"], "default": "json"}
+        ],
+        "timeout": 120000,
+        "permissions": ["read_file"]
+      },
+      "outputs": [
+        {"name": "metrics", "type": "object", "description": "Complexity metrics per file/function"},
+        {"name": "summary", "type": "object", "description": "Overall complexity summary"}
+      ],
+      "specialists": ["code-architect", "qa-engineer", "critic-analyst"],
+      "dependencies": {
+        "radon": "~5.1.0",
+        "lizard": "^1.17.0"
+      },
+      "version": "1.2.0",
+      "security": {
+        "sandbox": "strict",
+        "max_memory": "2GB",
+        "network_access": false
+      },
+      "tags": ["analysis", "metrics", "code-quality"]
+    },
+    {
+      "id": "generation/api-mock",
+      "name": "API Mock Data Generator",
+      "category": "generation",
+      "path": "scripts/generation/api-mock-generator.js",
+      "description": "Generate realistic mock data for API endpoints",
+      "execution": {
+        "type": "node_script",
+        "interpreter": "/usr/bin/node",
+        "args": [
+          {"name": "schema", "type": "object", "required": true, "description": "OpenAPI/JSON Schema definition"},
+          {"name": "count", "type": "number", "default": 10, "description": "Number of records to generate"},
+          {"name": "seed", "type": "number", "description": "Random seed for reproducibility"}
+        ],
+        "timeout": 30000,
+        "permissions": ["write_file"]
+      },
+      "outputs": [
+        {"name": "mock_data", "type": "array", "description": "Generated mock data"},
+        {"name": "metadata", "type": "object", "description": "Generation metadata"}
+      ],
+      "specialists": ["api-ui-designer", "qa-engineer", "test-case-generator"],
+      "dependencies": {
+        "faker": "^8.0.0",
+        "json-schema-faker": "^2.16.0"
+      },
+      "version": "2.0.1",
+      "security": {
+        "sandbox": "minimal",
+        "max_memory": "256MB",
+        "network_access": false
+      },
+      "tags": ["generation", "mock-data", "api", "testing"]
+    },
+    {
+      "id": "integration/github-pr",
+      "name": "GitHub PR Automation",
+      "category": "integration",
+      "path": "scripts/integration/github-pr.sh",
+      "description": "Create and manage GitHub pull requests",
+      "execution": {
+        "type": "shell_script",
+        "interpreter": "/bin/bash",
+        "args": [
+          {"name": "action", "type": "string", "enum": ["create", "update", "merge"], "required": true},
+          {"name": "title", "type": "string", "required": false},
+          {"name": "body", "type": "string", "required": false},
+          {"name": "branch", "type": "string", "required": false}
+        ],
+        "timeout": 60000,
+        "permissions": ["network", "env_vars"],
+        "env_required": ["GITHUB_TOKEN"]
+      },
+      "outputs": [
+        {"name": "pr_url", "type": "string", "description": "Pull request URL"},
+        {"name": "pr_number", "type": "number", "description": "Pull request number"}
+      ],
+      "specialists": ["devops-engineer", "code-architect"],
+      "dependencies": {
+        "gh": ">=2.0.0"
+      },
+      "version": "1.1.0",
+      "security": {
+        "sandbox": "network",
+        "max_memory": "128MB",
+        "network_access": true,
+        "allowed_hosts": ["api.github.com"]
+      },
+      "tags": ["integration", "github", "vcs", "automation"]
+    },
+    {
+      "id": "data/json-to-csv",
+      "name": "JSON to CSV Converter",
+      "category": "data",
+      "path": "scripts/data/json-to-csv.sh",
+      "description": "Convert JSON arrays to CSV format with automatic header detection",
+      "execution": {
+        "type": "shell_script",
+        "interpreter": "/bin/bash",
+        "args": [
+          {"name": "input_file", "type": "string", "required": true, "description": "JSON file to convert"},
+          {"name": "output_file", "type": "string", "required": false, "description": "Output CSV file (stdout if not specified)"},
+          {"name": "headers", "type": "boolean", "default": true, "description": "Use first row for headers"}
+        ],
+        "timeout": 60000,
+        "permissions": ["read_file", "write_file"]
+      },
+      "outputs": [
+        {"name": "json_data", "type": "object", "description": "Output file information"},
+        {"name": "row_count", "type": "number", "description": "Number of rows converted"}
+      ],
+      "specialists": ["data-scientist", "api-ui-designer", "database-admin-builder"],
+      "dependencies": {
+        "jq": ">=1.6"
+      },
+      "version": "1.0.0",
+      "security": {
+        "sandbox": "standard",
+        "max_memory": "1GB",
+        "network_access": false
+      },
+      "tags": ["conversion", "json", "csv", "data"]
+    },
+    {
+      "id": "data/yaml-to-json",
+      "name": "YAML to JSON Converter",
+      "category": "data",
+      "path": "scripts/data/yaml-to-json.py",
+      "description": "Convert YAML files to JSON format with validation",
+      "execution": {
+        "type": "python_script",
+        "interpreter": "/usr/bin/python3",
+        "args": [
+          {"name": "input_file", "type": "string", "required": true, "description": "Input YAML file"},
+          {"name": "output_file", "type": "string", "required": false, "description": "Output JSON file (stdout if not specified)"},
+          {"name": "compact", "type": "boolean", "default": false, "description": "Output compact JSON"}
+        ],
+        "timeout": 30000,
+        "permissions": ["read_file", "write_file"]
+      },
+      "outputs": [
+        {"name": "json_data", "type": "object", "description": "Output file information"},
+        {"name": "data_type", "type": "string", "description": "Type of root data structure"},
+        {"name": "size", "type": "number", "description": "Size of JSON output"}
+      ],
+      "specialists": ["devops-engineer", "api-ui-designer", "code-architect"],
+      "dependencies": {
+        "pyyaml": ">=5.4.0"
+      },
+      "version": "1.0.0",
+      "security": {
+        "sandbox": "minimal",
+        "max_memory": "512MB",
+        "network_access": false
+      },
+      "tags": ["conversion", "yaml", "json", "config"]
+    },
+    {
+      "id": "core/git-operations",
+      "name": "Git Operations Helper",
+      "category": "core",
+      "path": "scripts/core/git-operations.sh",
+      "description": "Common git operations for MetaClaude specialists",
+      "execution": {
+        "type": "shell_script",
+        "interpreter": "/bin/bash",
+        "args": [
+          {"name": "operation", "type": "string", "enum": ["check-status", "create-branch", "safe-commit", "push-branch", "check-conflicts", "stash-changes"], "required": true},
+          {"name": "branch", "type": "string", "required": false, "description": "Branch name"},
+          {"name": "message", "type": "string", "required": false, "description": "Commit message"},
+          {"name": "remote", "type": "string", "default": "origin", "description": "Remote name"}
+        ],
+        "timeout": 60000,
+        "permissions": ["read_file", "write_file", "env_vars"]
+      },
+      "outputs": [
+        {"name": "success", "type": "boolean", "description": "Operation success status"},
+        {"name": "branch", "type": "string", "description": "Current or created branch"},
+        {"name": "has_changes", "type": "boolean", "description": "Whether there are uncommitted changes"}
+      ],
+      "specialists": ["code-architect", "devops-engineer", "qa-engineer", "ui-designer"],
+      "dependencies": {
+        "git": ">=2.25.0"
+      },
+      "version": "1.0.0",
+      "security": {
+        "sandbox": "standard",
+        "max_memory": "256MB",
+        "network_access": false
+      },
+      "tags": ["git", "vcs", "workflow", "automation"]
+    },
+    {
+      "id": "core/json-validator@2.0.0",
+      "name": "JSON Schema Validator",
+      "category": "validation",
+      "path": "scripts/validation/json-schema-validator-v2.sh",
+      "description": "Validates JSON files against a schema with enhanced error reporting",
+      "execution": {
+        "type": "shell_script",
+        "interpreter": "/bin/bash",
+        "args": [
+          {"name": "schema_path", "type": "string", "required": true, "description": "Path to JSON schema file"},
+          {"name": "data_path", "type": "string", "required": true, "description": "Path to JSON data file"},
+          {"name": "verbose", "type": "boolean", "default": false, "description": "Enable verbose error reporting"}
+        ],
+        "timeout": 30000,
+        "permissions": ["read_file"]
+      },
+      "outputs": [
+        {"name": "is_valid", "type": "boolean", "description": "Whether the data is valid"},
+        {"name": "errors", "type": "array", "description": "List of validation errors"},
+        {"name": "warnings", "type": "array", "description": "List of validation warnings"}
+      ],
+      "specialists": ["api-ui-designer", "data-scientist", "prd-specialist"],
+      "dependencies": {
+        "jq": ">=1.6",
+        "ajv-cli": "^5.0.0"
+      },
+      "scriptDependencies": {
+        "core/git-operations": "^1.0.0"
+      },
+      "version": "2.0.0",
+      "changelog": {
+        "2.0.0": "Added verbose mode and warnings output, switched to ajv-cli for better schema support",
+        "1.0.0": "Initial release with basic validation"
+      },
+      "security": {
+        "sandbox": "minimal",
+        "max_memory": "512MB",
+        "network_access": false
+      },
+      "examples": ["examples/json-validator-v2-example.md"],
+      "tags": ["validation", "json", "schema", "v2"]
+    }
+  ],
+  "categories": {
+    "core": "Essential framework utilities",
+    "data": "Data processing and transformation",
+    "analysis": "Code and data analysis tools",
+    "validation": "Validators and checkers",
+    "generation": "Content and data generators",
+    "integration": "External service integrations",
+    "templates": "Reusable script templates"
+  }
+}

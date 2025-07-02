@@ -1,0 +1,271 @@
+# Advanced Workflow Example - Demonstrating Complex Orchestration Features
+# This workflow shows conditional branching, parallel execution, output transformation,
+# tool chaining, and error handling capabilities
+
+id: advanced_data_pipeline
+name: Advanced Data Processing Pipeline
+description: Demonstrates all advanced orchestration features
+version: 1.0.0
+
+# Initial variables can be provided at runtime
+variables:
+  api_endpoint: "https://api.example.com"
+  processing_mode: "full"
+  max_retries: 3
+  threshold: 85
+
+# Workflow steps with various execution patterns
+steps:
+  # Step 1: Fetch data with retry logic
+  - type: task
+    id: fetch_source_data
+    tool: http_request
+    parameters:
+      url: "${api_endpoint}/data"
+      method: GET
+      headers:
+        Authorization: "Bearer ${api_token}"
+    retry:
+      max_attempts: 3
+      delay: 2
+      backoff: exponential
+    output_mapping:
+      # Extract nested data with JSONPath
+      - source: "$.response.data.records"
+        target: "raw_records"
+        transform: "array"
+      - source: "$.response.data.total_count"
+        target: "total_count"
+        transform: "number"
+      - source: "$.response.metadata.timestamp"
+        target: "fetch_timestamp"
+        transform: "string"
+    continue_on_error: false
+
+  # Step 2: Conditional processing based on data volume
+  - type: conditional
+    condition:
+      and:
+        - greater: ["$total_count", 0]
+        - equals: ["$processing_mode", "full"]
+    then:
+      # Large dataset processing path
+      - type: parallel
+        id: parallel_processing
+        max_workers: 5
+        tasks:
+          # Process high-priority records
+          - id: process_high_priority
+            tool: data_processor
+            parameters:
+              records: "$raw_records"
+              filter: "priority:high"
+            output_mapping:
+              - source: "$.processed"
+                target: "high_priority_results"
+                transform: "filter:item['score'] > 90|map:item['id']"
+
+          # Process normal records
+          - id: process_normal
+            tool: data_processor
+            parameters:
+              records: "$raw_records"
+              filter: "priority:normal"
+            output_mapping:
+              - source: "$.processed"
+                target: "normal_results"
+                transform: "array"
+
+          # Generate statistics
+          - id: calculate_stats
+            tool: statistics_calculator
+            parameters:
+              data: "$raw_records"
+            output_mapping:
+              - source: "$.stats.average"
+                target: "average_score"
+                transform: "number"
+              - source: "$.stats.distribution"
+                target: "score_distribution"
+                transform: "object"
+
+    else:
+      # Small dataset or quick mode
+      - type: task
+        id: quick_process
+        tool: quick_processor
+        parameters:
+          records: "$raw_records"
+          mode: "fast"
+
+  # Step 3: Loop through results for validation
+  - type: loop
+    loop_type: for
+    collection: "$high_priority_results"
+    variable: "record_id"
+    max_iterations: 100
+    body:
+      - type: task
+        id: validate_record_${record_id}
+        tool: record_validator
+        parameters:
+          record_id: "$record_id"
+          strict_mode: true
+        output_mapping:
+          - source: "$.valid"
+            target: "validation_${record_id}"
+            transform: "boolean"
+
+  # Step 4: Tool composition - pipe outputs through multiple tools
+  - type: compose
+    id: transformation_pipeline
+    tasks:
+      # First: Aggregate all results
+      - id: aggregate
+        tool: data_aggregator
+        parameters:
+          high_priority: "$high_priority_results"
+          normal: "$normal_results"
+        output_mapping:
+          - source: "$"
+            target: "aggregated_data"
+
+      # Second: Transform aggregated data (receives output from aggregate)
+      - id: transform
+        tool: data_transformer
+        parameters:
+          # _piped_input is automatically set from previous task
+          transformation_rules:
+            - type: "normalize"
+            - type: "enrich"
+        output_mapping:
+          - source: "$.transformed"
+            target: "transformed_data"
+
+      # Third: Format for output (receives output from transform)
+      - id: format_output
+        tool: output_formatter
+        parameters:
+          format: "json"
+          include_metadata: true
+
+  # Step 5: Nested conditionals with complex logic
+  - type: conditional
+    condition:
+      or:
+        - and:
+            - greater: ["$average_score", "$threshold"]
+            - exists: "high_priority_results"
+        - equals: ["$override_approval", true]
+    then:
+      # Success path
+      - type: parallel
+        tasks:
+          # Store results
+          - id: store_results
+            tool: database_writer
+            parameters:
+              table: "processed_results"
+              data: "$transformed_data"
+              timestamp: "$fetch_timestamp"
+
+          # Send notifications
+          - id: notify_success
+            tool: notification_sender
+            parameters:
+              type: "success"
+              message: "Processing completed successfully"
+              stats:
+                total: "$total_count"
+                processed: "${high_priority_results.length}"
+                average_score: "$average_score"
+
+          # Generate report
+          - id: generate_report
+            tool: report_generator
+            parameters:
+              template: "processing_summary"
+              data:
+                results: "$transformed_data"
+                statistics: "$score_distribution"
+                timestamp: "$fetch_timestamp"
+            output_mapping:
+              - source: "$.report_url"
+                target: "report_link"
+                transform: "string"
+
+    else:
+      # Failure/review path
+      - type: task
+        id: create_review_task
+        tool: task_creator
+        parameters:
+          type: "manual_review"
+          reason: "Score below threshold"
+          data: "$aggregated_data"
+          assigned_to: "review_team"
+
+  # Step 6: Error recovery with alternative processing
+  - type: task
+    id: final_validation
+    tool: final_validator
+    parameters:
+      report_url: "$report_link"
+      validation_rules:
+        - check_completeness: true
+        - verify_thresholds: true
+    depends_on:
+      - store_results
+      - generate_report
+    retry:
+      max_attempts: 2
+      delay: 5
+    continue_on_error: true
+
+  # Step 7: Cleanup and finalization (always runs)
+  - type: task
+    id: cleanup
+    tool: cleanup_handler
+    parameters:
+      resources:
+        - temporary_files
+        - cache_entries
+      preserve_results: true
+    continue_on_error: true
+
+# Output mappings for the entire workflow
+output:
+  success: "${final_validation.status == 'success'}"
+  report_url: "$report_link"
+  total_processed: "$total_count"
+  average_score: "$average_score"
+  processing_time: "${cleanup.timestamp - fetch_source_data.timestamp}"
+  errors: "${_workflow.errors}"
+
+# Error handling configuration
+error_handling:
+  on_task_failure:
+    - log_error
+    - save_state
+  on_workflow_failure:
+    - send_alert
+    - create_incident
+  recovery_strategies:
+    - retry_from_last_checkpoint
+    - fallback_to_simple_mode
+
+# Workflow metadata
+metadata:
+  author: "AI Orchestration System"
+  created: "2024-01-15"
+  tags:
+    - data_processing
+    - parallel_execution
+    - conditional_logic
+  requirements:
+    - tool: http_request
+      version: ">=1.0.0"
+    - tool: data_processor
+      version: ">=2.0.0"
+    - tool: database_writer
+      version: ">=1.5.0"

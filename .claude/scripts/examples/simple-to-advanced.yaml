@@ -1,0 +1,190 @@
+# Example showing progression from simple to advanced workflows
+# Demonstrates backward compatibility and migration path
+
+# Simple Workflow (Backward Compatible)
+---
+id: simple_workflow_v1
+name: Simple Sequential Workflow
+steps:
+  - type: task
+    id: fetch_data
+    tool: http_get
+    parameters:
+      url: "https://api.example.com/data"
+    # Old style output mapping (still supported)
+    output_mapping:
+      data: "response_data"
+      status: "response_status"
+
+  - type: task
+    id: process_data
+    tool: data_processor
+    parameters:
+      input: "$response_data"
+    output_mapping:
+      result: "processed_result"
+
+---
+
+# Same workflow with new features (Backward Compatible)
+id: simple_workflow_v2
+name: Enhanced Sequential Workflow
+steps:
+  - type: task
+    id: fetch_data
+    tool: http_get
+    parameters:
+      url: "https://api.example.com/data"
+    # New style with more control
+    output_mapping:
+      - source: "$.data"
+        target: "response_data"
+        required: true
+      - source: "$.status"
+        target: "response_status"
+        default: "unknown"
+    # Add retry for reliability
+    retry:
+      max_attempts: 2
+      delay: 1
+
+  - type: task
+    id: process_data
+    tool: data_processor
+    parameters:
+      input: "$response_data"
+    output_mapping:
+      - source: "$.result"
+        target: "processed_result"
+        transform: "object"
+    depends_on:
+      - fetch_data
+
+---
+
+# Advanced version with full features
+id: advanced_workflow_v3
+name: Full-Featured Workflow
+variables:
+  api_endpoint: "https://api.example.com"
+  process_threshold: 10
+
+steps:
+  # Parallel data fetching
+  - type: parallel
+    id: fetch_multiple_sources
+    tasks:
+      - id: fetch_primary
+        tool: http_get
+        parameters:
+          url: "${api_endpoint}/primary"
+        output_mapping:
+          - source: "$.data"
+            target: "primary_data"
+            transform: "array"
+
+      - id: fetch_secondary
+        tool: http_get
+        parameters:
+          url: "${api_endpoint}/secondary"
+        output_mapping:
+          - source: "$.data"
+            target: "secondary_data"
+            transform: "array"
+
+  # Conditional processing based on data volume
+  - type: conditional
+    condition:
+      or:
+        - greater: ["${primary_data.length}", "$process_threshold"]
+        - greater: ["${secondary_data.length}", "$process_threshold"]
+    then:
+      # Large dataset path
+      - type: task
+        id: batch_process
+        tool: batch_processor
+        parameters:
+          primary: "$primary_data"
+          secondary: "$secondary_data"
+          mode: "parallel"
+        output_mapping:
+          - source: "$.results"
+            target: "batch_results"
+            transform: "filter:item['status'] == 'success'|map:item['data']"
+
+    else:
+      # Small dataset path
+      - type: compose
+        id: sequential_process
+        tasks:
+          - id: merge_data
+            tool: data_merger
+            parameters:
+              datasets:
+                - "$primary_data"
+                - "$secondary_data"
+
+          - id: simple_process
+            tool: simple_processor
+            # Uses _piped_input from merge_data
+
+          - id: format_results
+            tool: formatter
+            output_mapping:
+              - source: "$"
+                target: "batch_results"
+
+  # Process results in loop
+  - type: loop
+    loop_type: for
+    collection: "$batch_results"
+    variable: "result_item"
+    max_iterations: 50
+    body:
+      - type: task
+        id: validate_${result_item.id}
+        tool: validator
+        parameters:
+          item: "$result_item"
+        output_mapping:
+          - source: "$.valid"
+            target: "validations.${result_item.id}"
+            transform: "boolean"
+
+  # Final aggregation
+  - type: task
+    id: generate_report
+    tool: report_generator
+    parameters:
+      results: "$batch_results"
+      validations: "$validations"
+      metadata:
+        primary_count: "${primary_data.length}"
+        secondary_count: "${secondary_data.length}"
+        threshold: "$process_threshold"
+    output_mapping:
+      - source: "$.report"
+        target: "final_report"
+        transform: "object"
+      - source: "$.summary.total_valid"
+        target: "valid_count"
+        transform: "number"
+      - source: "$.summary.success_rate"
+        target: "success_rate"
+        transform: "number"
+
+# Error handling
+error_handling:
+  on_task_failure:
+    - log_error
+    - save_state
+  recovery_strategies:
+    - retry_from_checkpoint
+
+# Output specification
+output:
+  report: "$final_report"
+  metrics:
+    valid_items: "$valid_count"
+    success_rate: "$success_rate"
+    total_processed: "${batch_results.length}"
